@@ -4,7 +4,7 @@
 
 In this repository we will be working on the final year project
 
-## Collaborators
+## Contributors
 
 - [AMMARI Abdoulahab](https://github.com/AbdelAm)
 - [TAHRI Mostafa](https://github.com/mostafatahri)
