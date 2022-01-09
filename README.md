@@ -11,7 +11,7 @@ In this repository we will be working on the final year project
 - [AMARA Younes](https://github.com/sintoss)
 
 ## Under the support and the guidance of :
-### [Mr MANI Mhammed Adil](https://github.com/MANIMED)
+### [Mr MANI Mohammed Adil](https://github.com/MANIMED)
 - Information Systems Engineer
 - CEO of ITC training firm
 - CEO of CFC consulting firm
