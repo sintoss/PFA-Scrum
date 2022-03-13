@@ -1,0 +1,117 @@
+<!--begin::Page-->
+<div class="d-flex flex-row flex-column-fluid page">
+    <!--begin::Wrapper-->
+    <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+        <!--begin::Header-->
+        <app-header></app-header>
+        <!--end::Header-->
+        <!--begin::Content-->
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+            <app-sub-header></app-sub-header>
+            <!--begin::Entry-->
+            <div class="d-flex flex-column-fluid">
+                <!--begin::Container-->
+                <div class="container">
+                    <!--begin::Card-->
+                    <div class="card card-custom">
+                        <div class="card-body p-0">
+                            <div class="wizard wizard-1" id="kt_projects_add" data-wizard-state="step-first" data-wizard-clickable="true">
+                                <!--begin::Wizard Body-->
+                                <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
+                                    <div class="col-xl-12 col-xxl-7">
+                                        <!--begin::Card-->
+										<div class="card card-custom example example-compact">
+											<div class="card-header">
+												<h3 class="card-title">Ajouter un Projet</h3>
+											</div>
+											<!--begin::Form-->
+											<form class="form" #projetForm="ngForm" (submit)="onSubmit(projetForm)">
+												<div class="card-body">
+													<div class="alert alert-custom alert-light-danger d-none" role="alert" id="kt_form_1_msg">
+														<div class="alert-icon">
+															<i class="flaticon2-information"></i>
+														</div>
+														<div class="alert-text font-weight-bold">Oh snap! Change a few things up and try submitting again.</div>
+														<div class="alert-close">
+															<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+																<span>
+																	<i class="ki ki-close"></i>
+																</span>
+															</button>
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-form-label text-right col-lg-3 col-sm-12">Nom du Projet :*</label>
+														<div class="col-lg-9 col-md-9 col-sm-12">
+															<input type="text" class="form-control" name="nom" #nom="ngModel" [(ngModel)]="projetService.projet.nom" placeholder="Entrer le nom du projet" required>
+															<span class="form-text text-muted"></span>
+														</div>
+													</div>
+													<div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">Date De Debut :</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="input-group">
+                                                                <input type="date" class="form-control" name="dateCreation" #dateCreation="ngModel" [(ngModel)]="projetService.projet.dateCreation" placeholder="Select date" id="kt_datepicker_debut" required>
+                                                            </div>
+                                                            <span class="form-text text-muted"></span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+                                                    <div class="form-group row fv-plugins-icon-container">
+                                                        <label class="col-form-label col-lg-3 col-sm-12 text-right">Date Prevue de fin *</label>
+                                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                                            <div class="input-group">
+                                                                <input type="date" class="form-control" name="datePrevuFin" #datePrevuFin="ngModel" [(ngModel)]="projetService.projet.datePrevueFin" placeholder="Select date" id="kt_datepicker_fin" required>
+                                                            </div>
+                                                            <span class="form-text text-muted"></span>
+                                                        <div class="fv-plugins-message-container"></div></div>
+                                                    </div>
+												</div>
+												<div class="card-footer">
+													<div class="row">
+														<div class="m-auto">
+															<button type="submit" class="btn btn-primary font-weight-bold mr-2">Ajouter</button>
+														</div>
+													</div>
+												</div>
+											</form>
+											<!--end::Form-->
+										</div>
+										<!--end::Card-->
+                                    </div>
+                                </div>
+                                <!--end::Wizard Body-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Container-->
+            </div>
+            <!--end::Entry-->
+        </div>
+        <!--end::Content-->
+        <!--begin::Footer-->
+        <div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
+            <!--begin::Container-->
+            <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <!--begin::Copyright-->
+                <div class="text-dark order-2 order-md-1">
+                    <span class="text-muted font-weight-bold mr-2">2021©</span>
+                    <a href="http://keenthemes.com/metronic" target="_blank" class="text-dark-75 text-hover-primary">Keenthemes</a>
+                </div>
+                <!--end::Copyright-->
+                <!--begin::Nav-->
+                <div class="nav nav-dark order-1 order-md-2">
+                    <a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pr-3 pl-0">About</a>
+                    <a href="http://keenthemes.com/metronic" target="_blank" class="nav-link px-3">Team</a>
+                    <a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-3 pr-0">Contact</a>
+                </div>
+                <!--end::Nav-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Footer-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+<!--end::Page-->
