@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+.table-container table tr{
+    display: table;
+    width:100%;
+}
+.table-container table tr td:first-child {
+    width:50%;
+}
