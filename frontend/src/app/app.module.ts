@@ -14,10 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { SubHeaderComponent } from './sub-header/sub-header.component';
 import { BacklogComponent } from './backlog/backlog.component';
-import { StoryContentComponent } from './story/story-content/story-content.component';
+import { StoryItemComponent } from './story/story-item/story-item.component';
 import { StoryListComponent } from './story/story-list/story-list.component';
 import { StoryFormComponent } from './story/story-form/story-form.component';
-import { TacheContentComponent } from './tache/tache-content/tache-content.component';
+import { TacheItemComponent } from './tache/tache-item/tache-item.component';
 import { TacheListComponent } from './tache/tache-list/tache-list.component';
 import { TacheFormComponent } from './tache/tache-form/tache-form.component';
 import { SprintComponent } from './sprint/sprint.component';
@@ -34,10 +34,10 @@ import { SprintComponent } from './sprint/sprint.component';
     ProjetDetailComponent,
     ProjetFormComponent,
     BacklogComponent,
-    StoryContentComponent,
+    StoryItemComponent,
     StoryListComponent,
     StoryFormComponent,
-    TacheContentComponent,
+    TacheItemComponent,
     TacheListComponent,
     TacheFormComponent,
     SprintComponent
