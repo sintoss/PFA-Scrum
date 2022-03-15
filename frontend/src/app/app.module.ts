@@ -27,7 +27,7 @@ import { SprintComponent } from './sprint/sprint.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HeaderComponent,
+    /*HeaderComponent,
     SubHeaderComponent,
     ProjetCardComponent,
     ProjetListComponent,
@@ -40,13 +40,13 @@ import { SprintComponent } from './sprint/sprint.component';
     TacheItemComponent,
     TacheListComponent,
     TacheFormComponent,
-    SprintComponent
+    SprintComponent*/
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
