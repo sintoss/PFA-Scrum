@@ -10,10 +10,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'projets', loadChildren: () => import('./projet/projet.module').then(m => m.ProjetModule) },
-  /*{path: 'projets', component: ProjetListComponent},
-  {path: 'projets/ajouter', component: ProjetFormComponent, pathMatch: 'full'},
-  {path: 'projets/:id', component: ProjetDetailComponent}*/
+  { 
+    path: 'projets', 
+    loadChildren: () => import('./projet/projet.module').then(m => m.ProjetModule) 
+  },
 ];
 
 @NgModule({
