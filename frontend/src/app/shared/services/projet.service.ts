@@ -17,10 +17,11 @@ export class ProjetService {
 
   getById(projetId: number): Projet
   {
-    const url = this.baseUrl + "/projet/" + Number.toString();
-    let projet = new Projet();
+    const url = this.baseUrl + '/projet/' + Number.toString();
+    const projet = new Projet();
     return projet;
   }
+  // tslint:disable-next-line:typedef
   setProjet()
   {
     this.projet.scrumMasterId = 1;

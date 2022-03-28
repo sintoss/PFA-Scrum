@@ -59,6 +59,7 @@ namespace ScrumProject4GI.Services
 
             return new AuthModel
             {
+                UserId = user.Id,
                 Email = user.Email,
                 ExpiresOn = jwtSecurityToken.ValidTo,
                 IsAuthenticated = true,
@@ -83,6 +84,7 @@ namespace ScrumProject4GI.Services
             var jwtSecurityToken = await CreateJwtToken(user);
             var rolesList = await _userManager.GetRolesAsync(user);
 
+            authModel.UserId = user.Id;
             authModel.IsAuthenticated = true;
             authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             authModel.Email = user.Email;

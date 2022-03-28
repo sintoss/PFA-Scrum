@@ -5,6 +5,7 @@ namespace ScrumProject4GI.Models
 {
     public class AuthModel
     {
+        public string UserId { get; set; }
         public string Message { get; set; }
         public bool IsAuthenticated { get; set; }
         public string Username { get; set; }

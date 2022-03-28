@@ -21,12 +21,12 @@ namespace ScrumProject4GI.Controllers
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return Ok(ModelState);
 
             var result = await _authService.RegisterAsync(model);
 
             if (!result.IsAuthenticated)
-                return BadRequest(result.Message);
+                return Ok(result.Message);
 
             return Ok(new { token = result.Token , expiresOn = result.ExpiresOn });
         }
@@ -35,12 +35,12 @@ namespace ScrumProject4GI.Controllers
         public async Task<IActionResult> GetTokenAsync([FromBody] TokenRequestModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return Ok(ModelState);
 
             var result = await _authService.GetTokenAsync(model);
 
             if (!result.IsAuthenticated)
-                return BadRequest(result.Message);
+                return Ok(result.Message);
 
             return Ok(result);
         }

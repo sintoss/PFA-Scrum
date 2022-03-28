@@ -46,17 +46,20 @@
                         <p class="text-muted font-weight-bold">Enter your username and password</p>
                     </div>
                     <!--begin::Form-->
-                    <form class="form" novalidate="novalidate" id="kt_login_signin_form">
+                    <form (ngSubmit)="onSubmit()" #f="ngForm"  class="form" novalidate="novalidate" id="kt_login_signin_form">
                         <div class="form-group">
-                            <input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Username" name="username" autocomplete="off" />
+                            <input class="form-control form-control-solid h-auto py-5 px-6"
+                                   type="email" placeholder="your email" ngModel name="email" autocomplete="off" required="required" email />
+                          <small class="text-danger" [hidden]="!FormError" >email May be not correct.</small>
                         </div>
                         <div class="form-group">
-                            <input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Password" name="password" autocomplete="off" />
+                            <input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Password" ngModel name="password" autocomplete="off" required="required" />
+                          <small class="text-danger" [hidden]="!FormError">password Must be 8-20 characters long.</small>
                         </div>
                         <!--begin::Action-->
                         <div class="form-group d-flex flex-wrap justify-content-between align-items-center">
                             <a routerLink="forgot" class="text-dark-50 text-hover-primary my-3 mr-2" id="kt_login_forgot">Forgot Password ?</a>
-                            <button type="button" id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" (click)="onSubmit()">Sign In</button>
+                            <button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3" [disabled]="!f.valid" >Sign In</button>
                         </div>
                         <!--end::Action-->
                     </form>
