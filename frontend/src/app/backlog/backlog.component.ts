@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { log } from 'console';
 import { environment } from 'src/environments/environment';
 import { Backlog } from '../shared/models/backlog.model';
 import { BacklogService } from '../shared/services/backlog.service';
