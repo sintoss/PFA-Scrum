@@ -13,6 +13,6 @@ export class SignupService {
   constructor(private http: HttpClient) {}
 
   tryToRegister(rgmodel: RegisterModel): Observable<any>{
-    return this.http.post(this.baseUrl + '/api/Auth/register', rgmodel);
+    return this.http.post(this.baseUrl + '/Auth/register', rgmodel);
   }
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Projet } from '../models/projet.model';
 import { HttpClient} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +16,18 @@ export class ProjetService {
   constructor(private http: HttpClient) {
 
   }
-
-  getById(projetId: number): Projet
+  getMyProjets() : Observable<Projet[]> {
+    return this.http.get<Projet[]>(this.baseUrl + '/projets');
+  }
+  getProjetDetail(projetId: number): Observable<Projet>
   {
-    const url = this.baseUrl + '/projet/' + Number.toString();
-    const projet = new Projet();
-    return projet;
+    return this.http.get<Projet>(this.baseUrl + '/projets/' + projetId);
   }
   // tslint:disable-next-line:typedef
-  setProjet()
+  setProjet(scrumMasterId: string):Observable<Projet>
   {
-    this.projet.scrumMasterId = 1;
-    return this.http.post(this.baseUrl + '/projets/ajouter', this.projet);
+      this.projet.scrumMasterId = scrumMasterId;
+      this.projet.dateCreation = new Date();
+      return this.http.post<Projet>(this.baseUrl + '/projets/ajouter', this.projet);
   }
 }

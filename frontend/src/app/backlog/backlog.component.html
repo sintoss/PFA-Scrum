@@ -1,21 +1,21 @@
     <!--begin::Advance Table Widget 3-->
     <div class="card card-custom card-stretch gutter-b">
         <!--begin::Header-->
-        <div class="card-header align-items-center border-0 py-5" style="justify-content: stretch;">
+        <div class="card-header align-items-center border-0 py-5" style="justify-content: space-between;">
             <h3 class="card-title align-items-start flex-column mr-2">
                 <strong class="card-label font-weight-bolder text-dark">Backlog</strong>
             </h3>
             <div class="card-toolbar">
-                <div class="form-outline" style="width: 19vw;">
+                <div class="form-outline" style="width: 25vw;">
                     <input type="search" class="form-control" id="datatable-search-input" placeholder="Chercher une story">
                 </div>
-                <a href="#" class="btn btn-success font-weight-bolder font-size-sm mx-2">
-                    Creer Backlog
-                </a>
-                <a href="#" class="btn btn-success font-weight-bolder font-size-sm mx-2">
-                    Ajouter User Story
-                </a>
             </div>
+            <button *ngIf="backlog===null" class="btn btn-success font-weight-bolder font-size-sm mx-2" (click)="createBacklog()">
+                Creer Backlog
+            </button>
+            <a href="#" *ngIf="backlog!==null" class="btn btn-success font-weight-bolder font-size-sm mx-2">
+                Ajouter User Story
+            </a>
         </div>
         <!--end::Header-->
         <!--begin::Body-->

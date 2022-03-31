@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Projet } from 'src/app/shared/models/projet.model';
+import { JwtService } from 'src/app/shared/services/jwt.service';
 import { ProjetService } from 'src/app/shared/services/projet.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { ProjetService } from 'src/app/shared/services/projet.service';
 })
 export class ProjetFormComponent implements OnInit {
   
-  constructor(public projetService: ProjetService) {
+  constructor(public projetService: ProjetService, private jwt: JwtService) {
   }
 
   ngOnInit(): void {
@@ -19,9 +20,10 @@ export class ProjetFormComponent implements OnInit {
 
   onSubmit(projetForm: NgForm)
   {
-    this.projetService.setProjet().subscribe(
+    this.projetService.setProjet(this.jwt.getUserId()).subscribe(
       res => {
-
+        console.log(typeof res);
+        console.log(res);
       },
       err => {console.log(err)}
     );

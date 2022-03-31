@@ -15,9 +15,388 @@ namespace BackEnd.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.15")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BackEnd.Models.Backlog", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDerniereModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProjetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Backlogs");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.DeveloppeurStory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateAffectation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeveloppeurId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeveloppeurId");
+
+                    b.HasIndex("StoryId");
+
+                    b.ToTable("DeveloppeurStory");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Projet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BacklogId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DatePrevueFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ScrumMasterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScrumMasterId");
+
+                    b.ToTable("Projets");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Release", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateRelease")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsValide")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SprintId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Version")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SprintId");
+
+                    b.ToTable("Releases");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Reunion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateReunion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Emplacement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Objet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProjetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScrumMasterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjetId");
+
+                    b.HasIndex("ScrumMasterId");
+
+                    b.ToTable("Reunions");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.ScrumMasterProjet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProjetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScrumMasterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjetId");
+
+                    b.HasIndex("ScrumMasterId");
+
+                    b.ToTable("ScrumMasterProjet");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Sprint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDerniereModification")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sprints");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.SprintStory", b =>
+                {
+                    b.Property<int>("SprintId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SprintId", "StoryId");
+
+                    b.HasIndex("StoryId");
+
+                    b.ToTable("SprintStory");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Story", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BacklogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Commentaire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDerniereModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BacklogId");
+
+                    b.ToTable("Stories");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Tache", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDerniereModification")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Etat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.ToTable("Taches");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.TesteurStory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Commentaire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAffectation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TesteurId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("TesteurId");
+
+                    b.ToTable("TesteurStory");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Utilisateur", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NomComplet")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Utilisateur");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.UtilisateurProjet", b =>
+                {
+                    b.Property<string>("UtilisateurId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProjetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UtilisateurId", "ProjetId");
+
+                    b.HasIndex("ProjetId");
+
+                    b.ToTable("UtilisateurProjet");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.UtilisateurReunion", b =>
+                {
+                    b.Property<string>("UtilisateurId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ReunionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UtilisateurId", "ReunionId");
+
+                    b.HasIndex("ReunionId");
+
+                    b.ToTable("UtilisateurReunion");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -51,7 +430,7 @@ namespace BackEnd.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -75,7 +454,7 @@ namespace BackEnd.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -150,408 +529,206 @@ namespace BackEnd.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Backlog", b =>
+            modelBuilder.Entity("BackEnd.Models.Developpeur", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreation")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateDernierModification")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProjetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Backlogs");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.DeveloppeurStory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("DeveloppeurId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("StoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("dateAffectation")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeveloppeurId");
-
-                    b.HasIndex("StoryId");
-
-                    b.ToTable("DeveloppeurStory");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Projet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("BacklogId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreation")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DatePrevueFin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ScrumMasterId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ScrumMasterId");
-
-                    b.ToTable("Projets");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Release", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateRelease")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("EstValide")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SprintId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Version")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SprintId");
-
-                    b.ToTable("Releases");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Reunion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateReunion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Emplacement")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Objet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProjetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ScrumMasterId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjetId");
-
-                    b.HasIndex("ScrumMasterId");
-
-                    b.ToTable("Reunions");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.ScrumMasterProjet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ProjetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ScrumMasterId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjetId");
-
-                    b.HasIndex("ScrumMasterId");
-
-                    b.ToTable("ScrumMasterProjet");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Sprint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateCreation")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateDernierModification")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sprints");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.SprintStory", b =>
-                {
-                    b.Property<int>("SprintId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SprintId", "StoryId");
-
-                    b.HasIndex("StoryId");
-
-                    b.ToTable("SprintStory");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Story", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("BacklogId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Commentaire")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreation")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateDernierModification")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BacklogId");
-
-                    b.ToTable("Stories");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Tache", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateCreation")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateDernierModification")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Etat")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Libelle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StoryId");
-
-                    b.ToTable("Taches");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.TesteurStory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Commentaire")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TesteurId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("dateAffectation")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StoryId");
-
-                    b.HasIndex("TesteurId");
-
-                    b.ToTable("TesteurStory");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Utilisateur", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NomComplet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Utilisateur");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.UtilisateurProjet", b =>
-                {
-                    b.Property<string>("UtilisateurId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ProjetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UtilisateurId", "ProjetId");
-
-                    b.HasIndex("ProjetId");
-
-                    b.ToTable("UtilisateurProjet");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.UtilisateurReunion", b =>
-                {
-                    b.Property<string>("UtilisateurId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ReunionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UtilisateurId", "ReunionId");
-
-                    b.HasIndex("ReunionId");
-
-                    b.ToTable("UtilisateurReunion");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Developpeur", b =>
-                {
-                    b.HasBaseType("backend.Models.Entity.Utilisateur");
+                    b.HasBaseType("BackEnd.Models.Utilisateur");
 
                     b.HasDiscriminator().HasValue("Developpeur");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.ProductOwner", b =>
+            modelBuilder.Entity("BackEnd.Models.ProductOwner", b =>
                 {
-                    b.HasBaseType("backend.Models.Entity.Utilisateur");
+                    b.HasBaseType("BackEnd.Models.Utilisateur");
 
                     b.HasDiscriminator().HasValue("ProductOwner");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.ScrumMaster", b =>
+            modelBuilder.Entity("BackEnd.Models.ScrumMaster", b =>
                 {
-                    b.HasBaseType("backend.Models.Entity.Utilisateur");
+                    b.HasBaseType("BackEnd.Models.Utilisateur");
 
                     b.HasDiscriminator().HasValue("ScrumMaster");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Testeur", b =>
+            modelBuilder.Entity("BackEnd.Models.Testeur", b =>
                 {
-                    b.HasBaseType("backend.Models.Entity.Utilisateur");
+                    b.HasBaseType("BackEnd.Models.Utilisateur");
 
                     b.HasDiscriminator().HasValue("Testeur");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Backlog", b =>
+                {
+                    b.HasOne("BackEnd.Models.Projet", "Projet")
+                        .WithOne("Backlog")
+                        .HasForeignKey("BackEnd.Models.Backlog", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projet");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.DeveloppeurStory", b =>
+                {
+                    b.HasOne("BackEnd.Models.Developpeur", "Developpeur")
+                        .WithMany("DeveloppeurStories")
+                        .HasForeignKey("DeveloppeurId");
+
+                    b.HasOne("BackEnd.Models.Story", "Story")
+                        .WithMany("DeloppeurStories")
+                        .HasForeignKey("StoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Developpeur");
+
+                    b.Navigation("Story");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Projet", b =>
+                {
+                    b.HasOne("BackEnd.Models.ScrumMaster", "ScrumMaster")
+                        .WithMany()
+                        .HasForeignKey("ScrumMasterId");
+
+                    b.Navigation("ScrumMaster");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Release", b =>
+                {
+                    b.HasOne("BackEnd.Models.Sprint", "Sprint")
+                        .WithMany("Releases")
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sprint");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Reunion", b =>
+                {
+                    b.HasOne("BackEnd.Models.Projet", null)
+                        .WithMany("Reunion")
+                        .HasForeignKey("ProjetId");
+
+                    b.HasOne("BackEnd.Models.ScrumMaster", "ScrumMaster")
+                        .WithMany("Reunions")
+                        .HasForeignKey("ScrumMasterId");
+
+                    b.Navigation("ScrumMaster");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.ScrumMasterProjet", b =>
+                {
+                    b.HasOne("BackEnd.Models.Projet", "Projet")
+                        .WithMany("ScrumMasterProjets")
+                        .HasForeignKey("ProjetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Models.ScrumMaster", "ScrumMaster")
+                        .WithMany("ScrumMasterProjet")
+                        .HasForeignKey("ScrumMasterId");
+
+                    b.Navigation("Projet");
+
+                    b.Navigation("ScrumMaster");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.SprintStory", b =>
+                {
+                    b.HasOne("BackEnd.Models.Sprint", "Sprint")
+                        .WithMany("SprintStories")
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Models.Story", "Story")
+                        .WithMany("SprintStories")
+                        .HasForeignKey("StoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sprint");
+
+                    b.Navigation("Story");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Story", b =>
+                {
+                    b.HasOne("BackEnd.Models.Backlog", "Backlog")
+                        .WithMany("Stories")
+                        .HasForeignKey("BacklogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Backlog");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.Tache", b =>
+                {
+                    b.HasOne("BackEnd.Models.Story", "Story")
+                        .WithMany("Taches")
+                        .HasForeignKey("StoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Story");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.TesteurStory", b =>
+                {
+                    b.HasOne("BackEnd.Models.Story", "Story")
+                        .WithMany("TesteurStories")
+                        .HasForeignKey("StoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Models.Testeur", "Testeur")
+                        .WithMany("TesteurStories")
+                        .HasForeignKey("TesteurId");
+
+                    b.Navigation("Story");
+
+                    b.Navigation("Testeur");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.UtilisateurProjet", b =>
+                {
+                    b.HasOne("BackEnd.Models.Projet", "Projet")
+                        .WithMany("UtilisateurProjets")
+                        .HasForeignKey("ProjetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Models.Utilisateur", "Utilisateur")
+                        .WithMany("UtilisateurProjets")
+                        .HasForeignKey("UtilisateurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projet");
+
+                    b.Navigation("Utilisateur");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.UtilisateurReunion", b =>
+                {
+                    b.HasOne("BackEnd.Models.Reunion", "Reunion")
+                        .WithMany("UtilisateurReunions")
+                        .HasForeignKey("ReunionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Models.Utilisateur", "Utilisateur")
+                        .WithMany("UtilisateurReunions")
+                        .HasForeignKey("UtilisateurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reunion");
+
+                    b.Navigation("Utilisateur");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -565,7 +742,7 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("backend.Models.Entity.Utilisateur", null)
+                    b.HasOne("BackEnd.Models.Utilisateur", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -574,7 +751,7 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("backend.Models.Entity.Utilisateur", null)
+                    b.HasOne("BackEnd.Models.Utilisateur", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -589,7 +766,7 @@ namespace BackEnd.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.Entity.Utilisateur", null)
+                    b.HasOne("BackEnd.Models.Utilisateur", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -598,193 +775,19 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("backend.Models.Entity.Utilisateur", null)
+                    b.HasOne("BackEnd.Models.Utilisateur", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Backlog", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Projet", "Projet")
-                        .WithOne("Backlog")
-                        .HasForeignKey("backend.Models.Entity.Backlog", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projet");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.DeveloppeurStory", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Developpeur", "Developpeur")
-                        .WithMany("DeveloppeurStories")
-                        .HasForeignKey("DeveloppeurId");
-
-                    b.HasOne("backend.Models.Entity.Story", "Story")
-                        .WithMany("DeloppeurStories")
-                        .HasForeignKey("StoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Developpeur");
-
-                    b.Navigation("Story");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Projet", b =>
-                {
-                    b.HasOne("backend.Models.Entity.ScrumMaster", "ScrumMaster")
-                        .WithMany()
-                        .HasForeignKey("ScrumMasterId");
-
-                    b.Navigation("ScrumMaster");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Release", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Sprint", "Sprint")
-                        .WithMany("Releases")
-                        .HasForeignKey("SprintId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sprint");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Reunion", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Projet", null)
-                        .WithMany("Reunion")
-                        .HasForeignKey("ProjetId");
-
-                    b.HasOne("backend.Models.Entity.ScrumMaster", "ScrumMaster")
-                        .WithMany("Reunions")
-                        .HasForeignKey("ScrumMasterId");
-
-                    b.Navigation("ScrumMaster");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.ScrumMasterProjet", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Projet", "Projet")
-                        .WithMany("ScrumMasterProjets")
-                        .HasForeignKey("ProjetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Entity.ScrumMaster", "ScrumMaster")
-                        .WithMany("ScrumMasterProjet")
-                        .HasForeignKey("ScrumMasterId");
-
-                    b.Navigation("Projet");
-
-                    b.Navigation("ScrumMaster");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.SprintStory", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Sprint", "Sprint")
-                        .WithMany("SprintStories")
-                        .HasForeignKey("SprintId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Entity.Story", "Story")
-                        .WithMany("SprintStories")
-                        .HasForeignKey("StoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sprint");
-
-                    b.Navigation("Story");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Story", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Backlog", "Backlog")
-                        .WithMany("Stories")
-                        .HasForeignKey("BacklogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Backlog");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Tache", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Story", "Story")
-                        .WithMany("Taches")
-                        .HasForeignKey("StoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Story");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.TesteurStory", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Story", "Story")
-                        .WithMany("TesteurStories")
-                        .HasForeignKey("StoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Entity.Testeur", "Testeur")
-                        .WithMany("TesteurStories")
-                        .HasForeignKey("TesteurId");
-
-                    b.Navigation("Story");
-
-                    b.Navigation("Testeur");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.UtilisateurProjet", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Projet", "Projet")
-                        .WithMany("UtilisateurProjets")
-                        .HasForeignKey("ProjetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Entity.Utilisateur", "Utilisateur")
-                        .WithMany("UtilisateurProjets")
-                        .HasForeignKey("UtilisateurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projet");
-
-                    b.Navigation("Utilisateur");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.UtilisateurReunion", b =>
-                {
-                    b.HasOne("backend.Models.Entity.Reunion", "Reunion")
-                        .WithMany("UtilisateurReunions")
-                        .HasForeignKey("ReunionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Entity.Utilisateur", "Utilisateur")
-                        .WithMany("UtilisateurReunions")
-                        .HasForeignKey("UtilisateurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reunion");
-
-                    b.Navigation("Utilisateur");
-                });
-
-            modelBuilder.Entity("backend.Models.Entity.Backlog", b =>
+            modelBuilder.Entity("BackEnd.Models.Backlog", b =>
                 {
                     b.Navigation("Stories");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Projet", b =>
+            modelBuilder.Entity("BackEnd.Models.Projet", b =>
                 {
                     b.Navigation("Backlog");
 
@@ -795,19 +798,19 @@ namespace BackEnd.Migrations
                     b.Navigation("UtilisateurProjets");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Reunion", b =>
+            modelBuilder.Entity("BackEnd.Models.Reunion", b =>
                 {
                     b.Navigation("UtilisateurReunions");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Sprint", b =>
+            modelBuilder.Entity("BackEnd.Models.Sprint", b =>
                 {
                     b.Navigation("Releases");
 
                     b.Navigation("SprintStories");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Story", b =>
+            modelBuilder.Entity("BackEnd.Models.Story", b =>
                 {
                     b.Navigation("DeloppeurStories");
 
@@ -818,26 +821,26 @@ namespace BackEnd.Migrations
                     b.Navigation("TesteurStories");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Utilisateur", b =>
+            modelBuilder.Entity("BackEnd.Models.Utilisateur", b =>
                 {
                     b.Navigation("UtilisateurProjets");
 
                     b.Navigation("UtilisateurReunions");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Developpeur", b =>
+            modelBuilder.Entity("BackEnd.Models.Developpeur", b =>
                 {
                     b.Navigation("DeveloppeurStories");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.ScrumMaster", b =>
+            modelBuilder.Entity("BackEnd.Models.ScrumMaster", b =>
                 {
                     b.Navigation("Reunions");
 
                     b.Navigation("ScrumMasterProjet");
                 });
 
-            modelBuilder.Entity("backend.Models.Entity.Testeur", b =>
+            modelBuilder.Entity("BackEnd.Models.Testeur", b =>
                 {
                     b.Navigation("TesteurStories");
                 });

@@ -5,6 +5,7 @@ export class Backlog {
     id!: number;
     dateCreation!: Date;
     dateDernierModification!: Date;
+    projetId!: number;
     projet!: Projet;
     stories!: Story[];
 }

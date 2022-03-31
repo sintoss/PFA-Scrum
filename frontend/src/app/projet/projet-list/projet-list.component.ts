@@ -8,11 +8,15 @@ import { ProjetService } from 'src/app/shared/services/projet.service';
   styleUrls: ['./projet-list.component.css']
 })
 export class ProjetListComponent implements OnInit {
-
-  constructor(private projetService: ProjetService) { }
+  projets: Projet[];
+  constructor(private projetService: ProjetService) {
+    this.projets = new Array<Projet>();
+  }
 
   ngOnInit(): void {
-    
+    this.projetService.getMyProjets().subscribe(
+      res => this.projets.push(...res)
+    );
   }
 
 }

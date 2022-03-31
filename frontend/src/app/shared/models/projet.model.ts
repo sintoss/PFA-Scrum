@@ -8,9 +8,10 @@ export class Projet {
     id!: number;
     nom!: string;
     dateCreation!: Date;
+    dateDebut!: Date;
     datePrevueFin!: Date;
     backlog!: Backlog;
-    scrumMasterId!: number;
+    scrumMasterId!: string;
     scrumMaster!: ScrumMaster;
     reunions!: Reunion[];
     utilisateurProjets!: UtilisateurProjet[];

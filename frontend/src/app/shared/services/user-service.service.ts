@@ -14,7 +14,7 @@ export class UserServiceService {
   constructor(private http: HttpClient) {}
 
   tryToLogin(lg: Login): Observable<any>{
-     return this.http.post(this.baseUrl + '/api/Auth/token', lg);
+     return this.http.post(this.baseUrl + '/Auth/token', lg);
   }
 
 }

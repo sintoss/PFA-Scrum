@@ -1,5 +1,5 @@
 export class ScrumMaster {
-    id!: number;
+    id!: string;
     nomComplet!: string;
     username!: string;
     email!: string;

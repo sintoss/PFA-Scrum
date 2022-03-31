@@ -8,7 +8,8 @@ namespace BackEnd.Models
         public int Id { get; set; }
         public string Nom { get; set; }
         public DateTime DateCreation { get; set; }
-        public DateTime DatePrevueFin { get; set; }
+        public DateTime? DateDebut { get; set; }
+        public DateTime? DatePrevueFin { get; set; }
         public int? BacklogId { get; set; }
         public Backlog Backlog { get; set; }
         public string ScrumMasterId { get; set; }

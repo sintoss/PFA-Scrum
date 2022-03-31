@@ -14,6 +14,8 @@ import { BacklogComponent } from '../backlog/backlog.component';
 import { SprintComponent } from '../sprint/sprint.component';
 import { StoryModule } from '../story/story.module';
 import { TacheModule } from '../tache/tache.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtService } from '../shared/services/jwt.service';
 
 
 @NgModule({
@@ -34,6 +36,9 @@ import { TacheModule } from '../tache/tache.module';
     ProjetRoutingModule,
     StoryModule,
     TacheModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtService, multi: true }
   ],
   bootstrap: [ProjetComponent]
 })

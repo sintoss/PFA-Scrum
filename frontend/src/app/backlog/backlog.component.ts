@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { log } from 'console';
+import { environment } from 'src/environments/environment';
+import { Backlog } from '../shared/models/backlog.model';
+import { BacklogService } from '../shared/services/backlog.service';
 
 @Component({
   selector: 'app-backlog',
@@ -6,10 +12,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./backlog.component.css']
 })
 export class BacklogComponent implements OnInit {
-
-  constructor() { }
+  @Input() projetId: number;
+  @Input() backlog: Backlog;
+  constructor(private http: HttpClient, private backlogService: BacklogService) {
+      this.projetId = 0;
+      this.backlog = new Backlog();
+  }
 
   ngOnInit(): void {
+  }
+
+  createBacklog()
+  {
+    let backlog = new Backlog();
+    backlog.dateCreation = new Date();
+    backlog.projetId = this.projetId;
+    this.http.post<Backlog>(environment.apiUrl + "/backlog/ajouter", backlog).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
   }
 
 }

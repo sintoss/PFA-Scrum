@@ -20,8 +20,8 @@
                                           <div class="d-flex align-items-center justify-content-between flex-wrap">
                                               <div class="mr-3">
                                                   <!--begin::Name-->
-                                                  <a href="#" class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">Nexa - Next generation SAAS
-                                                  <i class="flaticon2-correct text-success icon-md ml-2"></i></a>
+                                                  <strong href="#" class="d-flex align-items-center text-dark text-hover-primary font-size-h5 font-weight-bold mr-3">{{projet.nom}}
+                                                  <i class="flaticon2-correct text-success icon-md ml-2"></i></strong>
                                                   <!--end::Name-->
                                                   <!--begin::Contacts-->
                                                   <div class="d-flex flex-wrap my-2">
@@ -36,7 +36,7 @@
                                                               </g>
                                                           </svg>
                                                           <!--end::Svg Icon-->
-                                                      </span>jason@siastudio.com</a>
+                                                      </span></a>
                                                       <a href="#" class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2">
                                                       <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
                                                           <!--begin::Svg Icon | path:assets/media/svg/icons/General/Lock.svg-->
@@ -73,17 +73,15 @@
                                           <!--end: Title-->
                                           <!--begin: Content-->
                                           <div class="d-flex align-items-center flex-wrap justify-content-between">
-                                              <div class="flex-grow-1 font-weight-bold text-dark-50 py-5 py-lg-2 mr-5">I distinguish three main text objectives could be merely to inform people.
-                                              <br />A second could be persuade people. You want people to bay objective.</div>
                                               <div class="d-flex flex-wrap align-items-center py-2">
                                                   <div class="d-flex align-items-center mr-10">
                                                       <div class="mr-6">
                                                           <div class="font-weight-bold mb-2">Start Date</div>
-                                                          <span class="btn btn-sm btn-text btn-light-primary text-uppercase font-weight-bold">07 May, 2020</span>
+                                                          <span class="btn btn-sm btn-text btn-light-primary text-uppercase font-weight-bold">{{projet.dateDebut | date}}</span>
                                                       </div>
                                                       <div class="">
                                                           <div class="font-weight-bold mb-2">Due Date</div>
-                                                          <span class="btn btn-sm btn-text btn-light-danger text-uppercase font-weight-bold">10 June, 2021</span>
+                                                          <span class="btn btn-sm btn-text btn-light-danger text-uppercase font-weight-bold">{{projet.datePrevueFin | date}}</span>
                                                       </div>
                                                   </div>
                                                   <div class="flex-grow-1 flex-shrink-0 w-150px w-xl-300px mt-4 mt-sm-0">
@@ -144,18 +142,7 @@
                                               <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
                                           </span>
                                           <div class="d-flex flex-column flex-lg-fill">
-                                              <span class="text-dark-75 font-weight-bolder font-size-sm">73 Tasks</span>
-                                              <a href="#" class="text-primary font-weight-bolder">View</a>
-                                          </div>
-                                      </div>
-                                      <!--end: Item-->
-                                      <!--begin: Item-->
-                                      <div class="d-flex align-items-center flex-lg-fill mr-5 my-1">
-                                          <span class="mr-4">
-                                              <i class="flaticon-chat-1 icon-2x text-muted font-weight-bold"></i>
-                                          </span>
-                                          <div class="d-flex flex-column">
-                                              <span class="text-dark-75 font-weight-bolder font-size-sm">648 Comments</span>
+                                              <span class="text-dark-75 font-weight-bolder font-size-sm">72 Tasks</span>
                                               <a href="#" class="text-primary font-weight-bolder">View</a>
                                           </div>
                                       </div>
@@ -378,7 +365,7 @@
                           <!--begin::Row-->
                           <div class="row">
                             <div class="col-lg-6">
-                                <app-backlog></app-backlog>
+                                <app-backlog [backlog]="projet.backlog" [projetId]="projet.id"></app-backlog>
                             </div>
                             <div class="col-lg-6">
                                   <app-tache-list></app-tache-list>
