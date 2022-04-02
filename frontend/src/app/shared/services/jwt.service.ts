@@ -1,23 +1,15 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { JwtModel } from '../models/jwtModel.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService implements HttpInterceptor{
 
-  jwt = {
-    email: "",
-    expiresOn: "",
-    id: "",
-    isAuthenticated: false,
-    message: null,
-    roles: [],
-    token: "",
-    username: ""
-  };
+  jwt: JwtModel;
+  
   constructor() {
     let token = localStorage.getItem("autMd") || "";
     this.jwt = JSON.parse(token);

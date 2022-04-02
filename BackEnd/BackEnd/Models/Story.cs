@@ -11,7 +11,7 @@ namespace BackEnd.Models
         public DateTime? DateDerniereModification { get; set; }
         public string Commentaire { get; set; }
         public int BacklogId { get; set; }
-        public Backlog Backlog { get; set; }
+        public virtual Backlog Backlog { get; set; }
         public virtual ICollection<Tache> Taches { get; set; }
         public virtual ICollection<SprintStory> SprintStories { get; set; }
         public virtual ICollection<DeveloppeurStory> DeloppeurStories { get; set; }

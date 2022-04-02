@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BackEnd.Migrations
 {
-    public partial class IntialDbc : Migration
+    public partial class initialdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,7 @@ namespace BackEnd.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateDernierModification = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DateDerniereModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,7 +176,8 @@ namespace BackEnd.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nom = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DatePrevueFin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateDebut = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DatePrevueFin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BacklogId = table.Column<int>(type: "int", nullable: true),
                     ScrumMasterId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -199,7 +200,7 @@ namespace BackEnd.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateRelease = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EstValide = table.Column<bool>(type: "bit", nullable: false),
+                    IsValide = table.Column<bool>(type: "bit", nullable: false),
                     SprintId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -217,17 +218,18 @@ namespace BackEnd.Migrations
                 name: "Backlogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjetId = table.Column<int>(type: "int", nullable: false),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateDernierModification = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ProjetId = table.Column<int>(type: "int", nullable: false)
+                    DateDerniereModification = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Backlogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Backlogs_Projets_Id",
-                        column: x => x.Id,
+                        name: "FK_Backlogs_Projets_ProjetId",
+                        column: x => x.ProjetId,
                         principalTable: "Projets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -320,7 +322,7 @@ namespace BackEnd.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateDernierModification = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateDerniereModification = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Commentaire = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BacklogId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -367,7 +369,7 @@ namespace BackEnd.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DeveloppeurId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     StoryId = table.Column<int>(type: "int", nullable: false),
-                    dateAffectation = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateAffectation = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -418,7 +420,7 @@ namespace BackEnd.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Libelle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateDernierModification = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateDerniereModification = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Etat = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     StoryId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -441,7 +443,7 @@ namespace BackEnd.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TesteurId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     StoryId = table.Column<int>(type: "int", nullable: false),
-                    dateAffectation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateAffectation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Commentaire = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -499,6 +501,12 @@ namespace BackEnd.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Backlogs_ProjetId",
+                table: "Backlogs",
+                column: "ProjetId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeveloppeurStory_DeveloppeurId",

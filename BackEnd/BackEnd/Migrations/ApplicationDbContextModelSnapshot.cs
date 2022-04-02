@@ -22,7 +22,9 @@ namespace BackEnd.Migrations
             modelBuilder.Entity("BackEnd.Models.Backlog", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("datetime2");
@@ -34,6 +36,9 @@ namespace BackEnd.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjetId")
+                        .IsUnique();
 
                     b.ToTable("Backlogs");
                 });
@@ -561,7 +566,7 @@ namespace BackEnd.Migrations
                 {
                     b.HasOne("BackEnd.Models.Projet", "Projet")
                         .WithOne("Backlog")
-                        .HasForeignKey("BackEnd.Models.Backlog", "Id")
+                        .HasForeignKey("BackEnd.Models.Backlog", "ProjetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

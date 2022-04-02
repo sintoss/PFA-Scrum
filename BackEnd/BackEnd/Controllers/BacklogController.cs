@@ -49,6 +49,10 @@ namespace BackEnd.Controllers
                 _context.Backlogs.Add(backlog);
                 await _context.SaveChangesAsync();
 
+                var projet = await _context.Projets.FindAsync(backlog.ProjetId);
+                projet.BacklogId = backlog.Id;
+                await _context.SaveChangesAsync();
+
                 return backlog;
             }
             return BadRequest();

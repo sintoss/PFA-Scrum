@@ -10,7 +10,7 @@ namespace BackEnd.Models
         public DateTime DateReunion { get; set; }
         public string Emplacement { get; set; }
         public string ScrumMasterId { get; set; }
-        public ScrumMaster ScrumMaster { get; set; }
+        public virtual ScrumMaster ScrumMaster { get; set; }
         public virtual ICollection<UtilisateurReunion> UtilisateurReunions { get; set; }
     }
 }

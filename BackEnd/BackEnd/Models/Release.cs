@@ -9,6 +9,6 @@ namespace BackEnd.Models
         public string Version { get; set; }
         public bool IsValide { get; set; }
         public int SprintId { get; set; }
-        public Sprint Sprint { get; set; }
+        public virtual Sprint Sprint { get; set; }
     }
 }

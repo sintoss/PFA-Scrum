@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public string ScrumMasterId { get; set; }
-        public ScrumMaster ScrumMaster { get; set; }
+        public virtual ScrumMaster ScrumMaster { get; set; }
         public int ProjetId { get; set; }
-        public Projet Projet { get; set; }
+        public virtual Projet Projet { get; set; }
     }
 }

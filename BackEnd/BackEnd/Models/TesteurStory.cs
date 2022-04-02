@@ -6,9 +6,9 @@ namespace BackEnd.Models
     {
         public int Id { get; set; }
         public string TesteurId { get; set; }
-        public Testeur Testeur { get; set; }
+        public virtual Testeur Testeur { get; set; }
         public int StoryId { get; set; }
-        public Story Story { get; set; }
+        public virtual Story Story { get; set; }
         public DateTime DateAffectation { get; set; }
         public string Commentaire { get; set; }
     }
