@@ -3,14 +3,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BackEnd.Models
 {
-
-    public enum Role
-    {
-        ScrumMaster,
-        ProductOwner,
-        Developpeur,
-        Testeur
-    }
     public abstract class Utilisateur : IdentityUser
     {
         public string NomComplet { get; set; }

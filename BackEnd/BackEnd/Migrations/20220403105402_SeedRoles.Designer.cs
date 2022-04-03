@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220402153628_initial database")]
-    partial class initialdatabase
+    [Migration("20220403105402_SeedRoles")]
+    partial class SeedRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,22 +52,22 @@ namespace BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateAffectation")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("DeveloppeurId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("StoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("DateAffectation")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id", "DeveloppeurId", "StoryId");
 
                     b.HasIndex("DeveloppeurId");
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("DeveloppeurStory");
+                    b.ToTable("DeveloppeurStories");
                 });
 
             modelBuilder.Entity("BackEnd.Models.Projet", b =>
@@ -579,7 +579,9 @@ namespace BackEnd.Migrations
                 {
                     b.HasOne("BackEnd.Models.Developpeur", "Developpeur")
                         .WithMany("DeveloppeurStories")
-                        .HasForeignKey("DeveloppeurId");
+                        .HasForeignKey("DeveloppeurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BackEnd.Models.Story", "Story")
                         .WithMany("DeloppeurStories")

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BackEnd.Migrations
 {
-    public partial class initialdatabase : Migration
+    public partial class IntialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -362,26 +362,26 @@ namespace BackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeveloppeurStory",
+                name: "DeveloppeurStories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeveloppeurId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DeveloppeurId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StoryId = table.Column<int>(type: "int", nullable: false),
                     DateAffectation = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeveloppeurStory", x => x.Id);
+                    table.PrimaryKey("PK_DeveloppeurStories", x => new { x.Id, x.DeveloppeurId, x.StoryId });
                     table.ForeignKey(
-                        name: "FK_DeveloppeurStory_AspNetUsers_DeveloppeurId",
+                        name: "FK_DeveloppeurStories_AspNetUsers_DeveloppeurId",
                         column: x => x.DeveloppeurId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DeveloppeurStory_Stories_StoryId",
+                        name: "FK_DeveloppeurStories_Stories_StoryId",
                         column: x => x.StoryId,
                         principalTable: "Stories",
                         principalColumn: "Id",
@@ -509,13 +509,13 @@ namespace BackEnd.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeveloppeurStory_DeveloppeurId",
-                table: "DeveloppeurStory",
+                name: "IX_DeveloppeurStories_DeveloppeurId",
+                table: "DeveloppeurStories",
                 column: "DeveloppeurId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeveloppeurStory_StoryId",
-                table: "DeveloppeurStory",
+                name: "IX_DeveloppeurStories_StoryId",
+                table: "DeveloppeurStories",
                 column: "StoryId");
 
             migrationBuilder.CreateIndex(
@@ -602,7 +602,7 @@ namespace BackEnd.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DeveloppeurStory");
+                name: "DeveloppeurStories");
 
             migrationBuilder.DropTable(
                 name: "Releases");

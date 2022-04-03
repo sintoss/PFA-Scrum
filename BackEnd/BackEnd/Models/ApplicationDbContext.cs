@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
+
 
 namespace BackEnd.Models
 {
@@ -8,6 +10,10 @@ namespace BackEnd.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         => optionsBuilder
+           .UseLazyLoadingProxies();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,6 +68,20 @@ namespace BackEnd.Models
                 .HasForeignKey(pt => pt.SprintId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Modelbuilder For DeveloppeurStories Class
+
+            modelBuilder.Entity<DeveloppeurStory>()
+             .HasKey(ds => new { ds.Id , ds.DeveloppeurId , ds.StoryId });
+            modelBuilder.Entity<DeveloppeurStory>()
+                .HasOne(d => d.Developpeur)
+                .WithMany(ds => ds.DeveloppeurStories)
+                .HasForeignKey(ds => ds.DeveloppeurId);
+            modelBuilder.Entity<DeveloppeurStory>()
+                .HasOne(s => s.Story)
+                .WithMany(ds => ds.DeloppeurStories)
+                .HasForeignKey(ds => ds.StoryId);
+
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -78,5 +98,6 @@ namespace BackEnd.Models
         public DbSet<Developpeur> Developpeurs { get; set; }
         public DbSet<Testeur> Testeurs { get; set; }
         public DbSet<ProductOwner> Productowners { get; set; }
+        public DbSet<DeveloppeurStory> DeveloppeurStories { get; set; }
     }
 }
