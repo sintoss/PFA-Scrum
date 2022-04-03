@@ -18,5 +18,8 @@ namespace BackEnd.ViewModel
 
         [Required, StringLength(256)]
         public string Password { get; set; }
+
+        [Required, StringLength(50)]
+        public string acctype { get; set; }
     }
 }

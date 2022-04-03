@@ -65,6 +65,16 @@
                     <div class="form-group">
                         <input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Confirm password" name="cpassword" autocomplete="off" />
                     </div>
+                  <div class="form-group">
+                    <select class="form-control form-control-solid h-auto py-5 px-6" name="acctype" ngModel>
+                      <option value="" selected disabled hidden>Choose Account type</option>
+                      <option value="ScrumMaster">ScrumMaster</option>
+                      <option value="Developpeur">Developpeur</option>
+                      <option value="Testeur">Testeur</option>
+                      <option value="ProductOwner">ProductOwner</option>
+                    </select>
+                  </div>
+
                     <div class="form-group">
                         <label class="checkbox mb-0">
                         <input type="checkbox" name="agree" />
