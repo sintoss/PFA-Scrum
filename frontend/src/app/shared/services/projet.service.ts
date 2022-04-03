@@ -14,7 +14,7 @@ export class ProjetService {
   projet: Projet = new Projet();
 
   constructor(private http: HttpClient) {
-
+    
   }
   getMyProjets() : Observable<Projet[]> {
     return this.http.get<Projet[]>(this.baseUrl + '/projets');

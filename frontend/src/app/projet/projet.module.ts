@@ -40,7 +40,9 @@ import {NgApexchartsModule} from "ng-apexcharts";
     TacheModule,
     NgApexchartsModule,
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtService, multi: true}],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtService, multi: true}
+  ],
   bootstrap: [ProjetComponent],
 })
 export class ProjetModule {}
