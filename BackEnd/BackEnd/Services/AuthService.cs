@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,11 +36,13 @@ namespace BackEnd.Services
             if (await _userManager.FindByNameAsync(model.Username) is not null)
                 return new AuthModel { Message = "Username is already registered!" };
 
-            var user = new ScrumMaster
-            {
-                UserName = model.Username,
-                Email = model.Email
-            };
+            Utilisateur user = (Utilisateur)Activator.CreateInstance(Type.GetType("BackEnd.Models."+model.acctype)); ;
+
+            if (user is null)
+                return new AuthModel { Message = "this type of user does not exist!" };
+
+            user.UserName = model.Username;
+            user.Email = model.Email;
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -53,7 +56,7 @@ namespace BackEnd.Services
                 return new AuthModel { Message = errors };
             }
 
-            await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, model.acctype);
 
             var jwtSecurityToken = await CreateJwtToken(user);
 
@@ -63,7 +66,7 @@ namespace BackEnd.Services
                 Email = user.Email,
                 ExpiresOn = jwtSecurityToken.ValidTo,
                 IsAuthenticated = true,
-                Roles = new List<string> { "User" },
+                Roles = new List<string> { model.acctype },
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Username = user.UserName
             };
@@ -141,5 +144,6 @@ namespace BackEnd.Services
 
             return jwtSecurityToken;
         }
+
     }
 }

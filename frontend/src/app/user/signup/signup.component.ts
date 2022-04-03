@@ -15,23 +15,24 @@ export class SignupComponent implements OnInit {
   @ViewChild('f')
   Form!: NgForm;
 
-  constructor(private route: Router ,private signup:SignupService) { }
+  constructor(private route: Router , private signup: SignupService) { }
 
   ngOnInit(): void {
   }
 
+  // tslint:disable-next-line:typedef
   onSubmit(){
     this.signup.tryToRegister(new RegisterModel(
       this.Form.value.FirstName,
       this.Form.value.LastName,
       this.Form.value.Username,
       this.Form.value.email,
-      this.Form.value.password)).subscribe(f => {
-        const registerInfo = new RegisterReturnInfoModel(f.token,f.expiresOn);
-        localStorage.setItem("autMd",JSON.stringify(registerInfo));
+      this.Form.value.password, this.Form.value.acctype)).subscribe(f => {
+        const registerInfo = new RegisterReturnInfoModel(f.token, f.expiresOn);
+        localStorage.setItem('autMd', JSON.stringify(registerInfo));
         this.route.navigateByUrl('projets');
         },
-      error => console.log('sorry'));
+      error => console.log(error));
   }
 
 }
