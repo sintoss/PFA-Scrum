@@ -4,6 +4,7 @@ import {SignupService} from '../../shared/services/signup.service';
 import {RegisterModel} from '../../shared/models/RegisterModel.model';
 import {RegisterReturnInfoModel} from '../../shared/models/RegisterReturnInfo.model';
 import {Router} from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signup',
@@ -30,7 +31,17 @@ export class SignupComponent implements OnInit {
       this.Form.value.password, this.Form.value.acctype)).subscribe(f => {
         const registerInfo = new RegisterReturnInfoModel(f.token, f.expiresOn);
         localStorage.setItem('autMd', JSON.stringify(registerInfo));
-        this.route.navigateByUrl('projets');
+        Swal.fire({
+          title: 'Le Compte a été crées avec sccues',
+          type: 'success',
+          confirmButtonText: 'Allez vers mes Projets!'
+        }).then((result) => {
+          if (result.value) {
+            this.route.navigateByUrl('projets');
+          // For more information about handling dismissals please visit
+          // https://sweetalert2.github.io/#handling-dismissals
+          }
+        });
         },
       error => console.log(error));
   }

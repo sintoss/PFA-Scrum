@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Projet } from 'src/app/shared/models/projet.model';
 import { JwtService } from 'src/app/shared/services/jwt.service';
 import { ProjetService } from 'src/app/shared/services/projet.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-projet-form',
@@ -12,7 +14,7 @@ import { ProjetService } from 'src/app/shared/services/projet.service';
 })
 export class ProjetFormComponent implements OnInit {
   
-  constructor(public projetService: ProjetService, private jwt: JwtService) {
+  constructor(public projetService: ProjetService, private jwt: JwtService, private route: Router) {
   }
 
   ngOnInit(): void {
@@ -22,8 +24,19 @@ export class ProjetFormComponent implements OnInit {
   {
     this.projetService.setProjet(this.jwt.getUserId()).subscribe(
       res => {
-        console.log(typeof res);
-        console.log(res);
+        Swal.fire({
+          title: 'Le projet: ' + res.nom + " a été crée avec succes",
+          type: 'success',
+          showCancelButton: true,
+          confirmButtonText: 'Allez vers mes Projets!',
+          cancelButtonText: 'Ajouter d\'autre projet'
+        }).then((result) => {
+          if (result.value) {
+            this.route.navigateByUrl('projets');
+          // For more information about handling dismissals please visit
+          // https://sweetalert2.github.io/#handling-dismissals
+          }
+        });
       },
       err => {console.log(err)}
     );

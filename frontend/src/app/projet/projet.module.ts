@@ -41,7 +41,6 @@ import {NgApexchartsModule} from "ng-apexcharts";
     NgApexchartsModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtService, multi: true}
   ],
   bootstrap: [ProjetComponent],
 })
