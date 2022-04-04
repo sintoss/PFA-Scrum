@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 import { Backlog } from '../shared/models/backlog.model';
 import { BacklogService } from '../shared/services/backlog.service';
 
@@ -26,7 +27,12 @@ export class BacklogComponent implements OnInit {
     backlog.dateCreation = new Date();
     backlog.projetId = this.projetId;
     this.http.post<Backlog>(environment.apiUrl + "/backlog/ajouter", backlog).subscribe(
-      res => console.log(res),
+      res => {
+        Swal.fire({
+          title: 'Le backlog a été crée avec succes',
+          type: 'success',
+        });
+      },
       err => console.log(err)
     )
   }
