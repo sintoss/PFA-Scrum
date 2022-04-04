@@ -17,5 +17,17 @@ namespace BackEnd.Models
         public virtual ICollection<Reunion> Reunion { get; set; }
         public virtual ICollection<UtilisateurProjet> UtilisateurProjets { get; set; }
         public virtual ICollection<ScrumMasterProjet> ScrumMasterProjets { get; set; }
+
+        public Projet()
+        {
+
+        }
+        public Projet(int id, string nom, DateTime dateDebut, DateTime datePrevueFin)
+        {
+            this.Id = id;
+            this.Nom = nom;
+            this.DateDebut = dateDebut;
+            this.DatePrevueFin = datePrevueFin;
+        }
     }
 }

@@ -20,5 +20,4 @@ export class ProjetDetailComponent implements OnInit {
       res => Object.assign(this.projet, res)
     )
   }
-
 }

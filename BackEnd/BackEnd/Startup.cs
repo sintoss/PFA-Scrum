@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using BackEnd.Helpers;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace BackEnd
 {
@@ -70,7 +71,10 @@ namespace BackEnd
                     };
                 });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(
+                options => {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ScrumProject4GI", Version = "v1" });

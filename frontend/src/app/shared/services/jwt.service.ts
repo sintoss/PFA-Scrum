@@ -24,6 +24,10 @@ export class JwtService implements HttpInterceptor{
   {
     return this.jwt.id;
   }
+  getRoles(): Object
+  {
+    return this.jwt.roles;
+  }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(this.jwt.isAuthenticated && req.url.startsWith(environment.apiUrl)) {
       req = req.clone({

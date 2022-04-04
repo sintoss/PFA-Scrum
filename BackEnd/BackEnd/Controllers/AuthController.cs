@@ -28,7 +28,16 @@ namespace BackEnd.Controllers
             if (!result.IsAuthenticated)
                 return Ok(result.Message);
 
-            return Ok(new { token = result.Token , expiresOn = result.ExpiresOn });
+            return Ok(new { 
+                id = result.UserId,
+                result.Username,
+                email = result.Email,
+                isAuthenticated = result.IsAuthenticated,
+                roles = result.Roles,
+                token = result.Token,
+                message = result.Message,
+                expiresOn = result.ExpiresOn
+            });
         }
 
         [HttpPost("token")]

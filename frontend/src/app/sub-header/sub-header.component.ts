@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { JwtService } from '../shared/services/jwt.service';
 
 @Component({
   selector: 'app-sub-header',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubHeaderComponent implements OnInit {
 
-  constructor() { }
+  roles: Object;
+  constructor(public jwtServie: JwtService) {
+    this.roles = {};
+    Object.assign(this.roles, this.jwtServie.getRoles());
+  }
 
   ngOnInit(): void {
   }
 
+  isScrumMaster(): boolean
+  {
+    return Object.values(this.roles).indexOf('ScrumMaster') > -1 ? true : false;
+  }
 }
