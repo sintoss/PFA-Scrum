@@ -1,11 +1,11 @@
-import { Projet } from "./projet.model";
-import { Story } from "./story.model";
+import {Projet} from './projet.model';
+import {Story} from './story.model';
 
 export class Backlog {
-    id!: number;
-    dateCreation!: Date;
-    dateDernierModification!: Date;
-    projetId!: number;
-    projet!: Projet;
-    stories!: Story[];
+  id!: number;
+  dateCreation!: Date;
+  dateDernierModification!: Date;
+  projetId!: number;
+  projet!: Projet;
+  stories!: Story[];
 }

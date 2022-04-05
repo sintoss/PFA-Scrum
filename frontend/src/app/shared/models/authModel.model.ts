@@ -1,6 +1,6 @@
 // tslint:disable-next-line:class-name
 export class authModelModel {
-  id!:string;
+  id!: string;
   email!: string;
   expiresOn!: string;
   isAuthenticated = false;
