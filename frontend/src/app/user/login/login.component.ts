@@ -44,11 +44,14 @@ export class LoginComponent implements OnInit {
          authMd.token = data.token;
          authMd.username = data.username;
          authMd.roles = data.roles;
-         localStorage.setItem("autMd",JSON.stringify(authMd));
+         localStorage.setItem('autMd', JSON.stringify(authMd));
          this.route.navigateByUrl('projets');
        }
      },
-       error => this.FormError = true  );
+       error => {
+         this.FormError = true;
+         console.log(error);
+       } );
   }
 
 

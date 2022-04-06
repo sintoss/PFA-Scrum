@@ -10,6 +10,7 @@ import {Backlog} from '../models/backlog.model';
 export class BacklogService {
   readonly baseUrl = environment.apiUrl;
   backlog: Backlog = new Backlog();
+<<<<<<< Updated upstream
 
   constructor(private http: HttpClient) {
   }
@@ -18,5 +19,13 @@ export class BacklogService {
     this.backlog.projetId = projetId;
     this.backlog.dateCreation = new Date();
     return this.http.post<Backlog>(this.baseUrl + '/backlog/ajouter', this.backlog);
+=======
+  constructor(private http: HttpClient) { }
+  setBacklog(projetId: number): Observable<Backlog>
+  {
+      this.backlog.projetId = projetId;
+      this.backlog.dateCreation = new Date();
+      return this.http.post<Backlog>(this.baseUrl + '/backlog/ajouter', this.backlog);
+>>>>>>> Stashed changes
   }
 }

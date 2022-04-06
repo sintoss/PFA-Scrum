@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEnd.Helpers;
 using BackEnd.Models;
+using BackEnd.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,8 +27,27 @@ namespace BackEnd.Controllers
             return await _context.Stories.ToListAsync();
         }
 
+        [HttpGet("{bckid}/{pg}")]
+        public async Task<IActionResult> GetStoriesByBacklog(int bckid, int pg = 1)
+        {
+            List<Story> stories = await _context.Stories.Where(s => s.BacklogId == bckid).ToListAsync();
+
+            const int pageSize = 3;
+            if (pg < 1) pg = 1;
+
+            int recscount = stories.Count();
+
+            var pager = new Pager(recscount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = stories.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            return Ok(new { data , pager } ) ;
+        }
+
         // GET: api/Story/5
-        [HttpGet("{id}")]
+       /* [HttpGet("{id}")]
         public async Task<ActionResult<Story>> GetStory(int id)
         {
             var story = await _context.Stories.FindAsync(id);
@@ -37,7 +58,7 @@ namespace BackEnd.Controllers
             }
 
             return story;
-        }
+        }*/
 
         // PUT: api/Story/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -73,12 +94,12 @@ namespace BackEnd.Controllers
         // POST: api/Story
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Story>> PostInspection(Story story)
+        public ActionResult<Story> PostInspection(Story story)
         {
             _context.Stories.Add(story);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStory", new { id = story.Id }, story);
+            return  new Story();
         }
 
         // DELETE: api/Story/5

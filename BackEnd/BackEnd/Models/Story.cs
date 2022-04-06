@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BackEnd.ViewModel;
+using System;
 using System.Collections.Generic;
 
 namespace BackEnd.Models
@@ -16,5 +17,7 @@ namespace BackEnd.Models
         public virtual ICollection<SprintStory> SprintStories { get; set; }
         public virtual ICollection<DeveloppeurStory> DeloppeurStories { get; set; }
         public virtual ICollection<TesteurStory> TesteurStories { get; set; }
+
+
     }
 }
