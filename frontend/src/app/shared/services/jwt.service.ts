@@ -10,10 +10,10 @@ import { JwtModel } from '../models/jwtModel.model';
 })
 export class JwtService implements HttpInterceptor{
 
-  jwt: JwtModel;
-  
+  jwt!: JwtModel;
+
   constructor(private router: Router) {
-    let token = localStorage.getItem("autMd") || "";
+    const token = localStorage.getItem('autMd') || '';
     this.jwt = JSON.parse(token);
   }
   isAuthenticated(): boolean
@@ -24,14 +24,17 @@ export class JwtService implements HttpInterceptor{
   {
     return this.jwt.id;
   }
-  getRoles(): Object
+  getRoles(): never[]
   {
     return this.jwt.roles;
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(this.jwt.isAuthenticated && req.url.startsWith(environment.apiUrl)) {
+    if (req.url.includes('/auth/')) {
+      return next.handle(req);
+    }
+    if (this.jwt.isAuthenticated && req.url.startsWith(environment.apiUrl)) {
       req = req.clone({
-        headers: req.headers.set("Authorisation", `${this.jwt.token}`)
+        headers: req.headers.set('Authorisation', `${this.jwt.token}`)
       });
     }
     return next.handle(req);

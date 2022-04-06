@@ -9,8 +9,10 @@ import { ProjetService } from 'src/app/shared/services/projet.service';
   styleUrls: ['./projet-detail.component.css']
 })
 export class ProjetDetailComponent implements OnInit {
+
   projet: Projet;
-  constructor(private projetService: ProjetService, private router: ActivatedRoute) {
+
+  constructor(private router: ActivatedRoute,private projetService: ProjetService) {
     this.projet = new Projet();
    }
 

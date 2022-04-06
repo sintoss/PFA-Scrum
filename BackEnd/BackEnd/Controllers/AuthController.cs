@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using BackEnd.Services;
 using BackEnd.ViewModel;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +29,8 @@ namespace BackEnd.Controllers
             if (!result.IsAuthenticated)
                 return Ok(result.Message);
 
-            return Ok(new { 
+            return Ok(new
+            {
                 id = result.UserId,
                 result.Username,
                 email = result.Email,
@@ -67,6 +69,14 @@ namespace BackEnd.Controllers
                 return BadRequest(result);
 
             return Ok(model);
+        }
+
+        [HttpPost("decodeJw")]
+        public IActionResult decodeJw(string token)
+        {
+            var handler =  new JwtSecurityTokenHandler();
+            var decodedValue = handler.ReadJwtToken(token);
+            return  Ok(decodedValue);
         }
     }
 }

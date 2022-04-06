@@ -10,7 +10,7 @@ import {ProjetCardComponent} from "./projet-card/projet-card.component";
 import {ProjetDetailComponent} from "./projet-detail/projet-detail.component";
 import {ProjetFormComponent} from "./projet-form/projet-form.component";
 import {FormsModule} from "@angular/forms";
-import {BacklogComponent} from "../backlog/backlog.component";
+import {BacklogComponent} from "../story/story-list/backlog/backlog.component";
 import {SprintComponent} from "../sprint/sprint.component";
 import {StoryModule} from "../story/story.module";
 import {TacheModule} from "../tache/tache.module";
@@ -28,7 +28,6 @@ import {NgApexchartsModule} from "ng-apexcharts";
     ProjetCardComponent,
     ProjetDetailComponent,
     ProjetFormComponent,
-    BacklogComponent,
     SprintComponent,
     BdchartComponent,
   ],

@@ -68,8 +68,7 @@
                       </g>
                     </svg>
                     <!--end::Svg Icon-->
-                  </span>{{projet.scrumMaster.email}}</a
-                >
+                  </span></a>
                 <a
                   href="#"
                   class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2"
@@ -730,10 +729,7 @@
   <!--begin::Row-->
   <div class="row">
     <div class="col-lg-6">
-      <app-backlog
-        [backlog]="projet.backlog"
-        [projetId]="projet.id"
-      ></app-backlog>
+      <app-backlog [backlog]="projet.backlog" [projetId]="projet.id"></app-backlog>
     </div>
     <div class="col-lg-6">
       <app-tache-list></app-tache-list>
