@@ -20,4 +20,5 @@ export class BacklogService {
       this.backlog.dateCreation = new Date();
       return this.http.post<Backlog>(this.baseUrl + '/backlog/ajouter', this.backlog);
   }
+
 }

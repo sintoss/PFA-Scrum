@@ -4,6 +4,8 @@ import { UserServiceService } from 'src/app/shared/services/user-service.service
 import {NgForm} from '@angular/forms';
 import { Login } from 'src/app/shared/models/login.model';
 import {authModelModel} from '../../shared/models/authModel.model';
+import {LocalStoragemangerModel} from '../../shared/services/LocalStoragemanger.model';
+import Swal from 'sweetalert2';
 
 
 
@@ -20,6 +22,8 @@ export class LoginComponent implements OnInit {
 
   FormError = false;
 
+  dispalyBtn = false;
+
  constructor(private route: Router , private user: UserServiceService) { }
 
  ngOnInit(): void {
@@ -28,24 +32,26 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line:typedef
   onSubmit()
  {
-
+   this.dispalyBtn = true;
      this.user.
      tryToLogin(new Login
      (
        this.SignupForm.value.email
        , this.SignupForm.value.password)).subscribe(data => {
        if(data.isAuthenticated){
-         const authMd = new authModelModel();
-         authMd.id = data.userId;
-         authMd.email = data.email;
-         authMd.expiresOn = data.expiresOn;
-         authMd.isAuthenticated = data.isAuthenticated;
-         authMd.message = data.message;
-         authMd.token = data.token;
-         authMd.username = data.username;
-         authMd.roles = data.roles;
-         localStorage.setItem('autMd', JSON.stringify(authMd));
-         this.route.navigateByUrl('projets');
+         let manger = new LocalStoragemangerModel();
+         manger.putAccounntInLocal(data);
+         Swal.fire({
+           title: 'Login avec sccues',
+           type: 'success',
+           confirmButtonText: 'Allez vers mes Projets!'
+         }).then((result) => {
+           if (result.value) {
+             this.route.navigateByUrl('projets');
+             // For more information about handling dismissals please visit
+             // https://sweetalert2.github.io/#handling-dismissals
+           }
+         });
        }
      },
        error => {

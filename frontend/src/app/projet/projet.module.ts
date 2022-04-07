@@ -10,14 +10,11 @@ import {ProjetCardComponent} from "./projet-card/projet-card.component";
 import {ProjetDetailComponent} from "./projet-detail/projet-detail.component";
 import {ProjetFormComponent} from "./projet-form/projet-form.component";
 import {FormsModule} from "@angular/forms";
-import {BacklogComponent} from "../story/story-list/backlog/backlog.component";
 import {SprintComponent} from "../sprint/sprint.component";
-import {StoryModule} from "../story/story.module";
 import {TacheModule} from "../tache/tache.module";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {JwtService} from "../shared/services/jwt.service";
 import {BdchartComponent} from "./bdchart/bdchart.component";
 import {NgApexchartsModule} from "ng-apexcharts";
+import {BacklogModule} from '../backlog/backlog.module';
 
 @NgModule({
   declarations: [
@@ -35,9 +32,9 @@ import {NgApexchartsModule} from "ng-apexcharts";
     CommonModule,
     FormsModule,
     ProjetRoutingModule,
-    StoryModule,
     TacheModule,
     NgApexchartsModule,
+    BacklogModule,
   ],
   providers: [
   ],

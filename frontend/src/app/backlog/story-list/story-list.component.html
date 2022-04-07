@@ -1,4 +1,3 @@
-
 <!--begin::Advance Table Widget 3-->
 <div class="card card-custom card-stretch gutter-b">
   <!--begin::Header-->
@@ -14,10 +13,10 @@
       </div>
     </div>
 
-    <button *ngIf="backlog===null" class="btn btn-success font-weight-bolder font-size-sm mx-2" (click)="createBacklog()">
+    <button *ngIf="backlog===undefined" class="btn btn-success font-weight-bolder font-size-sm mx-2" (click)="createBacklog()">
       Creer Backlog
     </button>
-    <a href="#" *ngIf="backlog!==null"   class="btn btn-success font-weight-bolder font-size-sm mx-2" data-toggle="modal" data-target="#exampleModal">
+    <a href="#" *ngIf="backlog!==undefined"   class="btn btn-success font-weight-bolder font-size-sm mx-2" data-toggle="modal" data-target="#exampleModal">
       Ajouter User Story
     </a>
 

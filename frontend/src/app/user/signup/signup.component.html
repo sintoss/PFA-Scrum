@@ -47,12 +47,6 @@
                 </div>
                 <!--begin::Form-->
                 <form (ngSubmit)="onSubmit()" #f="ngForm" class="form" novalidate="novalidate" id="kt_login_signup_form">
-                  <div class="form-group">
-                    <input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="FirstName" name="FirstName" autocomplete="off" ngModel required="required" />
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="LastName" name="LastName" autocomplete="off" ngModel required="required"/>
-                  </div>
                     <div class="form-group">
                         <input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Username" name="Username" autocomplete="off" ngModel required="required"/>
                     </div>
@@ -82,7 +76,7 @@
                         <a href="#">terms and conditions</a></label>
                     </div>
                     <div class="form-group d-flex flex-wrap flex-center">
-                        <button type="submit" id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4" [disabled]="!f.valid">Submit</button>
+                        <button type="submit" id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4" [disabled]="!f.valid || btnDisplay">Submit</button>
                         <button type="button" id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">Cancel</button>
                     </div>
                 </form>

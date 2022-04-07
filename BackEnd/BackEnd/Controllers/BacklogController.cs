@@ -31,14 +31,7 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Backlog>> GetBacklog(int id)
         {
-            var backlog = await _context.Backlogs.FindAsync(id);
-
-            if (backlog == null)
-            {
-                return NotFound();
-            }
-
-            return backlog;
+            return await _context.Backlogs.Where(b=>b.ProjetId==id).FirstOrDefaultAsync();
         }
         // GET: api/Backlog/ajouter
         [HttpPost("ajouter")]

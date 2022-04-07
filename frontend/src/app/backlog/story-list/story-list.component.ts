@@ -15,52 +15,70 @@ import {Pager} from '../../shared/models/pager.model';
   styleUrls: ['./story-list.component.css']
 })
 export class StoryListComponent implements OnInit {
-  @Input() projetId: number;
-  @Input() backlog: Backlog;
+  backlog!: Backlog;
   value:any;
   story:Story = new Story();
   storyList$!: any[];
   pager:Pager = new Pager();
   pg:number = 1;
   desc:string = "";
+  idproject!:number;
 
 
   constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute) {
-    this.projetId = 0;
-    this.backlog = new Backlog();
-  }
-  ngOnInit(): void {
+    this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
+    this.checkIfBacklogExist();
     this.value = new Story();
-    this.FillList();
   }
 
+
+  ngOnInit(): void {}
+
   FillList() {
-    let id = (Number)(this.router.snapshot.paramMap.get("id"));
-    this.service.getStoryListByBacklogId(id,this.pg,this.pager.pageSize,this.desc).subscribe(res=>{
-      this.storyList$ = (<any>res).data;
-      this.pager = (<any>res).pager;
-    },error => console.log(error));
+    if(this.backlog !== undefined) {
+      this.service.getStoryListByBacklogId(this.backlog.id,this.pg,this.pager.pageSize,this.desc).subscribe(res=>{
+        this.storyList$ = (<any>res).data;
+        this.pager = (<any>res).pager;
+      },error => console.log(error));
+    }
+  }
+
+  checkIfBacklogExist(){
+    //check if exist
+    this.http.get<Backlog>(environment.apiUrl + `/Backlog/${this.idproject}`)
+      .subscribe(res=>{
+        if(res != null){
+             this.backlog = res;
+             this.FillList();
+        }
+      },error => console.log(error));
   }
 
   createBacklog()
   {
-    let backlog = new Backlog();
-    backlog.dateCreation = new Date();
-    backlog.projetId = this.projetId;
-    this.http.post<Backlog>(environment.apiUrl + "/backlog/ajouter", backlog).subscribe(
-      res => {
-        Swal.fire({
-          title: 'Le backlog a été crée avec succes',
-          type: 'success',
-        });
-      },
-      err => console.log(err)
-    )
+    //try to add if it's not exist
+    if(this.backlog === undefined){
+      let backlog = new Backlog();
+      backlog.dateCreation = new Date();
+      backlog.projetId = this.idproject;
+      this.http.post<Backlog>(environment.apiUrl + "/backlog/ajouter", backlog).subscribe(
+        res => {
+          if(res != null){
+            this.backlog = res;
+            this.FillList();
+          }
+          Swal.fire({
+            title: 'Le backlog a été crée avec succes',
+            type: 'success',
+          });
+        },
+        err => console.log(err)
+      );
+    }
   }
 
   onSubmit(){
-    let id = (Number) (this.router.snapshot.paramMap.get("id"))
-    this.story.backlogId = id;
+    this.story.backlogId = this.backlog.id;
     this.service.addStory(this.story)
       .subscribe(res=>{
         Swal.fire({
