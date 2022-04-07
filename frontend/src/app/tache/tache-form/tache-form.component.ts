@@ -10,7 +10,7 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./tache-form.component.css']
 })
 export class TacheFormComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm!: FormGroup;
 
   readonly story: any = [
     {

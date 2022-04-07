@@ -11,11 +11,12 @@ import { JwtModel } from '../models/jwtModel.model';
 export class JwtService implements HttpInterceptor{
 
   jwt!: JwtModel;
+  token : any;
 
   constructor(private router: Router) {
-    const token = localStorage.getItem('autMd') || '';
-    this.jwt = JSON.parse(token);
+    this.InjectToken();
   }
+
   isAuthenticated(): boolean
   {
     return this.jwt.isAuthenticated;
@@ -24,19 +25,22 @@ export class JwtService implements HttpInterceptor{
   {
     return this.jwt.id;
   }
-  getRoles(): never[]
+  getRoles(): any
   {
     return this.jwt.roles;
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.includes('/auth/')) {
-      return next.handle(req);
-    }
-    if (this.jwt.isAuthenticated && req.url.startsWith(environment.apiUrl)) {
-      req = req.clone({
-        headers: req.headers.set('Authorisation', `${this.jwt.token}`)
-      });
+    this.InjectToken();
+    if(this.jwt){
+            req = req.clone({
+            headers: req.headers.set('Authorisation', `${this.jwt.token}`)});
     }
     return next.handle(req);
   }
+
+  InjectToken(){
+    this.token = localStorage.getItem('autMd');
+    if(this.token) this.jwt = JSON.parse(this.token)
+  }
+
 }
