@@ -22,6 +22,7 @@ export class StoryListComponent implements OnInit {
   storyList$!: any[];
   pager:Pager = new Pager();
   pg:number = 1;
+  desc:string = "";
 
 
   constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute) {
@@ -35,7 +36,7 @@ export class StoryListComponent implements OnInit {
 
   FillList() {
     let id = (Number)(this.router.snapshot.paramMap.get("id"));
-    this.service.getStoryListByBacklogId(id,this.pg).subscribe(res=>{
+    this.service.getStoryListByBacklogId(id,this.pg,this.pager.pageSize,this.desc).subscribe(res=>{
       this.storyList$ = (<any>res).data;
       this.pager = (<any>res).pager;
     },error => console.log(error));
@@ -66,11 +67,11 @@ export class StoryListComponent implements OnInit {
           title: 'Le user story a été crée avec succes',
           type: 'success',
         });
+        let model = document.getElementById('exampleModal');
+        if(model != null)model.click();
+        this.story = new Story();
+        this.FillList();
       },error => console.log(error));
-    var model = document.getElementById('exampleModal');
-    if(model != null)model.click();
-    this.story = new Story();
-    this.FillList();
   }
 
  EditModel(s:any){
@@ -85,8 +86,9 @@ export class StoryListComponent implements OnInit {
          type: 'success',
        });
      },error => console.log(error));
-   var model = document.getElementById('exampleModal1');
+   let model = document.getElementById('exampleModal1');
    if(model != null)model.click();
+   this.FillList();
  }
 
  givepg(pg:number){
@@ -112,11 +114,22 @@ export class StoryListComponent implements OnInit {
            'Your file has been deleted.',
            'success'
          );
+         this.FillList();
        },error => console.log(error));
      }
    })
 
 
  }//end of function
+
+  onOptionsSelected(num:any){
+     this.pager.pageSize = num;
+     this.FillList();
+  }
+
+  onSearchChange(searchValue: any): void {
+     this.desc = searchValue.target.value;
+     this.FillList();
+  }
 
 }

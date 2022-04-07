@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEnd.Helpers;
@@ -27,12 +28,15 @@ namespace BackEnd.Controllers
             return await _context.Stories.ToListAsync();
         }
 
-        [HttpGet("{bckid}/{pg}")]
-        public async Task<IActionResult> GetStoriesByBacklog(int bckid, int pg = 1)
+        [HttpGet("{bckid}/{pg}/{pgs}/{desc?}")]
+        public async Task<IActionResult> GetStoriesByBacklog(int bckid  , int pg = 1 , int pgs = 5, string desc = " " )
         {
-            List<Story> stories = await _context.Stories.Where(s => s.BacklogId == bckid).ToListAsync();
+            List<Story> stories = await _context.Stories.Where(s => s.BacklogId == bckid
+              && 
+              s.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToListAsync();
 
-            const int pageSize = 3;
+            int pageSize = (pgs <= 7 ) ? pgs : 5;
+
             if (pg < 1) pg = 1;
 
             int recscount = stories.Count();

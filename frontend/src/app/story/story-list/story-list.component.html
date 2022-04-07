@@ -8,7 +8,9 @@
     </h3>
     <div class="card-toolbar">
       <div class="form-outline" style="width: 25vw;">
-        <input type="search" class="form-control" id="datatable-search-input" placeholder="Chercher une story">
+        <input type="search" class="form-control" id="datatable-search-input"
+               (input)="onSearchChange($event)"
+               placeholder="Chercher une story">
       </div>
     </div>
 
@@ -151,14 +153,15 @@
 
         </div>
         <div class="d-flex align-items-center py-3">
-          <select class="form-control form-control-sm text-success font-weight-bold mr-4 border-0 bg-light-success" style="width: 75px;">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+          <select
+            #mySelect
+            (change)='onOptionsSelected(mySelect.value)'
+            class="form-control form-control-sm text-success font-weight-bold mr-4 border-0 bg-light-success" style="width: 75px;">
+            <option value="3">3</option>
+            <option value="5" selected>5</option>
+            <option value="7">7</option>
           </select>
-          <span class="text-muted">Displaying 5 of 230 records</span>
+          <span class="text-muted">Displaying {{pager.currentPage}} of {{pager.totalPages}} pages</span>
         </div>
       </div>
     </div>
