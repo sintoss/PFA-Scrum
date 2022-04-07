@@ -8,6 +8,7 @@ import {environment} from '../../../environments/environment';
 import Swal from 'sweetalert2';
 import {HttpClient} from '@angular/common/http';
 import {Pager} from '../../shared/models/pager.model';
+import {TachmangerService} from '../../shared/services/tachmanger.service';
 
 @Component({
   selector: 'app-story-list',
@@ -25,7 +26,8 @@ export class StoryListComponent implements OnInit {
   idproject!:number;
 
 
-  constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute) {
+  constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute
+  ,private tachmanger : TachmangerService) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
     this.checkIfBacklogExist();
     this.value = new Story();
@@ -148,6 +150,11 @@ export class StoryListComponent implements OnInit {
   onSearchChange(searchValue: any): void {
      this.desc = searchValue.target.value;
      this.FillList();
+  }
+
+  AssignUserStory(UserStory:any){
+      this.tachmanger.UserStory=UserStory;
+      console.log(UserStory);
   }
 
 }

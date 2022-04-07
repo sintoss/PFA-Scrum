@@ -19,7 +19,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

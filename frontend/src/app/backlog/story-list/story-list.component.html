@@ -43,7 +43,7 @@
 
         <!--  Begin items -->
 
-        <tr *ngFor="let item of storyList$">
+        <tr *ngFor="let item of storyList$" (click)="AssignUserStory(item)">
           <td class="pl-0 py-8">
             <div class="d-flex align-items-center">
               <div>
@@ -213,3 +213,4 @@
     </div>
   </div>
 </div>
+

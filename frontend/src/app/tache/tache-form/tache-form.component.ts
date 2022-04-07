@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TacheService} from '../../shared/services/tache.service';
 import {TacheModel} from '../../shared/models/tache.model';
 import {FormControl, FormGroup} from '@angular/forms';
+import {TachmangerService} from '../../shared/services/tachmanger.service';
 
 
 @Component({
@@ -41,18 +42,20 @@ export class TacheFormComponent implements OnInit {
     }
   ];
 
-  constructor(private addTache: TacheService) {
+  constructor(private addTache: TacheService , private tachmanger : TachmangerService ) {
   }
 
   onSubmit() {
-    this.addTache.postTaches(new TacheModel(
+    /*this.addTache.postTaches(new TacheModel(
       this.registerForm.value.Libelle,
       new Date(),
       this.registerForm.value.storyId)).subscribe(
       response => console.log(response),
       error => console.log(error)
     );
-    this.registerForm.reset();
+    this.registerForm.reset();*/
+    console.log(this.tachmanger.UserStory)
+
   }
 
   ngOnInit(): void {
