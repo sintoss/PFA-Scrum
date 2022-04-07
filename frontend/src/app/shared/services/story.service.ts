@@ -15,8 +15,8 @@ export class StoryService {
      return this.http.get<any[]>(this.baseUrl + '/Story');
    }
 
-   getStoryListByBacklogId(bckid: number | string , pg: number ): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + `/Story/${bckid}/${pg}`);
+   getStoryListByBacklogId(bckid: number | string, pg: number| string , pgs: number | string = 5, desc : string = " "): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + `/Story/${bckid}/${pg}/${pgs}/${desc}`);
    }
 
   // tslint:disable-next-line:typedef
