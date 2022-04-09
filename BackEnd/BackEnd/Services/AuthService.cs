@@ -7,9 +7,12 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,30 +22,70 @@ namespace BackEnd.Services
     {
         private readonly UserManager<Utilisateur> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IENCRYPTION crypt;
         private readonly JWT _jwt;
 
-        public AuthService(UserManager<Utilisateur> userManager, RoleManager<IdentityRole> roleManager, IOptions<JWT> jwt)
+        public AuthService(UserManager<Utilisateur> userManager, RoleManager<IdentityRole> roleManager, IOptions<JWT> jwt , IENCRYPTION crypt)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            this.crypt = crypt;
             _jwt = jwt.Value;
         }
 
         public async Task<AuthModel> RegisterAsync(RegisterModel model)
         {
-            if (await _userManager.FindByEmailAsync(model.Email) is not null)
-                return new AuthModel { Message = "Email is already registered!" };
+             if (await _userManager.FindByEmailAsync(model.Email) is not null)
+                 return new AuthModel { Message = "Email is already registered!" };
 
-            if (await _userManager.FindByNameAsync(model.Username) is not null)
-                return new AuthModel { Message = "Username is already registered!" };
+             if (await _userManager.FindByNameAsync(model.Username) is not null)
+                 return new AuthModel { Message = "Username is already registered!" };
+
+            if (model.file is null)
+                return new AuthModel { Message = "Avtar picture has some problem!" };
 
             Utilisateur user = (Utilisateur)Activator.CreateInstance(Type.GetType("BackEnd.Models."+model.acctype)); ;
 
-            if (user is null)
-                return new AuthModel { Message = "this type of user does not exist!" };
+             if (user is null)
+                 return new AuthModel { Message = "this type of user does not exist!" };
 
-            user.UserName = model.Username;
-            user.Email = model.Email;
+             user.UserName = model.Username;
+             user.Email = model.Email;
+
+            // logic of upload images
+
+            var file = model.file;
+
+            if (file.Length > 0)
+            {
+                var foldername = Path.Combine("Ressources", "Image");
+                var pathtosave = Path.Combine(Directory.GetCurrentDirectory(), foldername);
+
+                string[] exts = { ".jpg", ".png", ".jpeg" };
+                if (exts.Contains(Path.GetExtension(file.FileName)))
+                {
+
+                    DateTime dt = DateTime.Now;
+                    string NewName = dt.Year + dt.Month
+                        + dt.Day + dt.Hour + dt.Minute
+                        + dt.Second + dt.Millisecond + Path.GetFileNameWithoutExtension(file.FileName);
+
+                    NewName = crypt.GetHash(NewName);
+
+                    NewName += Path.GetExtension(file.FileName);
+
+                    var FullPath = Path.Combine(pathtosave, NewName);
+                    var dbpath = Path.Combine(foldername, NewName);
+
+                    using (var stream = new FileStream(FullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    user.pathImage = dbpath;
+
+                }
+            }
 
             var result = await _userManager.CreateAsync(user, model.Password);
 

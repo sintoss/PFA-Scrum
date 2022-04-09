@@ -13,8 +13,12 @@ export class SignupService {
   constructor(private http: HttpClient) {}
 
   tryToRegister(rgmodel: RegisterModel): Observable<any>{
-    console.log(rgmodel);
-    console.log(this.baseUrl);
-    return this.http.post(this.baseUrl + '/Auth/register', rgmodel);
+    const formData: FormData = new FormData();
+    formData.append('Username', rgmodel.username);
+    formData.append('Email', rgmodel.email);
+    formData.append('Password', rgmodel.password);
+    formData.append('acctype', rgmodel.acctype);
+    formData.append('file', rgmodel.file, rgmodel.file.name);
+    return this.http.post(this.baseUrl + '/Auth/register', formData);
   }
 }

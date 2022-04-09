@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace BackEnd.ViewModel
 {
@@ -15,5 +16,7 @@ namespace BackEnd.ViewModel
 
         [Required, StringLength(50)]
         public string acctype { get; set; }
+        public IFormFile file { get; set; }
+
     }
 }

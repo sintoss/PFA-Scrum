@@ -19,17 +19,21 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
+        public async Task<IActionResult> RegisterAsync([FromForm] RegisterModel model)
         {
             if (!ModelState.IsValid)
                 return Ok(ModelState);
+
+            model.file = Request.Form.Files["file"];
 
             var result = await _authService.RegisterAsync(model);
 
             if (!result.IsAuthenticated)
                 return Ok(result.Message);
 
+
             return Ok(result);
+
         }
 
         [HttpPost("token")]

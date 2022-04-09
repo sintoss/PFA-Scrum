@@ -13,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using BackEnd.Helpers;
 using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace BackEnd
 {
@@ -45,6 +47,7 @@ namespace BackEnd
             services.AddIdentity<Utilisateur, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IENCRYPTION, Encryptor>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
@@ -94,6 +97,12 @@ namespace BackEnd
             app.UseHttpsRedirection();
 
             app.UseCors("EnableCORS");
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Ressources")),
+                RequestPath = new Microsoft.AspNetCore.Http.PathString("/Ressources")
+            }); 
 
             app.UseRouting();
 

@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
 
   dispalyBtn = false;
 
- constructor(private route: Router , private user: UserServiceService) { }
+ constructor(private route: Router , private user: UserServiceService) {
+     if(localStorage.getItem('autMd')) this.route.navigateByUrl('projets');
+ }
 
  ngOnInit(): void {
  }
