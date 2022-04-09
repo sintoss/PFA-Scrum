@@ -47,22 +47,32 @@ namespace BackEnd.Controllers
 
             var data = stories.Skip(recSkip).Take(pager.PageSize).ToList();
 
-            return Ok(new { data , pager } ) ;
+            var newData = new List<StoryMv>();
+
+            data.ForEach(d =>
+            {
+                newData.Add(new StoryMv
+                {
+                     id = d.Id,
+                     description = d.Description,
+                     dateCreation = d.DateCreation,
+                     dateDerniereModification = (System.DateTime)d.DateDerniereModification,
+                     Commentaire = d.Commentaire,
+                     BacklogId = d.BacklogId,
+                     pathAvtar = GetImage(d.Id)
+                });
+            });
+
+            return Ok(new { newData, pager } ) ;
         }
 
-        // GET: api/Story/5
-       /* [HttpGet("{id}")]
-        public async Task<ActionResult<Story>> GetStory(int id)
+        private string GetImage(int UserStoryId)
         {
-            var story = await _context.Stories.FindAsync(id);
-
-            if (story == null)
-            {
-                return NotFound();
-            }
-
-            return story;
-        }*/
+            string path = _context.DeveloppeurStories.Where(ds=>ds.StoryId == UserStoryId).Join(_context.Stories, d => d.StoryId, s => s.Id, (devstory, story) => new { devstory, story })
+                .Join(_context.Developpeurs, ds => ds.devstory.DeveloppeurId, d => d.Id, (ds,d) => new { d.pathImage }).Select(u => u.pathImage)
+                .FirstOrDefault();
+            return (string.IsNullOrEmpty(path)) ? @"Ressources\Image\anonymous.png" : path;
+        }
 
         // PUT: api/Story/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

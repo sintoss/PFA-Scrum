@@ -54,7 +54,7 @@ export class TacheFormComponent implements OnInit {
       error => console.log(error)
     );
     this.registerForm.reset();*/
-    console.log(this.tachmanger.UserStory)
+    console.log(this.tachmanger.getValue())
 
   }
 

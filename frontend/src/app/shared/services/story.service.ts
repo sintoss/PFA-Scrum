@@ -33,4 +33,8 @@ export class StoryService {
     return this.http.delete(this.baseUrl + `/Story/${id}`);
   }
 
+  getImagePath(UserStoryId: number | string){
+    return this.http.get(this.baseUrl + `/Story/UserStoryId?UserStoryId=${UserStoryId}`, { responseType: 'text' });
+  }
+
 }

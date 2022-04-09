@@ -41,12 +41,21 @@
         <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
             <!--begin::Signup-->
             <div class="login-form login-signup-on">
-                <div class="text-center mb-10 mb-lg-20">
-                    <h3 class="font-size-h1">Sign Up</h3>
-                    <p class="text-muted font-weight-bold">Enter your details to create your account</p>
-                </div>
+
                 <!--begin::Form-->
                 <form (ngSubmit)="onSubmit()" #f="ngForm" class="form" novalidate="novalidate" id="kt_login_signup_form">
+                  <h3 class="text-center font-size-h1">Sign Up</h3>
+
+                    <div class="avatar-upload">
+                      <div class="avatar-edit">
+                        <input type='file' id="imageUpload" #file accept=".png, .jpg, .jpeg" (change)="handerFileInput(file.files)" required="required"/>
+                        <label for="imageUpload"></label>
+                      </div>
+                      <div class="avatar-preview">
+                        <div id="imagePreview" [style.backgroundImage]="'url('+ ImageString +')'"></div>
+                      </div>
+                    </div>
+
                     <div class="form-group">
                         <input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Username" name="Username" autocomplete="off" ngModel required="required"/>
                     </div>
@@ -60,7 +69,7 @@
                         <input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Confirm password" name="cpassword" autocomplete="off" />
                     </div>
                   <div class="form-group">
-                    <select class="form-control form-control-solid h-auto py-5 px-6" name="acctype" ngModel>
+                    <select class="form-control form-control-solid h-auto py-5 px-6" name="acctype" ngModel required="required">
                       <option value="" selected disabled hidden>Choose Account type</option>
                       <option value="ScrumMaster">ScrumMaster</option>
                       <option value="Developpeur">Developpeur</option>

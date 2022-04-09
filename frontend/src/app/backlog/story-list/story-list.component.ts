@@ -24,6 +24,7 @@ export class StoryListComponent implements OnInit {
   pg:number = 1;
   desc:string = "";
   idproject!:number;
+  ImagePath:any;
 
 
   constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute
@@ -39,7 +40,7 @@ export class StoryListComponent implements OnInit {
   FillList() {
     if(this.backlog !== undefined) {
       this.service.getStoryListByBacklogId(this.backlog.id,this.pg,this.pager.pageSize,this.desc).subscribe(res=>{
-        this.storyList$ = (<any>res).data;
+        this.storyList$ = (<any>res).newData;
         this.pager = (<any>res).pager;
       },error => console.log(error));
     }
@@ -153,8 +154,11 @@ export class StoryListComponent implements OnInit {
   }
 
   AssignUserStory(UserStory:any){
-      this.tachmanger.UserStory=UserStory;
-      console.log(UserStory);
+      this.tachmanger.setValue(UserStory);
+  }
+
+  GetAvtareUsingUserStory(pathImg:string){
+         return `https://localhost:44349/${pathImg}`;
   }
 
 }

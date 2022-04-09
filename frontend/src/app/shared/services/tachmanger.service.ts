@@ -8,14 +8,14 @@ export class TachmangerService {
 
   constructor() { }
 
-  userstory!:Story;
+  str!:any;
 
-  public get UserStory() {
-    return this.UserStory;
+  getValue(){
+    return this.str;
   }
 
-  public set UserStory(val:any) {
-    this.UserStory = val;
+  setValue(vl:any){
+    this.str = vl;
   }
 
 }
