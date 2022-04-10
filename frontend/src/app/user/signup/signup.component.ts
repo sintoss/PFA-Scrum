@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit {
   btnDisplay:boolean = false;
   ImageString : string = "../assets/Img/Default.jpg";
   FileToUpload:any;
+  AcceptePolicy:boolean = false;
 
   constructor(private route: Router , private signup: SignupService) { }
 
@@ -67,6 +68,12 @@ export class SignupComponent implements OnInit {
         this.ImageString = event.target.result;
       }
       reader.readAsDataURL(this.FileToUpload);
+  }
+
+  changeterm(vl:any){
+     this.AcceptePolicy = vl;
+     let model = document.getElementById('exampleModalCenter');
+     if(model != null)model.click();
   }
 
 }
