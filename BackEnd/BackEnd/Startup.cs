@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using System.Linq;
 
 namespace BackEnd
 {
@@ -81,6 +82,7 @@ namespace BackEnd
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ScrumProject4GI", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
         }
 

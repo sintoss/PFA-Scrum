@@ -318,7 +318,7 @@
             >
           </h3>
           <div class="card-toolbar">
-            <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#membremodal">
+            <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#membremodal" (click)="getUsers()">
               <span class="svg-icon svg-icon-md svg-icon-white">
                 <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
                 <svg
@@ -366,14 +366,23 @@
                 </button>
               </div>
               <div class="modal-body">
-
-                <form class="form">
-
-                  <div class="form-group membreInput">
-                    <label for="desc1">Username(pour ajouter plusieurs membres separer les par une virgule)</label>
-                    <input type="text" class="form-control" id="desc1" aria-describedby="username"  name="username" placeholder="Entrer Username du membre de l'equipe">
-                    <div id="membreTable">
-                    </div>
+                <div class="form-outline mb-4">
+                  <input type="search" class="form-control" id="datatable-search-input" placeholder="Trouver un membre" (input)="getResult($event)">
+                </div>
+                <form class="form text-center" (submit)="addMembres()">
+                  <div id="datatable" class="membredata">
+                    <article *ngFor="let user of usersInput">
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets(user.id, $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/{{user.pathImage}}" class="w-100 h-100 rounded-circle" alt="{{user.userName}}">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">{{user.userName}}</h5>
+                          <span>{{user.discriminator}}</span>
+                        </div>
+                      </div>
+                    </article>
                   </div>
                   <button type="submit" class="btn btn-primary">Ajouter</button>
                 </form>
@@ -393,7 +402,7 @@
               <thead>
                 <tr class="text-uppercase">
                   <th style="min-width: 150px" class="pl-7">
-                    <span class="text-dark-75">Nom Complet</span>
+                    <span class="text-dark-75">Nom d'Utilisateur</span>
                   </th>
                   <th style="min-width: 200px">Email</th>
                   <th style="min-width: 100px">Role</th>
@@ -401,82 +410,31 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let user of projet.utilisateurProjets">
                   <td class="pl-0 py-8">
                     <div class="d-flex align-items-center">
                       <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                        <div
-                          class="symbol-label"
-                          style="
-                            background-image: url('assets/media/stock-600x400/img-26.jpg');
-                          "
-                        ></div>
+                        <img class="symbol-label" src="https://localhost:44349/{{user.utilisateur.pathImage}}">
                       </div>
                       <div>
-                        <a
-                          href="#"
-                          class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"
-                          >Abdelouhab AMMARI</a
-                        >
+                        <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                          {{user.utilisateur.userName}}
+                        </a>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <strong
-                      class="text-dark-75 font-weight-bolder d-block font-size-lg"
-                      >amabde20@gmail.com</strong
-                    >
+                    <strong class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                      {{user.utilisateur.email}}
+                    </strong>
                   </td>
                   <td>
-                    <span
-                      class="text-dark-75 font-weight-bolder d-block font-size-lg"
-                      >Developpeur</span
-                    >
+                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                      {{user.utilisateur.discriminator}}
+                    </span>
                   </td>
-                  <td class="text-right pr-0">
-                    <a
-                      href="#"
-                      class="btn btn-icon btn-light-success btn-hover-success btn-sm mr-3"
-                    >
-                      <span class="svg-icon svg-icon-success svg-icon-2x"
-                        ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Design\Edit.svg--><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          width="24px"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          version="1.1"
-                        >
-                          <g
-                            stroke="none"
-                            stroke-width="1"
-                            fill="none"
-                            fill-rule="evenodd"
-                          >
-                            <rect x="0" y="0" width="24" height="24" />
-                            <path
-                              d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
-                              fill="#000000"
-                              fill-rule="nonzero"
-                              transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "
-                            />
-                            <rect
-                              fill="#000000"
-                              opacity="0.3"
-                              x="5"
-                              y="20"
-                              width="15"
-                              height="2"
-                              rx="1"
-                            />
-                          </g></svg
-                        ><!--end::Svg Icon--></span
-                      >
-                    </a>
-                    <a
-                      href="#"
-                      class="btn btn-icon btn-light-danger btn-hover-danger btn-sm"
-                    >
+                  <td class="text-center pr-0">
+                    <button class="btn btn-icon btn-light-danger btn-hover-danger btn-sm" (click)="supprimerMembre(user.utilisateurId)">
                       <span class="svg-icon svg-icon-danger svg-icon-2x"
                         ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -501,222 +459,12 @@
                             />
                             <path
                               d="M10.5857864,13 L9.17157288,11.5857864 C8.78104858,11.1952621 8.78104858,10.5620972 9.17157288,10.1715729 C9.56209717,9.78104858 10.1952621,9.78104858 10.5857864,10.1715729 L12,11.5857864 L13.4142136,10.1715729 C13.8047379,9.78104858 14.4379028,9.78104858 14.8284271,10.1715729 C15.2189514,10.5620972 15.2189514,11.1952621 14.8284271,11.5857864 L13.4142136,13 L14.8284271,14.4142136 C15.2189514,14.8047379 15.2189514,15.4379028 14.8284271,15.8284271 C14.4379028,16.2189514 13.8047379,16.2189514 13.4142136,15.8284271 L12,14.4142136 L10.5857864,15.8284271 C10.1952621,16.2189514 9.56209717,16.2189514 9.17157288,15.8284271 C8.78104858,15.4379028 8.78104858,14.8047379 9.17157288,14.4142136 L10.5857864,13 Z"
-                              fill="#000000"
-                            />
-                          </g></svg
-                        ><!--end::Svg Icon--></span
-                      >
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="pl-0 py-8">
-                    <div class="d-flex align-items-center">
-                      <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                        <div class="symbol-label" style="background-image: url('assets/media/stock-600x400/img-26.jpg');"></div>
-                      </div>
-                      <div>
-                        <a
-                          href="#"
-                          class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"
-                          >Abdelouhab AMMARI</a>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <strong
-                      class="text-dark-75 font-weight-bolder d-block font-size-lg"
-                      >amabde20@gmail.com</strong
-                    >
-                  </td>
-                  <td>
-                    <span
-                      class="text-dark-75 font-weight-bolder d-block font-size-lg"
-                      >Developpeur</span
-                    >
-                  </td>
-                  <td class="text-right pr-0">
-                    <a
-                      href="#"
-                      class="btn btn-icon btn-light-success btn-hover-success btn-sm mr-3"
-                    >
-                      <span class="svg-icon svg-icon-success svg-icon-2x"
-                        ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Design\Edit.svg--><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          width="24px"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          version="1.1"
-                        >
-                          <g
-                            stroke="none"
-                            stroke-width="1"
-                            fill="none"
-                            fill-rule="evenodd"
-                          >
-                            <rect x="0" y="0" width="24" height="24" />
-                            <path
-                              d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
-                              fill="#000000"
-                              fill-rule="nonzero"
-                              transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "
-                            />
-                            <rect
-                              fill="#000000"
-                              opacity="0.3"
-                              x="5"
-                              y="20"
-                              width="15"
-                              height="2"
-                              rx="1"
-                            />
-                          </g></svg
-                        ><!--end::Svg Icon--></span
-                      >
-                    </a>
-                    <a
-                      href="#"
-                      class="btn btn-icon btn-light-danger btn-hover-danger btn-sm"
-                    >
-                      <span class="svg-icon svg-icon-danger svg-icon-2x"
-                        ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          width="24px"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          version="1.1"
-                        >
-                          <g
-                            stroke="none"
-                            stroke-width="1"
-                            fill="none"
-                            fill-rule="evenodd"
-                          >
-                            <polygon points="0 0 24 0 24 24 0 24" />
-                            <path
-                              d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
-                              fill="#000000"
-                              fill-rule="nonzero"
-                              opacity="0.3"
-                            />
-                            <path
-                              d="M10.5857864,13 L9.17157288,11.5857864 C8.78104858,11.1952621 8.78104858,10.5620972 9.17157288,10.1715729 C9.56209717,9.78104858 10.1952621,9.78104858 10.5857864,10.1715729 L12,11.5857864 L13.4142136,10.1715729 C13.8047379,9.78104858 14.4379028,9.78104858 14.8284271,10.1715729 C15.2189514,10.5620972 15.2189514,11.1952621 14.8284271,11.5857864 L13.4142136,13 L14.8284271,14.4142136 C15.2189514,14.8047379 15.2189514,15.4379028 14.8284271,15.8284271 C14.4379028,16.2189514 13.8047379,16.2189514 13.4142136,15.8284271 L12,14.4142136 L10.5857864,15.8284271 C10.1952621,16.2189514 9.56209717,16.2189514 9.17157288,15.8284271 C8.78104858,15.4379028 8.78104858,14.8047379 9.17157288,14.4142136 L10.5857864,13 Z"
-                              fill="#000000"
-                            />
-                          </g></svg
-                        ><!--end::Svg Icon--></span
-                      >
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="pl-0 py-8">
-                    <div class="d-flex align-items-center">
-                      <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                        <div
-                          class="symbol-label"
-                          style="
-                            background-image: url('assets/media/stock-600x400/img-26.jpg');
-                          "
-                        ></div>
-                      </div>
-                      <div>
-                        <a
-                          href="#"
-                          class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"
-                          >Abdelouhab AMMARI</a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <strong
-                      class="text-dark-75 font-weight-bolder d-block font-size-lg"
-                      >amabde20@gmail.com</strong
-                    >
-                  </td>
-                  <td>
-                    <span
-                      class="text-dark-75 font-weight-bolder d-block font-size-lg"
-                      >Developpeur</span
-                    >
-                  </td>
-                  <td class="text-right pr-0">
-                    <a
-                      href="#"
-                      class="btn btn-icon btn-light-success btn-hover-success btn-sm mr-3"
-                    >
-                      <span class="svg-icon svg-icon-success svg-icon-2x"
-                        ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Design\Edit.svg--><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          width="24px"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          version="1.1"
-                        >
-                          <g
-                            stroke="none"
-                            stroke-width="1"
-                            fill="none"
-                            fill-rule="evenodd"
-                          >
-                            <rect x="0" y="0" width="24" height="24" />
-                            <path
-                              d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
-                              fill="#000000"
-                              fill-rule="nonzero"
-                              transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "
-                            />
-                            <rect
-                              fill="#000000"
-                              opacity="0.3"
-                              x="5"
-                              y="20"
-                              width="15"
-                              height="2"
-                              rx="1"
-                            />
-                          </g></svg
-                        ><!--end::Svg Icon--></span
-                      >
-                    </a>
-                    <a
-                      href="#"
-                      class="btn btn-icon btn-light-danger btn-hover-danger btn-sm"
-                    >
-                      <span class="svg-icon svg-icon-danger svg-icon-2x"
-                        ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          width="24px"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          version="1.1"
-                        >
-                          <g
-                            stroke="none"
-                            stroke-width="1"
-                            fill="none"
-                            fill-rule="evenodd"
-                          >
-                            <polygon points="0 0 24 0 24 24 0 24" />
-                            <path
-                              d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
-                              fill="#000000"
-                              fill-rule="nonzero"
-                              opacity="0.3"
-                            />
-                            <path
-                              d="M10.5857864,13 L9.17157288,11.5857864 C8.78104858,11.1952621 8.78104858,10.5620972 9.17157288,10.1715729 C9.56209717,9.78104858 10.1952621,9.78104858 10.5857864,10.1715729 L12,11.5857864 L13.4142136,10.1715729 C13.8047379,9.78104858 14.4379028,9.78104858 14.8284271,10.1715729 C15.2189514,10.5620972 15.2189514,11.1952621 14.8284271,11.5857864 L13.4142136,13 L14.8284271,14.4142136 C15.2189514,14.8047379 15.2189514,15.4379028 14.8284271,15.8284271 C14.4379028,16.2189514 13.8047379,16.2189514 13.4142136,15.8284271 L12,14.4142136 L10.5857864,15.8284271 C10.1952621,16.2189514 9.56209717,16.2189514 9.17157288,15.8284271 C8.78104858,15.4379028 8.78104858,14.8047379 9.17157288,14.4142136 L10.5857864,13 Z"
-                              fill="#000000"
-                            />
-                          </g></svg
-                        ><!--end::Svg Icon--></span
-                      >
-                    </a>
+                              fill="#000000" />
+                          </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                      </span>
+                    </button>
                   </td>
                 </tr>
               </tbody>

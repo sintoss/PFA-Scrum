@@ -5,6 +5,7 @@ export class LocalStoragemangerModel{
      const authMd = new authModelModel();
      authMd.id = data.userId;
      authMd.email = data.email;
+     authMd.pathImage = data.pathImage;
      authMd.expiresOn = data.expiresOn;
      authMd.isAuthenticated = data.isAuthenticated;
      authMd.message = data.message;

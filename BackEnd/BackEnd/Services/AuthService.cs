@@ -109,6 +109,7 @@ namespace BackEnd.Services
                 Email = user.Email,
                 ExpiresOn = jwtSecurityToken.ValidTo,
                 IsAuthenticated = true,
+                PathImage = user.pathImage,
                 Roles = new List<string> { model.acctype },
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Username = user.UserName
@@ -135,6 +136,7 @@ namespace BackEnd.Services
             authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             authModel.Email = user.Email;
             authModel.Username = user.UserName;
+            authModel.PathImage = user.pathImage;
             authModel.ExpiresOn = jwtSecurityToken.ValidTo;
             authModel.Roles = rolesList.ToList();
 
