@@ -11,19 +11,26 @@
     <div class="signup__overlay"></div>
   </div>
   <div class="container__child signup__form">
-    <form (ngSubmit)="addSprint()" #f="ngForm" class="mt-30">
+    <form  #f="ngForm" class="mt-30">
       <div class="form-group">
         <label for="Libelle">Libelle de sprint</label>
-        <input type="text" class="form-control" name="Libelle" id="Libelle" placeholder="Enter Libelle" required="required" ngModel />
+        <input type="text"  class="form-control" name="Libelle"
+               [ngModel]="!btnManger && sprint?.libelle ? sprint?.libelle : ''"
+               (ngModelChange) = "$event"
+                id="Libelle" placeholder="Enter Libelle" required="required"  />
       </div>
       <div class="form-group">
         <label for="dtf">Date estimee de Fin</label>
-        <input class="form-control" type="date" name="dtf" id="dtf"  required="required" ngModel/>
+        <input class="form-control" type="date" name="dtf"
+               [ngModel]="!btnManger && sprint?.dateestimeedefin ? (sprint?.dateestimeedefin | date:'yyyy-MM-dd') : ''"
+               (ngModelChange) = "$event"
+               id="dtf"  required="required" />
       </div>
       <div class="m-t-lg">
         <ul class="list-inline">
           <li>
-            <button class="btn btn--form" type="submit" [disabled]="!f.valid">Ajouter</button>
+            <button *ngIf="btnManger" (click)="addSprint()" class="btn btn--form" type="submit" [disabled]="!f.valid">Ajouter</button>
+            <button *ngIf="!btnManger"(click)="editSprint()" class="btn btn--form" type="submit" [disabled]="!f.valid">Edit</button>
           </li>
         </ul>
       </div>

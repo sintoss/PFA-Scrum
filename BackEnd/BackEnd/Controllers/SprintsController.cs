@@ -72,7 +72,7 @@ namespace BackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok("UPDATED");
         }
 
         // POST: api/Sprints
@@ -86,6 +86,7 @@ namespace BackEnd.Controllers
             var spr = new Sprint();
             spr.Libelle = sprint.libelle;
             spr.Dateestimeedefin = sprint.dateestimeedefin;
+            spr.DateCreation = DateTime.Now;
 
             _context.Sprints.Add(spr);
             await _context.SaveChangesAsync();
@@ -106,7 +107,7 @@ namespace BackEnd.Controllers
             _context.Sprints.Remove(sprint);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("DELETED");
         }
 
         private bool SprintExists(int id)

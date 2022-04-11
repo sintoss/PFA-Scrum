@@ -20,4 +20,12 @@ export class SprintService {
     return this.http.get<any[]>(this.baseUrl+`/Sprints/${pg}/${pgs}/${lib}`);
   }
 
+  editSprints(value:any) : Observable<any> {
+    return this.http.put(this.baseUrl + `/Sprints/${value.Id}`, value, {responseType: 'text'});
+  }
+
+  deleteSprint(id: number | string){
+    return this.http.delete(this.baseUrl + `/Sprints/${id}`, {responseType: 'text'});
+  }
+
 }

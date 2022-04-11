@@ -111,12 +111,16 @@
 
                   <div class="form-group">
                     <label for="dc1">DATE CREATION	</label>
-                    <input type="date" class="form-control" id="dc1" aria-describedby="DATE CREATION" [(ngModel)]="value.dateCreation" ngForm name="dateCreation" placeholder="Enter DATE CREATION	">
+                    <input type="date" class="form-control" id="dc1" aria-describedby="DATE CREATION" [ngModel]="(value.dateCreation | date:'yyyy-MM-dd')"
+                           (ngModelChange) = "value.dateCreation=$event"
+                            name="dateCreation" placeholder="Enter DATE CREATION	">
                   </div>
 
                   <div class="form-group">
                     <label for="ddm1">DATE DERNIER MODIFICATION	</label>
-                    <input type="date" class="form-control" id="ddm1" aria-describedby="DESCRIPTION" [(ngModel)]="value.dateDerniereModification" name="dateDerniereModification" placeholder="Enter DATE ">
+                    <input type="date" class="form-control" id="ddm1" aria-describedby="DESCRIPTION" [ngModel]="(value.dateDerniereModification| date:'yyyy-MM-dd')"
+                           (ngModelChange) = "value.dateDerniereModification=$event"
+                           name="dateDerniereModification" placeholder="Enter DATE ">
                   </div>
 
                   <div class="form-group">
