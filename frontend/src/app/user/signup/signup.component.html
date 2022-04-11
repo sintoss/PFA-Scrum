@@ -78,14 +78,12 @@
                     </select>
                   </div>
 
-                    <div class="form-group">
-                        <label class="checkbox mb-0">
-                        <input type="checkbox" name="agree" />
-                        <span></span>I Agree the
-                        <a href="#">terms and conditions</a></label>
-                    </div>
+
+                        <app-termpolicy (etatEvent)="changeterm($event)"></app-termpolicy>
+
+
                     <div class="form-group d-flex flex-wrap flex-center">
-                        <button type="submit" id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4" [disabled]="!f.valid || btnDisplay">Submit</button>
+                        <button type="submit" id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4" [disabled]="!(f.valid && !btnDisplay && AcceptePolicy)">Submit</button>
                         <button type="button" id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">Cancel</button>
                     </div>
                 </form>
