@@ -6,9 +6,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },*/
   { path: '', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
-  { 
-    path: 'projets', 
-    loadChildren: () => import('./projet/projet.module').then(m => m.ProjetModule) 
+  {
+    path: 'projets',
+    loadChildren: () => import('./projet/projet.module').then(m => m.ProjetModule)
   },
 ];
 

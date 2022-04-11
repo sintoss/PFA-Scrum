@@ -15,6 +15,8 @@ import {TacheModule} from "../tache/tache.module";
 import {BdchartComponent} from "./bdchart/bdchart.component";
 import {NgApexchartsModule} from "ng-apexcharts";
 import {BacklogModule} from '../backlog/backlog.module';
+import {AppModule} from '../app.module';
+import {SprintModule} from '../sprint/sprint.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import {BacklogModule} from '../backlog/backlog.module';
     TacheModule,
     NgApexchartsModule,
     BacklogModule,
+    SprintModule
   ],
   providers: [
   ],

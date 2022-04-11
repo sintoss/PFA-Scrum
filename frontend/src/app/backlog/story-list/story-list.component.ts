@@ -144,11 +144,13 @@ export class StoryListComponent implements OnInit {
  }//end of function
 
   onOptionsSelected(num:any){
+     this.pg = 1;
      this.pager.pageSize = num;
      this.FillList();
   }
 
   onSearchChange(searchValue: any): void {
+    this.pg = 1;
      this.desc = searchValue.target.value;
      this.FillList();
   }
