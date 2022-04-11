@@ -1,0 +1,234 @@
+body {
+  font: 100% / 1.414 "Open Sans", "Roboto", arial, sans-serif;
+  background: #e9e9e9;
+}
+a, [type="submit"] {
+  transition: all 0.25s ease-in;
+}
+.signup__container {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  transform: translateY(-50%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50rem;
+  height: 35rem;
+  border-radius: 0.1875rem;
+  box-shadow: 0px 0.1875rem 0.4375rem rgba(0, 0, 0, 0.25);
+}
+.signup__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.container__child {
+  width: 60%;
+  height: 100%;
+  color: #fff;
+}
+.signup__thumbnail {
+  width: 40%;
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background: url(https://images.unsplash.com/photo-1494587351196-bbf5f29cff42?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&w=1000&q=80);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+}
+.thumbnail__logo, .thumbnail__content, .thumbnail__links {
+  position: relative;
+  z-index: 2;
+}
+.thumbnail__logo {
+  align-self: flex-start;
+}
+.logo__shape {
+  fill: #fff;
+}
+.logo__text {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  vertical-align: bottom;
+}
+.thumbnail__content {
+  align-self: center;
+}
+h1, h2 {
+  font-weight: 300;
+  color: white;
+}
+.heading--primary {
+  font-size: 1.999rem;
+}
+.heading--secondary {
+  font-size: 1.414rem;
+}
+.thumbnail__links {
+  align-self: flex-end;
+  width: 100%;
+}
+.thumbnail__links a {
+  font-size: 1rem;
+  color: #fff;
+}
+.thumbnail__links a:focus, .thumbnail__links a:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+.signup__form {
+  padding: 2.5rem;
+  background: #fafafa;
+}
+label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #ccc;
+}
+.form-control {
+  background-color: transparent;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+}
+.form-control:focus {
+  border-color: #111;
+}
+[type="text"] {
+  color: #111;
+}
+[type="password"] {
+  color: #111;
+}
+.btn--form {
+  padding: 0.5rem 2.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+  background: #111;
+  border-radius: 2.1875rem;
+}
+.btn--form:focus, .btn--form:hover {
+  background: #323232;
+}
+.signup__link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: underline;
+  color: #999;
+}
+.signup__link:focus, .signup__link:hover {
+  color: #787878;
+}
+
+
+
+.membredata {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  margin: 15px 0 25px;
+  padding: 15px 0;
+  flex-wrap: wrap;
+  max-height: 245px;
+  overflow: auto;
+}
+.membredata::-webkit-scrollbar-track {
+  background-color: #e3e3e3;
+  border-radius: 10px;
+}
+.membredata::-webkit-scrollbar {
+  width: 20px;
+}
+/* Handle */
+.membredata::-webkit-scrollbar-thumb {
+  background: #6993FF;
+  border-radius: 10px;
+  border: 3.5px solid #e3e3e3;
+}
+
+/* Handle on hover */
+.membredata::-webkit-scrollbar-thumb:hover {
+  background: #4a7dff;
+}
+.membredata article {
+  position: relative;
+  width: 33%;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+article .membre-content {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  align-items: center;
+  grid-column-gap: 10px;
+  border-radius: 50px;
+  transition: .5s ease;
+  background-color:#f0f0f0;
+}
+.membre-content .membre-img {
+  height: 50px;
+  border-radius: 25px;
+  background-color: #bec2d0;;
+}
+.membre-content .membre-detail span {
+  font-size: .9rem;
+  color: #818585;
+}
+
+article input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+input[type=checkbox]:checked ~ .membre-content {
+  background-color: #50bcf2;
+  color: #ffffff;
+}
+
+
+
+
+                                   .butt {
+                                     box-shadow:inset 0px 1px 0px 0px #fce2c1;
+                                     background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
+                                     background-color:#ffc477;
+                                     border-radius:11px;
+                                     border:2px solid #eeb44f;
+                                     display:inline-block;
+                                     cursor:pointer;
+                                     color:#ffffff;
+                                     font-family:Arial;
+                                     font-size:16px;
+                                     font-weight:bold;
+                                     padding:8px 18px;
+                                     text-decoration:none;
+                                     text-shadow:0px 1px 0px #cc9f52;
+                                   }
+.butt:hover {
+  background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
+  background-color:#fb9e25;
+}
+.butt:active {
+  position:relative;
+  top:1px;
+}

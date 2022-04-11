@@ -23,10 +23,13 @@ namespace BackEnd.Controllers
         }
 
         
-        [HttpGet("{pg}/{pgs}/{lib?}")]
-        public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints( int pg = 1, int pgs = 5 , string lib = " ")
+        [HttpGet("{backId}/{pg}/{pgs}/{lib?}")]
+        public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints(int backId , int pg = 1, int pgs = 5 , string lib = " ")
         {
-            List<Sprint> sprints = await _context.Sprints.Where(s=>s.Libelle.Contains((string.IsNullOrWhiteSpace(lib)) ? "" : lib)).ToListAsync();
+            List<Sprint> sprints = await _context.Sprints.Where(s=>
+            s.BacklogId == backId
+              &&
+            s.Libelle.Contains((string.IsNullOrWhiteSpace(lib)) ? "" : lib)).ToListAsync();
 
             int pageSize = (pgs <= 7) ? pgs : 5;
 
@@ -47,30 +50,18 @@ namespace BackEnd.Controllers
         // PUT: api/Sprints/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSprint(int id, Sprint sprint)
+        public IActionResult PutSprint(int id, Sprint sprint)
         {
             if (id != sprint.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(sprint).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SprintExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var spr = _context.Sprints.Find(id);
+            spr.Libelle = sprint.Libelle;
+            spr.Dateestimeedefin = sprint.Dateestimeedefin;
+            spr.DateDerniereModification = DateTime.Now;
+            _context.SaveChanges();
 
             return Ok("UPDATED");
         }
@@ -87,6 +78,7 @@ namespace BackEnd.Controllers
             spr.Libelle = sprint.libelle;
             spr.Dateestimeedefin = sprint.dateestimeedefin;
             spr.DateCreation = DateTime.Now;
+            spr.BacklogId = sprint.BacklogId;
 
             _context.Sprints.Add(spr);
             await _context.SaveChangesAsync();
@@ -114,5 +106,66 @@ namespace BackEnd.Controllers
         {
             return _context.Sprints.Any(e => e.Id == id);
         }
+
+        [HttpGet("affection/{bckid}/{desc?}")]
+        public ActionResult<IEnumerable<Story>> GetstorywithoutSprint(int bckid ,string desc = " ")
+        {
+            var story = 
+                _context.Stories
+          .Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)
+               && c.BacklogId == bckid
+                &&
+              c.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToList();
+
+            var newData = new List<StoryMv>();
+
+            story.ForEach(d =>
+            {
+                newData.Add(new StoryMv
+                {
+                    id = d.Id,
+                    description = d.Description,
+                    dateCreation = d.DateCreation,
+                    dateDerniereModification = (System.DateTime)d.DateDerniereModification,
+                    Commentaire = d.Commentaire,
+                    BacklogId = d.BacklogId,
+                    pathAvtar = GetImage(d.Id)
+                });
+            });
+
+            return Ok(newData);
+        }
+
+        private string GetImage(int UserStoryId)
+        {
+            string path = _context.DeveloppeurStories.Where(ds => ds.StoryId == UserStoryId).Join(_context.Stories, d => d.StoryId, s => s.Id, (devstory, story) => new { devstory, story })
+                .Join(_context.Developpeurs, ds => ds.devstory.DeveloppeurId, d => d.Id, (ds, d) => new { d.pathImage }).Select(u => u.pathImage)
+                .FirstOrDefault();
+            return (string.IsNullOrEmpty(path)) ? @"Ressources\Image\anonymous.png" : path;
+        }
+
+
+        [HttpPost("aff")]
+        public async Task<ActionResult<Sprint>> affectstorytosprint(StoryAffectMv sprint)
+        {
+            if (!ModelState.IsValid)
+                return Ok(ModelState);
+
+            sprint.storylist.ForEach(i =>
+            {
+                if (_context.Stories.Find(i)!=null)
+                {
+                    var sprintstories = new SprintStory();
+                    sprintstories.StoryId = i;
+                    sprintstories.SprintId = sprint.sprintid;
+                    _context.sprintStories.Add(sprintstories);
+                }
+            });
+           
+            await _context.SaveChangesAsync();
+
+            return Ok("List of story was added to the sprint with success");
+        }
+
     }
 }

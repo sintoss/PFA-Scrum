@@ -4,14 +4,16 @@ using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220411161241_addsprintstorytocontext")]
+    partial class addsprintstorytocontext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,9 +188,6 @@ namespace BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BacklogId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("datetime2");
 
@@ -202,8 +201,6 @@ namespace BackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BacklogId");
 
                     b.ToTable("Sprints");
                 });
@@ -654,17 +651,6 @@ namespace BackEnd.Migrations
                     b.Navigation("Projet");
 
                     b.Navigation("ScrumMaster");
-                });
-
-            modelBuilder.Entity("BackEnd.Models.Sprint", b =>
-                {
-                    b.HasOne("BackEnd.Models.Backlog", "Backlog")
-                        .WithMany()
-                        .HasForeignKey("BacklogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Backlog");
                 });
 
             modelBuilder.Entity("BackEnd.Models.SprintStory", b =>

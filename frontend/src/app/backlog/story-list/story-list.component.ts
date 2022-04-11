@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import {HttpClient} from '@angular/common/http';
 import {Pager} from '../../shared/models/pager.model';
 import {TachmangerService} from '../../shared/services/tachmanger.service';
+import {SprintService} from '../../shared/services/sprint.service';
 
 @Component({
   selector: 'app-story-list',
@@ -28,7 +29,7 @@ export class StoryListComponent implements OnInit {
 
 
   constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute
-  ,private tachmanger : TachmangerService) {
+  ,private tachmanger : TachmangerService ) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
     this.checkIfBacklogExist();
     this.value = new Story();

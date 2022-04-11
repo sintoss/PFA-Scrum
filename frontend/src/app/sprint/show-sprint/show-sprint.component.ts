@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Pager} from '../../shared/models/pager.model';
 import {SprintService} from '../../shared/services/sprint.service';
 import Swal from 'sweetalert2';
+import {Backlog} from '../../shared/models/backlog.model';
+import {environment} from '../../../environments/environment';
+import {ActivatedRoute} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-show-sprint',
@@ -16,18 +20,37 @@ export class ShowSprintComponent implements OnInit {
   lib:string = "";
   sprint:any;
   canIaddorEdit:boolean = false;
+  currentsprint:any;
+  idproject!:number;
+  backlog!: Backlog;
 
-  constructor(private service:SprintService) { }
+  constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute) {
+    this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
+    this.checkIfBacklogExist();
+  }
 
   ngOnInit(): void {
-    this.FillsprintList();
+
+  }
+
+  checkIfBacklogExist(){
+    //check if exist
+    this.http.get<Backlog>(environment.apiUrl + `/Backlog/${this.idproject}`)
+      .subscribe(res=>{
+        if(res != null){
+          this.backlog = res;
+          this.FillsprintList();
+        }
+      },error => console.log(error));
   }
 
   FillsprintList(){
-    this.service.getSprints(this.pg,this.pager.pageSize,this.lib).subscribe(res=>{
+      if(this.backlog != undefined){
+        this.service.getSprints(this.backlog.id,this.pg,this.pager.pageSize,this.lib).subscribe(res=>{
           this.springList$ = (<any>res).data;
           this.pager = (<any>res).pager;
-    },error => console.log(error));
+        },error => console.log(error));
+      }
   }
 
   givepg(pg:number){
@@ -54,7 +77,7 @@ export class ShowSprintComponent implements OnInit {
   }
 
   doSomething(){
-    this.FillsprintList();
+    this.checkIfBacklogExist()
     let model = document.getElementById('sprintmodel');
     if(model != null)model.click();
   }
@@ -87,5 +110,14 @@ export class ShowSprintComponent implements OnInit {
 
     }
   }//end of function
+
+  Affect(vl:any){
+    this.currentsprint = vl;
+  }
+
+  clsfrm(){
+      let model = document.getElementById('sprintmode2');
+      if(model != null) model.click();
+  }
 
 }

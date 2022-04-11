@@ -9,5 +9,8 @@ namespace BackEnd.ViewModel
         public string libelle { get; set; }
         [Required]
         public DateTime dateestimeedefin { get; set; }
+
+        [Required]
+        public int BacklogId { get; set; }
     }
 }

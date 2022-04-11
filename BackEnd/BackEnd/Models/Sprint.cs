@@ -12,5 +12,7 @@ namespace BackEnd.Models
         public DateTime? Dateestimeedefin { get; set; }
         public virtual ICollection<SprintStory> SprintStories { get; set; }  
         public virtual ICollection<Release> Releases { get; set; }
+        public int BacklogId { get; set; }
+        public virtual Backlog Backlog { get; set; }
     }
 }
