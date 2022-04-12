@@ -1,19 +1,30 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Pager} from '../../shared/models/pager.model';
 import {DetailsprintService} from '../../shared/services/detailsprint.service';
+import {SprintService} from '../../shared/services/sprint.service';
 
 @Component({
   selector: 'app-sprint-detail',
   templateUrl: './sprint-detail.component.html',
   styleUrls: ['./sprint-detail.component.css']
 })
-export class SprintDetailComponent implements OnInit , OnChanges  {
+export class SprintDetailComponent implements OnInit{
 
   storysprintList$!:any[];
   pager:Pager = new Pager();
   pg:number = 1;
   lib:string = "";
-  constructor(private service:DetailsprintService) { }
+  constructor( public sprint:SprintService ,private service:DetailsprintService) {
+
+      this.sprint.returnSprint().subscribe(res=>{
+            if(res == false){
+              if(this.service.getValueOfSprint() != null){
+                this.FillstorysprintList();
+              }
+            }
+      });
+
+  }
 
   ngOnInit(): void {}
 
@@ -43,16 +54,6 @@ export class SprintDetailComponent implements OnInit , OnChanges  {
     this.FillstorysprintList();
   }
 
-  showstory(){
-    if(this.service.getValueOfSprint() != null){
-      this.FillstorysprintList();
-    }
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.service.getValueOfSprint() != null){
-      this.FillstorysprintList();
-    }
-  }
 
 }

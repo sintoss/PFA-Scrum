@@ -122,7 +122,10 @@ export class ShowSprintComponent implements OnInit {
   }
 
   ShowStory(vl:any){
+    if(vl != undefined){
+      this.service.emitData(false);
       this.sprintstor.setValueOfSprint(vl.id);
+    }
   }
 
 }
