@@ -4,6 +4,7 @@ import {Projet} from '../models/projet.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { UtilisateurProjet } from '../models/utilisateurProjet.model';
+import { ProjetModel } from '../models/projet-model.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class ProjetService {
     
   }
 
-  getMyProjets(): Observable<Projet[]> {
-    return this.http.get<Projet[]>(this.baseUrl + '/projets');
+  getMyProjets(): Observable<ProjetModel[]> {
+    return this.http.get<ProjetModel[]>(this.baseUrl + '/projets');
   }
 
   getProjetDetail(projetId: number): Observable<Projet> {

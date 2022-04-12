@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BackEnd.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Newtonsoft.Json.Linq;
+using BackEnd.ViewModel;
 
 namespace BackEnd.Controllers
 {
@@ -24,13 +25,15 @@ namespace BackEnd.Controllers
 
         // GET: api/Projets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Projet>>> GetProjets([FromHeader(Name = "Authorisation")] string jwt)
+        public async Task<ActionResult<IEnumerable<ProjetModel>>> GetProjets([FromHeader(Name = "Authorisation")] string jwt)
         {
             var handler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = handler.ReadJwtToken(jwt);
             string id = jwtSecurityToken.Claims.First(claim => claim.Type == "uid").Value;
 
-            return await _context.Projets.Where(p => p.ScrumMasterId.Equals(id) || p.UtilisateurProjets.Where(up => up.utilisateurId.Equals(id)).Count()>0).ToListAsync();
+            return await _context.Projets.Where(p => p.ScrumMasterId.Equals(id) || p.UtilisateurProjets.Where(up => up.utilisateurId.Equals(id)).Count()>0)
+                                         .Select(p => new ProjetModel(p.Id, p.Nom, p.DateDebut, p.DatePrevueFin, p.Backlog.Stories.Count()))
+                                         .ToListAsync();
 
            
 

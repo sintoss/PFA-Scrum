@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Projet } from 'src/app/shared/models/projet.model';
+import { ProjetModel } from 'src/app/shared/models/projet-model.model';
 import { ProjetService } from 'src/app/shared/services/projet.service';
 
 @Component({
@@ -8,15 +8,16 @@ import { ProjetService } from 'src/app/shared/services/projet.service';
   styleUrls: ['./projet-list.component.css']
 })
 export class ProjetListComponent implements OnInit {
-  projets: Projet[];
+  projets: ProjetModel[];
   constructor(private projetService: ProjetService) {
-    this.projets = new Array<Projet>();
+    this.projets = new Array<ProjetModel>();
   }
 
   ngOnInit(): void {
     this.projetService.getMyProjets().subscribe(
       res => this.projets.push(...res)
     );
+    console.log(this.projets);
   }
 
 }

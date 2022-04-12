@@ -102,50 +102,8 @@
                     <!--end::Svg Icon--> </span
                   >{{projet.scrumMaster.discriminator}}</a
                 >
-                <a
-                  href="#"
-                  class="text-muted text-hover-primary font-weight-bold"
-                >
-                  <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/Map/Marker2.svg-->
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                      width="24px"
-                      height="24px"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <g
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                      >
-                        <rect x="0" y="0" width="24" height="24" />
-                        <path
-                          d="M9.82829464,16.6565893 C7.02541569,15.7427556 5,13.1079084 5,10 C5,6.13400675 8.13400675,3 12,3 C15.8659932,3 19,6.13400675 19,10 C19,13.1079084 16.9745843,15.7427556 14.1717054,16.6565893 L12,21 L9.82829464,16.6565893 Z M12,12 C13.1045695,12 14,11.1045695 14,10 C14,8.8954305 13.1045695,8 12,8 C10.8954305,8 10,8.8954305 10,10 C10,11.1045695 10.8954305,12 12,12 Z"
-                          fill="#000000"
-                        />
-                      </g>
-                    </svg>
-                    <!--end::Svg Icon--> </span
-                  >Melbourne</a
-                >
               </div>
               <!--end::Contacts-->
-            </div>
-            <div class="my-lg-0 my-1">
-              <a
-                href="#"
-                class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3"
-                >Reports</a
-              >
-              <a
-                href="#"
-                class="btn btn-sm btn-info font-weight-bolder text-uppercase"
-                >New Task</a
-              >
             </div>
           </div>
           <!--end: Title-->
@@ -246,10 +204,9 @@
             <i class="flaticon-file-2 icon-2x text-muted font-weight-bold"></i>
           </span>
           <div class="d-flex flex-column flex-lg-fill">
-            <span class="text-dark-75 font-weight-bolder font-size-sm"
-              >72 Tasks</span
-            >
-            <a href="#" class="text-primary font-weight-bolder">View</a>
+            <span class="text-dark-75 font-weight-bolder font-size-sm">
+              {{projet.backlog.stories.length}} UserStories
+            </span>
           </div>
         </div>
         <!--end: Item-->
@@ -259,43 +216,11 @@
             <i class="flaticon-network icon-2x text-muted font-weight-bold"></i>
           </span>
           <div class="symbol-group symbol-hover">
-            <div
+            <div *ngFor="let user of projet.utilisateurProjets"
               class="symbol symbol-30 symbol-circle"
-              data-toggle="tooltip"
-              title="Mark Stone"
             >
-              <img alt="Pic" src="assets/media/users/300_25.jpg" />
-            </div>
-            <div
-              class="symbol symbol-30 symbol-circle"
-              data-toggle="tooltip"
-              title="Charlie Stone"
-            >
-              <img alt="Pic" src="assets/media/users/300_19.jpg" />
-            </div>
-            <div
-              class="symbol symbol-30 symbol-circle"
-              data-toggle="tooltip"
-              title="Luca Doncic"
-            >
-              <img alt="Pic" src="assets/media/users/300_22.jpg" />
-            </div>
-            <div
-              class="symbol symbol-30 symbol-circle"
-              data-toggle="tooltip"
-              title="Nick Mana"
-            >
-              <img alt="Pic" src="assets/media/users/300_23.jpg" />
-            </div>
-            <div
-              class="symbol symbol-30 symbol-circle"
-              data-toggle="tooltip"
-              title="Teresa Fox"
-            >
-              <img alt="Pic" src="assets/media/users/300_18.jpg" />
-            </div>
-            <div class="symbol symbol-30 symbol-circle symbol-light">
-              <span class="symbol-label font-weight-bold">5+</span>
+              <img alt="{{user.utilisateur.userName}}" src="https://localhost:44349/{{user.utilisateur.pathImage}}" data-toggle="tooltip"
+              title="{{user.utilisateur.userName}}" />
             </div>
           </div>
         </div>
@@ -544,61 +469,63 @@
               </thead>
               <tbody>
                 <tr *ngFor="let user of projet.utilisateurProjets">
-                  <td class="pl-0 py-8">
-                    <div class="d-flex align-items-center">
-                      <div class="symbol symbol-50 flex-shrink-0 mr-4">
-                        <img class="symbol-label" src="https://localhost:44349/{{user.utilisateur.pathImage}}">
+                  <ng-container *ngIf="user.utilisateur.id !== jwtService.getUserId()">
+                    <td class="pl-0 py-8">
+                      <div class="d-flex align-items-center">
+                        <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                          <img class="symbol-label" src="https://localhost:44349/{{user.utilisateur.pathImage}}">
+                        </div>
+                        <div>
+                          <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
+                            {{user.utilisateur.userName}}
+                          </a>
+                        </div>
                       </div>
-                      <div>
-                        <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">
-                          {{user.utilisateur.userName}}
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <strong class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                      {{user.utilisateur.email}}
-                    </strong>
-                  </td>
-                  <td>
-                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                      {{user.utilisateur.discriminator}}
-                    </span>
-                  </td>
-                  <td class="text-center pr-0">
-                    <button class="btn btn-icon btn-light-danger btn-hover-danger btn-sm" *ngIf="jwtService.hasRole('ScrumMaster')" (click)="supprimerMembre(user.utilisateurId)">
-                      <span class="svg-icon svg-icon-danger svg-icon-2x"
-                        ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          width="24px"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          version="1.1"
-                        >
-                          <g
-                            stroke="none"
-                            stroke-width="1"
-                            fill="none"
-                            fill-rule="evenodd"
-                          >
-                            <polygon points="0 0 24 0 24 24 0 24" />
-                            <path
-                              d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
-                              fill="#000000"
-                              fill-rule="nonzero"
-                              opacity="0.3"
-                            />
-                            <path
-                              d="M10.5857864,13 L9.17157288,11.5857864 C8.78104858,11.1952621 8.78104858,10.5620972 9.17157288,10.1715729 C9.56209717,9.78104858 10.1952621,9.78104858 10.5857864,10.1715729 L12,11.5857864 L13.4142136,10.1715729 C13.8047379,9.78104858 14.4379028,9.78104858 14.8284271,10.1715729 C15.2189514,10.5620972 15.2189514,11.1952621 14.8284271,11.5857864 L13.4142136,13 L14.8284271,14.4142136 C15.2189514,14.8047379 15.2189514,15.4379028 14.8284271,15.8284271 C14.4379028,16.2189514 13.8047379,16.2189514 13.4142136,15.8284271 L12,14.4142136 L10.5857864,15.8284271 C10.1952621,16.2189514 9.56209717,16.2189514 9.17157288,15.8284271 C8.78104858,15.4379028 8.78104858,14.8047379 9.17157288,14.4142136 L10.5857864,13 Z"
-                              fill="#000000" />
-                          </g>
-                        </svg>
-                        <!--end::Svg Icon-->
+                    </td>
+                    <td>
+                      <strong class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                        {{user.utilisateur.email}}
+                      </strong>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                        {{user.utilisateur.discriminator}}
                       </span>
-                    </button>
-                  </td>
+                    </td>
+                    <td class="text-center pr-0">
+                      <button class="btn btn-icon btn-light-danger btn-hover-danger btn-sm" *ngIf="jwtService.hasRole('ScrumMaster')" (click)="supprimerMembre(user.utilisateurId)">
+                        <span class="svg-icon svg-icon-danger svg-icon-2x"
+                          ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            width="24px"
+                            height="24px"
+                            viewBox="0 0 24 24"
+                            version="1.1"
+                          >
+                            <g
+                              stroke="none"
+                              stroke-width="1"
+                              fill="none"
+                              fill-rule="evenodd"
+                            >
+                              <polygon points="0 0 24 0 24 24 0 24" />
+                              <path
+                                d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
+                                fill="#000000"
+                                fill-rule="nonzero"
+                                opacity="0.3"
+                              />
+                              <path
+                                d="M10.5857864,13 L9.17157288,11.5857864 C8.78104858,11.1952621 8.78104858,10.5620972 9.17157288,10.1715729 C9.56209717,9.78104858 10.1952621,9.78104858 10.5857864,10.1715729 L12,11.5857864 L13.4142136,10.1715729 C13.8047379,9.78104858 14.4379028,9.78104858 14.8284271,10.1715729 C15.2189514,10.5620972 15.2189514,11.1952621 14.8284271,11.5857864 L13.4142136,13 L14.8284271,14.4142136 C15.2189514,14.8047379 15.2189514,15.4379028 14.8284271,15.8284271 C14.4379028,16.2189514 13.8047379,16.2189514 13.4142136,15.8284271 L12,14.4142136 L10.5857864,15.8284271 C10.1952621,16.2189514 9.56209717,16.2189514 9.17157288,15.8284271 C8.78104858,15.4379028 8.78104858,14.8047379 9.17157288,14.4142136 L10.5857864,13 Z"
+                                fill="#000000" />
+                            </g>
+                          </svg>
+                          <!--end::Svg Icon-->
+                        </span>
+                      </button>
+                    </td>
+                  </ng-container>
                 </tr>
               </tbody>
             </table>
