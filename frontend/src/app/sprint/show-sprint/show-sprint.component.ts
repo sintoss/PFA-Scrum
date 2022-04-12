@@ -6,6 +6,7 @@ import {Backlog} from '../../shared/models/backlog.model';
 import {environment} from '../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {DetailsprintService} from '../../shared/services/detailsprint.service';
 
 @Component({
   selector: 'app-show-sprint',
@@ -24,7 +25,7 @@ export class ShowSprintComponent implements OnInit {
   idproject!:number;
   backlog!: Backlog;
 
-  constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute) {
+  constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute , private sprintstor:DetailsprintService) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
     this.checkIfBacklogExist();
   }
@@ -118,6 +119,13 @@ export class ShowSprintComponent implements OnInit {
   clsfrm(){
       let model = document.getElementById('sprintmode2');
       if(model != null) model.click();
+  }
+
+  ShowStory(vl:any){
+    if(vl != undefined){
+      this.service.emitData(false);
+      this.sprintstor.setValueOfSprint(vl.id);
+    }
   }
 
 }

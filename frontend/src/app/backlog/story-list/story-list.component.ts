@@ -29,7 +29,7 @@ export class StoryListComponent implements OnInit {
 
 
   constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute
-  ,private tachmanger : TachmangerService ) {
+  ,private tachmanger : TachmangerService , private sprint:SprintService ) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
     this.checkIfBacklogExist();
     this.value = new Story();
@@ -89,6 +89,7 @@ export class StoryListComponent implements OnInit {
           title: 'Le user story a été crée avec succes',
           type: 'success',
         });
+        this.sprint.emitData(true);
         let model = document.getElementById('exampleModal');
         if(model != null)model.click();
         this.story = new Story();
@@ -136,6 +137,7 @@ export class StoryListComponent implements OnInit {
            'Your file has been deleted.',
            'success'
          );
+         this.sprint.emitData(true);
          this.FillList();
        },error => console.log(error));
      }

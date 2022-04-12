@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {Observable} from 'rxjs';
+import {Observable , Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Backlog} from '../models/backlog.model';
 import {ActivatedRoute} from '@angular/router';
-import {compareSegments} from '@angular/compiler-cli/src/ngtsc/sourcemaps/src/segment_marker';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +10,19 @@ import {compareSegments} from '@angular/compiler-cli/src/ngtsc/sourcemaps/src/se
 export class SprintService {
 
   readonly baseUrl = environment.apiUrl;
+
+  sprintId!:number;
+  subject$ = new Subject<any>();
+
+  emitData(sprintId:any){
+       this.subject$.next(sprintId);
+  }
+
+  returnSprint(){
+    return this.subject$.asObservable();
+  }
+
+
 
   constructor(private http:HttpClient ,  private router: ActivatedRoute) { }
 

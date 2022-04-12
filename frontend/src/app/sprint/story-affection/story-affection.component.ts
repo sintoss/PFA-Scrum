@@ -18,8 +18,15 @@ export class StoryAffectionComponent implements  OnInit {
   desc:string = "";
   StoryList:number[] = [];
 
+  constructor(public service:SprintService) {
 
-  constructor(public service:SprintService) { }
+    this.service.returnSprint().subscribe(res=>{
+      if(res == true){
+        this.Fillist();
+      }
+    })
+
+  }
 
   ngOnInit() {
     this.Fillist();
@@ -66,6 +73,7 @@ export class StoryAffectionComponent implements  OnInit {
                      title : "affection of story to sprint with success",
                      type : "success"
                    });
+                   this.Fillist();
                    this.closeFormWhenAffect.emit(true);
                  }
           });
