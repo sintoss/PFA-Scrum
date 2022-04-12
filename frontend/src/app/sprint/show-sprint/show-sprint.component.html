@@ -41,7 +41,7 @@
         </thead>
         <tbody>
 
-        <tr class="bg-dark border border-white" *ngFor="let item of springList$">
+        <tr class="bg-dark border border-white" *ngFor="let item of springList$" (click)="ShowStory(item)" >
           <td class="py-8"  style="width: 35%">
             <strong class="text-white font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.libelle}}</strong>
           </td>
@@ -73,9 +73,6 @@
              </svg>
             </span>
             </a>
-
-
-
 
             <a (click)="Affect(item)"  class="btn btn-icon btn-light btn-hover-primary btn-sm" data-toggle="modal" data-target="#sprintmode2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">

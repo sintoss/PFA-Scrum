@@ -22,11 +22,11 @@ namespace BackEnd.Controllers
             _context = context;
         }
 
-        
+
         [HttpGet("{backId}/{pg}/{pgs}/{lib?}")]
-        public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints(int backId , int pg = 1, int pgs = 5 , string lib = " ")
+        public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints(int backId, int pg = 1, int pgs = 5, string lib = " ")
         {
-            List<Sprint> sprints = await _context.Sprints.Where(s=>
+            List<Sprint> sprints = await _context.Sprints.Where(s =>
             s.BacklogId == backId
               &&
             s.Libelle.Contains((string.IsNullOrWhiteSpace(lib)) ? "" : lib)).ToListAsync();
@@ -108,9 +108,9 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("affection/{bckid}/{desc?}")]
-        public ActionResult<IEnumerable<Story>> GetstorywithoutSprint(int bckid ,string desc = " ")
+        public ActionResult<IEnumerable<Story>> GetstorywithoutSprint(int bckid, string desc = " ")
         {
-            var story = 
+            var story =
                 _context.Stories
           .Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)
                && c.BacklogId == bckid
@@ -153,7 +153,7 @@ namespace BackEnd.Controllers
 
             sprint.storylist.ForEach(i =>
             {
-                if (_context.Stories.Find(i)!=null)
+                if (_context.Stories.Find(i) != null)
                 {
                     var sprintstories = new SprintStory();
                     sprintstories.StoryId = i;
@@ -161,10 +161,36 @@ namespace BackEnd.Controllers
                     _context.sprintStories.Add(sprintstories);
                 }
             });
-           
+
             await _context.SaveChangesAsync();
 
             return Ok("List of story was added to the sprint with success");
+        }
+
+        [HttpGet("story/{sprintId}/{pg}/{pgs}/{desc?}")]
+        public ActionResult<Sprint> getstorysofsprint(int sprintId , int pg = 1, int pgs = 5, string desc = " ")
+        {
+            var stories = _context.Stories.Where(s=>
+            s.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)
+            ).Join(_context.sprintStories.Where(ss=> ss.SprintId == sprintId),
+                                              s => s.Id, ss => ss.StoryId , (story, sprintstory) => new
+                                              {
+                                                  story
+                                              }).ToList();
+
+            int pageSize = (pgs <= 7) ? pgs : 5;
+
+            if (pg < 1) pg = 1;
+
+            int recscount = stories.Count();
+
+            var pager = new Pager(recscount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = stories.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            return Ok(new { data, pager });
         }
 
     }
