@@ -66,21 +66,12 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost("{projetId}/membres/ajouter")]
-<<<<<<< HEAD
         public async Task<ActionResult<IEnumerable<utilisateurProjets>>> addMembres(int projetId, [FromBody] IEnumerable<utilisateurProjets> utilisateurProjets)
         {
             _context.utilisateurProjets.AddRange(utilisateurProjets);
             await _context.SaveChangesAsync();
 
             return await _context.utilisateurProjets.Include(up => up.utilisateur).Where(up => up.ProjetId == projetId).ToListAsync();
-=======
-        public async Task<ActionResult<IEnumerable<UtilisateurProjet>>> addMembres(int projetId, [FromBody] IEnumerable<UtilisateurProjet> utilisateurProjets)
-        {
-            _context.UtilisateurProjets.AddRange(utilisateurProjets);
-            await _context.SaveChangesAsync();
-
-            return await _context.UtilisateurProjets.Include(up => up.Utilisateur).Where(up => up.ProjetId == projetId).ToListAsync();
->>>>>>> ff83c22ff1a6fe027b1fa5f2c5654f2fb328b580
         }
 
         // DELETE: api/Projets/5
@@ -99,25 +90,16 @@ namespace BackEnd.Controllers
             return NoContent();
         }
         [HttpDelete("{projetId}/membres/supprimer/{userId}")]
-<<<<<<< HEAD
         public async Task<ActionResult<utilisateurProjets>> Delete(int projetId, string userId)
         {
             var utilisateurProjet = await _context.utilisateurProjets.Where(up => up.ProjetId == projetId && up.utilisateurId.Equals(userId)).FirstOrDefaultAsync();
-=======
-        public async Task<ActionResult<UtilisateurProjet>> Delete(int projetId, string userId)
-        {
-            var utilisateurProjet = await _context.UtilisateurProjets.Where(up => up.ProjetId == projetId && up.UtilisateurId.Equals(userId)).FirstOrDefaultAsync();
->>>>>>> ff83c22ff1a6fe027b1fa5f2c5654f2fb328b580
+
             if (utilisateurProjet == null)
             {
                 return NotFound();
             }
 
-<<<<<<< HEAD
             _context.utilisateurProjets.Remove(utilisateurProjet);
-=======
-            _context.UtilisateurProjets.Remove(utilisateurProjet);
->>>>>>> ff83c22ff1a6fe027b1fa5f2c5654f2fb328b580
             await _context.SaveChangesAsync();
 
             return utilisateurProjet;
