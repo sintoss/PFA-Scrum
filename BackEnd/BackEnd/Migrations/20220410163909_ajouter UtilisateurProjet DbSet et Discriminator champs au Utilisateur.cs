@@ -6,7 +6,7 @@ namespace BackEnd.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+            /*migrationBuilder.DropForeignKey(
                 name: "FK_utilisateurProjets_AspNetUsers_UtilisateurId",
                 table: "utilisateurProjets");
 
@@ -46,12 +46,12 @@ namespace BackEnd.Migrations
                 column: "ProjetId",
                 principalTable: "Projets",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Restrict);*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+           /* migrationBuilder.DropForeignKey(
                 name: "FK_UtilisateurProjets_AspNetUsers_UtilisateurId",
                 table: "UtilisateurProjets");
 
@@ -91,7 +91,7 @@ namespace BackEnd.Migrations
                 column: "ProjetId",
                 principalTable: "Projets",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Restrict);*/
         }
     }
 }
