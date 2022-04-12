@@ -4,14 +4,16 @@ using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220410163909_ajouter UtilisateurProjet DbSet et Discriminator champs au Utilisateur")]
+    partial class ajouterUtilisateurProjetDbSetetDiscriminatorchampsauUtilisateur
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,24 +188,13 @@ namespace BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BacklogId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateDerniereModification")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Dateestimeedefin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Libelle")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BacklogId");
 
                     b.ToTable("Sprints");
                 });
@@ -220,7 +211,7 @@ namespace BackEnd.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("sprintStories");
+                    b.ToTable("SprintStory");
                 });
 
             modelBuilder.Entity("BackEnd.Models.Story", b =>
@@ -654,17 +645,6 @@ namespace BackEnd.Migrations
                     b.Navigation("Projet");
 
                     b.Navigation("ScrumMaster");
-                });
-
-            modelBuilder.Entity("BackEnd.Models.Sprint", b =>
-                {
-                    b.HasOne("BackEnd.Models.Backlog", "Backlog")
-                        .WithMany()
-                        .HasForeignKey("BacklogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Backlog");
                 });
 
             modelBuilder.Entity("BackEnd.Models.SprintStory", b =>

@@ -25,6 +25,15 @@ export class JwtService implements HttpInterceptor{
   {
     return this.jwt.id;
   }
+  getObject(): Object
+  {
+    return {
+      username: this.jwt.username,
+      email: this.jwt.email,
+      pathImage: this.jwt.pathImage,
+      roles: this.jwt.roles
+    }
+  }
   getRoles(): any
   {
     return this.jwt.roles;

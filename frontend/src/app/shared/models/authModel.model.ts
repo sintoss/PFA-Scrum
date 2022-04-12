@@ -5,6 +5,7 @@ export class authModelModel {
   expiresOn!: string;
   isAuthenticated = false;
   message!: string;
+  pathImage!: string; 
   roles: [] = [];
   token!: string;
   username!: string;

@@ -1,0 +1,68 @@
+.membredata {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    margin: 15px 0 25px;
+    padding: 15px 0;
+    flex-wrap: wrap;
+    max-height: 245px;
+    overflow: auto;
+}
+.membredata::-webkit-scrollbar-track {
+    background-color: #e3e3e3; 
+    border-radius: 10px;
+  }
+  .membredata::-webkit-scrollbar {
+    width: 15px;
+  }
+  /* Handle */
+  .membredata::-webkit-scrollbar-thumb {
+    background: #6993FF; 
+    border-radius: 10px;
+    border: 3.5px solid #e3e3e3;
+  }
+  
+  /* Handle on hover */
+  .membredata::-webkit-scrollbar-thumb:hover {
+    background: #4a7dff; 
+  }
+.membredata article {
+    position: relative;
+    width: 33%;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  
+  article .membre-content {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+    grid-column-gap: 10px;
+    border-radius: 50px;
+    transition: .5s ease;
+    background-color:#f0f0f0;
+  }
+  .membre-content .membre-img {
+      height: 50px;
+      border-radius: 25px;
+      background-color: #6993FF;
+  }
+  .membre-content .membre-detail span {
+      font-size: .9rem;
+      color: #818585;
+  }
+  
+  article input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  input[type=checkbox]:checked ~ .membre-content {
+    background-color: #50bcf2;
+    color: #ffffff;
+  }

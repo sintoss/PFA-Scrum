@@ -3,6 +3,7 @@ import {environment} from 'src/environments/environment';
 import {Projet} from '../models/projet.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { UtilisateurProjet } from '../models/utilisateurProjet.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,13 @@ export class ProjetService {
     this.projet.scrumMasterId = scrumMasterId;
     this.projet.dateCreation = new Date();
     return this.http.post<Projet>(this.baseUrl + '/projets/ajouter', this.projet);
+  }
+  setProjetMembres(projetId: number, utilisateurProjets: UtilisateurProjet[]): Observable<UtilisateurProjet[]>
+  {
+    return this.http.post<UtilisateurProjet[]>(this.baseUrl + `/projets/${projetId}/membres/ajouter`, utilisateurProjets);
+  }
+  deleteMembre(projetId: number, userId: string): Observable<UtilisateurProjet>
+  {
+    return this.http.delete<UtilisateurProjet>(this.baseUrl + `/Projets/${projetId}/membres/supprimer/${userId}`);
   }
 }
