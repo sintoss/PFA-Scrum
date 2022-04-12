@@ -387,21 +387,6 @@ namespace BackEnd.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Utilisateur");
                 });
 
-            modelBuilder.Entity("BackEnd.Models.UtilisateurProjet", b =>
-                {
-                    b.Property<string>("UtilisateurId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ProjetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UtilisateurId", "ProjetId");
-
-                    b.HasIndex("ProjetId");
-
-                    b.ToTable("UtilisateurProjets");
-                });
-
             modelBuilder.Entity("BackEnd.Models.UtilisateurReunion", b =>
                 {
                     b.Property<string>("UtilisateurId")
@@ -415,6 +400,21 @@ namespace BackEnd.Migrations
                     b.HasIndex("ReunionId");
 
                     b.ToTable("UtilisateurReunion");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.utilisateurProjets", b =>
+                {
+                    b.Property<string>("utilisateurId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProjetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("utilisateurId", "ProjetId");
+
+                    b.HasIndex("ProjetId");
+
+                    b.ToTable("utilisateurProjets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -725,25 +725,6 @@ namespace BackEnd.Migrations
                     b.Navigation("Testeur");
                 });
 
-            modelBuilder.Entity("BackEnd.Models.UtilisateurProjet", b =>
-                {
-                    b.HasOne("BackEnd.Models.Projet", "Projet")
-                        .WithMany("UtilisateurProjets")
-                        .HasForeignKey("ProjetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BackEnd.Models.Utilisateur", "Utilisateur")
-                        .WithMany("UtilisateurProjets")
-                        .HasForeignKey("UtilisateurId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projet");
-
-                    b.Navigation("Utilisateur");
-                });
-
             modelBuilder.Entity("BackEnd.Models.UtilisateurReunion", b =>
                 {
                     b.HasOne("BackEnd.Models.Reunion", "Reunion")
@@ -761,6 +742,25 @@ namespace BackEnd.Migrations
                     b.Navigation("Reunion");
 
                     b.Navigation("Utilisateur");
+                });
+
+            modelBuilder.Entity("BackEnd.Models.utilisateurProjets", b =>
+                {
+                    b.HasOne("BackEnd.Models.Projet", "Projet")
+                        .WithMany("UtilisateurProjets")
+                        .HasForeignKey("ProjetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BackEnd.Models.Utilisateur", "utilisateur")
+                        .WithMany("utilisateurProjets")
+                        .HasForeignKey("utilisateurId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projet");
+
+                    b.Navigation("utilisateur");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -855,7 +855,7 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("BackEnd.Models.Utilisateur", b =>
                 {
-                    b.Navigation("UtilisateurProjets");
+                    b.Navigation("utilisateurProjets");
 
                     b.Navigation("UtilisateurReunions");
                 });

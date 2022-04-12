@@ -15,7 +15,7 @@ namespace BackEnd.Models
         public string ScrumMasterId { get; set; }
         public virtual ScrumMaster ScrumMaster { get; set; }
         public virtual ICollection<Reunion> Reunion { get; set; }
-        public virtual ICollection<UtilisateurProjet> UtilisateurProjets { get; set; }
+        public virtual ICollection<utilisateurProjets> UtilisateurProjets { get; set; }
         public virtual ICollection<ScrumMasterProjet> ScrumMasterProjets { get; set; }
 
         public Projet()

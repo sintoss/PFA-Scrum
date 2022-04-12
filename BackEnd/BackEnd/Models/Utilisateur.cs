@@ -8,7 +8,7 @@ namespace BackEnd.Models
         public string NomComplet { get; set; }
         public string Discriminator { get; private set; }
         public string pathImage { get; set; }
-        public virtual ICollection<UtilisateurProjet> UtilisateurProjets { get; set; }
+        public virtual ICollection<utilisateurProjets> utilisateurProjets { get; set; }
         public virtual ICollection<UtilisateurReunion> UtilisateurReunions { get; set; }
     }
 }

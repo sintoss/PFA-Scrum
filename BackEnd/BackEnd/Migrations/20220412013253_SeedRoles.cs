@@ -7,11 +7,12 @@ namespace BackEnd.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //AspNetRoles
             migrationBuilder.InsertData(
-               table: "AspNetRoles",
-               columns: new[] { "Id", "Name", "NormalizedName", "ConcurrencyStamp" },
-               values: new object[] { Guid.NewGuid().ToString(), "ScrumMaster", "ScrumMaster".ToUpper(), Guid.NewGuid().ToString() }
-           );
+              table: "AspNetRoles",
+              columns: new[] { "Id", "Name", "NormalizedName", "ConcurrencyStamp" },
+              values: new object[] { Guid.NewGuid().ToString(), "ScrumMaster", "ScrumMaster".ToUpper(), Guid.NewGuid().ToString() }
+          );
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
@@ -30,7 +31,6 @@ namespace BackEnd.Migrations
                 columns: new[] { "Id", "Name", "NormalizedName", "ConcurrencyStamp" },
                 values: new object[] { Guid.NewGuid().ToString(), "Testeur", "Testeur".ToUpper(), Guid.NewGuid().ToString() }
             );
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -19,16 +19,16 @@ namespace BackEnd.Models
         {
             // Modelbuilder For UtilisateurProjet Class
 
-            modelBuilder.Entity<UtilisateurProjet>()
-                .HasKey(t => new { t.UtilisateurId, t.ProjetId });
+            modelBuilder.Entity<utilisateurProjets>()
+                .HasKey(t => new { t.utilisateurId, t.ProjetId });
 
-            modelBuilder.Entity<UtilisateurProjet>()
-                .HasOne(pt => pt.Utilisateur)
-                .WithMany(p => p.UtilisateurProjets)
-                .HasForeignKey(pt => pt.UtilisateurId)
+            modelBuilder.Entity<utilisateurProjets>()
+                .HasOne(pt => pt.utilisateur)
+                .WithMany(p => p.utilisateurProjets)
+                .HasForeignKey(pt => pt.utilisateurId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<UtilisateurProjet>()
+            modelBuilder.Entity<utilisateurProjets>()
                 .HasOne(pt => pt.Projet)
                 .WithMany(t => t.UtilisateurProjets)
                 .HasForeignKey(pt => pt.ProjetId)
@@ -81,8 +81,6 @@ namespace BackEnd.Models
                 .WithMany(ds => ds.DeloppeurStories)
                 .HasForeignKey(ds => ds.StoryId);
 
-
-
             base.OnModelCreating(modelBuilder);
         }
 
@@ -99,7 +97,7 @@ namespace BackEnd.Models
         public DbSet<Testeur> Testeurs { get; set; }
         public DbSet<ProductOwner> Productowners { get; set; }
         public DbSet<DeveloppeurStory> DeveloppeurStories { get; set; }
-        public DbSet<UtilisateurProjet> UtilisateurProjets { get; set; }
+        public DbSet<utilisateurProjets> utilisateurProjets { get; set; }
         public DbSet<SprintStory> sprintStories { get; set; }
 
     }
