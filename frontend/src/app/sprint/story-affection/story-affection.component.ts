@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Backlog} from '../../shared/models/backlog.model';
 import {SprintService} from '../../shared/services/sprint.service';
 import {Pager} from '../../shared/models/pager.model';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './story-affection.component.html',
   styleUrls: ['./story-affection.component.css']
 })
-export class StoryAffectionComponent implements  OnInit {
+export class StoryAffectionComponent implements  OnInit , OnChanges {
 
   @Input() currentsprint:any;
   @Input() backlog!:Backlog;
@@ -18,7 +18,9 @@ export class StoryAffectionComponent implements  OnInit {
   desc:string = "";
   StoryList:number[] = [];
 
-
+  ngOnChanges(changes: SimpleChanges) {
+     this.Fillist();
+  }
   constructor(public service:SprintService) { }
 
   ngOnInit() {
@@ -66,6 +68,7 @@ export class StoryAffectionComponent implements  OnInit {
                      title : "affection of story to sprint with success",
                      type : "success"
                    });
+                   this.Fillist();
                    this.closeFormWhenAffect.emit(true);
                  }
           });
