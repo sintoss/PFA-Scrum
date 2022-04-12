@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Projet } from 'src/app/shared/models/projet.model';
 import { Utilisateur } from 'src/app/shared/models/utilisateur.model';
 import { UtilisateurProjet } from 'src/app/shared/models/utilisateurProjet.model';
+import { JwtService } from 'src/app/shared/services/jwt.service';
 import { ProjetService } from 'src/app/shared/services/projet.service';
 import { UserServiceService } from 'src/app/shared/services/user-service.service';
 import { environment } from 'src/environments/environment';
@@ -23,7 +24,7 @@ export class ProjetDetailComponent implements OnInit {
   usersInput: Array<Utilisateur>;
   usersProjets: Array<UtilisateurProjet>
 
-  constructor(private router: ActivatedRoute,private projetService: ProjetService, private http: HttpClient, private userService: UserServiceService) {
+  constructor(private router: ActivatedRoute,private projetService: ProjetService, private http: HttpClient, private userService: UserServiceService, public jwtService: JwtService) {
     this.projet = new Projet();
     this.users = new Array<Utilisateur>();
     this.usersInput = new Array<Utilisateur>();
@@ -37,6 +38,7 @@ export class ProjetDetailComponent implements OnInit {
         Object.assign(this.projet, res);
       }
     )
+    console.log(this.projet);
   }
   getUsers()
   {

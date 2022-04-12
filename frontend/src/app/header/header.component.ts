@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     Swal.fire({
       title: "Logout avec succes",
       type: "success"
-    });
+    }).then(value => window.location.reload());
     this.router.navigateByUrl("login");
   }
 }

@@ -68,7 +68,7 @@
                       </g>
                     </svg>
                     <!--end::Svg Icon-->
-                  </span></a>
+                  </span>{{projet.scrumMaster.email}}</a>
                 <a
                   href="#"
                   class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2"
@@ -100,7 +100,7 @@
                       </g>
                     </svg>
                     <!--end::Svg Icon--> </span
-                  >PR Manager</a
+                  >{{projet.scrumMaster.discriminator}}</a
                 >
                 <a
                   href="#"
@@ -317,7 +317,7 @@
               >Membres de l'Equipe</span
             >
           </h3>
-          <div class="card-toolbar">
+          <div class="card-toolbar" *ngIf="jwtService.hasRole('ScrumMaster')">
             <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#membremodal" (click)="getUsers()">
               <span class="svg-icon svg-icon-md svg-icon-white">
                 <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Add-user.svg-->
@@ -367,9 +367,10 @@
               </div>
               <div class="modal-body">
                 <div class="form-outline mb-4">
-                  <input type="search" class="form-control" id="datatable-search-input" placeholder="Trouver un membre" (input)="getResult($event)">
+                  <input type="search" class="form-control" id="datatable-search-input" placeholder="chercher un membre par nom d'utilisateur..." (input)="getResult($event)">
                 </div>
                 <form class="form text-center" (submit)="addMembres()">
+                  <h4 class="text-left my-5">Choisir les membre de l'equipe pour ce projet :</h4>
                   <div id="datatable" class="membredata">
                     <article *ngFor="let user of usersInput">
                       <input type="checkbox" name="membres[]" (change)="setUsersProjets(user.id, $event)"/>
@@ -380,6 +381,138 @@
                         <div class="membre-detail text-left">
                           <h5 class="mb-0">{{user.userName}}</h5>
                           <span>{{user.discriminator}}</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
+                        </div>
+                      </div>
+                    </article>
+                    <article>
+                      <input type="checkbox" name="membres[]" (change)="setUsersProjets('1', $event)"/>
+                      <div class="membre-content p-2">
+                        <div class="membre-img">
+                          <img src="https://localhost:44349/Ressources/Image/b059cf6baa178848bde6598bc5803c2c.jpeg" class="w-100 h-100 rounded-circle" alt="username">
+                        </div>
+                        <div class="membre-detail text-left">
+                          <h5 class="mb-0">username</h5>
+                          <span>role</span>
                         </div>
                       </div>
                     </article>
@@ -434,7 +567,7 @@
                     </span>
                   </td>
                   <td class="text-center pr-0">
-                    <button class="btn btn-icon btn-light-danger btn-hover-danger btn-sm" (click)="supprimerMembre(user.utilisateurId)">
+                    <button class="btn btn-icon btn-light-danger btn-hover-danger btn-sm" *ngIf="jwtService.hasRole('ScrumMaster')" (click)="supprimerMembre(user.utilisateurId)">
                       <span class="svg-icon svg-icon-danger svg-icon-2x"
                         ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
                           xmlns="http://www.w3.org/2000/svg"

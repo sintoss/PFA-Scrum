@@ -4,7 +4,7 @@ export class JwtModel {
     email = "";
     pathImage = "";
     isAuthenticated = false;
-    roles = [];
+    roles = new Array<string>();
     token = "";
     message = null;
     expiresOn = "";

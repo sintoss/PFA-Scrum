@@ -4,5 +4,5 @@ export class ScrumMaster {
     username!: string;
     email!: string;
     password!: string;
-    role: string = 'ScrumMaster';
+    discriminator!: string;
 }

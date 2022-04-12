@@ -25,6 +25,10 @@ export class JwtService implements HttpInterceptor{
   {
     return this.jwt.id;
   }
+  hasRole(role: string):boolean
+  {
+    return this.jwt.roles.includes(role);
+  }
   getObject(): Object
   {
     return {
