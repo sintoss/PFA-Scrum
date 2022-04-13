@@ -1,4 +1,5 @@
-﻿using BackEnd.Models;
+﻿using BackEnd.Helpers;
+using BackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -39,6 +40,32 @@ namespace BackEnd.Controllers
             return tache;
         }
 
+
+        [HttpGet("StoryTaches/{storyId}/{pg}/{pgs}/{desc?}")]
+        public async Task<IActionResult> GetStoriesByBacklog(int storyId, int pg = 1, int pgs = 5, string desc = " ")
+        {
+            List<Tache> stories = await _context.Taches.Where(s => s.StoryId == storyId
+                                                                   &&
+                                                                   s.Libelle.Contains(
+                                                                       (string.IsNullOrWhiteSpace(desc)) ? "" : desc))
+                .ToListAsync();
+
+            int pageSize = (pgs <= 7) ? pgs : 5;
+
+            if (pg < 1) pg = 1;
+
+            int recscount = stories.Count();
+
+            var pager = new Pager(recscount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = stories.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            return Ok(new {data, pager});
+        }
+
+
         // PUT: api/Taches/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -78,7 +105,7 @@ namespace BackEnd.Controllers
             _context.Taches.Add(tache);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTache", new { id = tache.Id }, tache);
+            return CreatedAtAction("GetTache", new {id = tache.Id}, tache);
         }
 
         // DELETE: api/Taches/5
