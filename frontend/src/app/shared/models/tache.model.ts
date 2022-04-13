@@ -1,8 +1,14 @@
 export class TacheModel {
-  constructor(
-    libelle: string,
-    dateCreation: Date,
-    storyId: number,
-  ) {
+
+
+  id!: number;
+  libelle!: string;
+  dateCreation!: Date;
+  dateDerniereModification!: Date;
+  etat!: number;
+  storyId!: number;
+
+
+  constructor() {
   }
 }
