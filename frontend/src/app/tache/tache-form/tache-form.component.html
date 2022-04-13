@@ -1,5 +1,6 @@
 <!-- Button trigger modal -->
 <button
+  (click)="getStoryList()"
   class="btn btn-success font-weight-bolder font-size-sm"
   data-target="#staticBackdrop"
   data-toggle="modal"
@@ -26,6 +27,7 @@
           class="close"
           data-dismiss="modal"
           type="button"
+
         >
           <i aria-hidden="true" class="ki ki-close"></i>
         </button>
@@ -36,21 +38,21 @@
             <div class="form-group">
               <label>Storie :</label>
               <select class="form-control form-control-solid" formControlName="storyId">
-                <option *ngFor="let story of story" [ngValue]="story.id">{{story.id}}-{{story.description}}
-                  -{{story.dateCreation}}</option>
+                <option *ngFor="let story of story" [ngValue]="story.id">{{story.id}}-{{story.description | slice:0:20}}
+                  -{{story.dateCreation | date:'yy/mm/dd'}}</option>
               </select>
             </div>
             <div class="form-group">
               <label for="Libelle">Libelle :</label>
               <textarea class="form-control form-control-solid" formControlName="Libelle"
-                   id="Libelle" name="Libelle" placeholder="La description de la tache..." rows="3" type="text"></textarea>
+                        id="Libelle" name="Libelle" placeholder="La description de la tache..." rows="3"
+                        type="text"></textarea>
             </div>
           </div>
-          <p>{{this.registerForm.value | json}}</p>
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-primary mr-2" data-dismiss="modal" type="reset">Close</button>
+          <button (click)="closeModal()" class="btn btn-primary mr-2" data-dismiss="modal" type="reset">Close</button>
           <button (click)="onSubmit()" class="btn btn-secondary" data-dismiss="modal" type="submit">Submit</button>
         </div>
       </form>

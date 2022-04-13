@@ -1,8 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TacheService} from '../../shared/services/tache.service';
 import {TacheModel} from '../../shared/models/tache.model';
 import {FormControl, FormGroup} from '@angular/forms';
-import {TachmangerService} from '../../shared/services/tachmanger.service';
+import {Story} from '../../shared/models/story.model';
+import {StoryService} from '../../shared/services/story.service';
+import Swal from 'sweetalert2';
+import {TachManagerService} from '../../shared/services/tach-manager.service';
 
 
 @Component({
@@ -12,51 +15,38 @@ import {TachmangerService} from '../../shared/services/tachmanger.service';
 })
 export class TacheFormComponent implements OnInit {
   registerForm!: FormGroup;
+  story: Story[];
+  _tache: TacheModel = new TacheModel();
 
-  readonly story: any = [
-    {
-      'id': 1,
-      'description': 'story desc',
-      'dateCreation': '2022-04-03T00:00:00',
-      'dateDerniereModification': null,
-      'commentaire': null,
-      'backlogId': 1,
-      'backlog': null,
-      'taches': null,
-      'sprintStories': null,
-      'deloppeurStories': null,
-      'testeurStories': null
-    },
-    {
-      'id': 2,
-      'description': 'story desc',
-      'dateCreation': '2022-04-03T00:00:00',
-      'dateDerniereModification': null,
-      'commentaire': null,
-      'backlogId': 1,
-      'backlog': null,
-      'taches': null,
-      'sprintStories': null,
-      'deloppeurStories': null,
-      'testeurStories': null
-    }
-  ];
+  // private storyTaches: TacheModel[];
 
-  constructor(private addTache: TacheService , private tachmanger : TachmangerService ) {
+  constructor(private tacheService: TacheService, private storyService: StoryService, private tacheManager: TachManagerService) {
+    this.story = new Array<Story>();
+    // this.storyTaches = new Array<TacheModel>();
   }
 
   onSubmit() {
-    /*this.addTache.postTaches(new TacheModel(
-      this.registerForm.value.Libelle,
-      new Date(),
-      this.registerForm.value.storyId)).subscribe(
-      response => console.log(response),
-      error => console.log(error)
-    );
-    this.registerForm.reset();*/
-    console.log(this.tachmanger.getValue())
-
+    this._tache.libelle = this.registerForm.value.Libelle;
+    this._tache.dateCreation = new Date();
+    this._tache.dateDerniereModification = new Date();
+    this._tache.storyId = this.registerForm.value.storyId;
+    this.tacheService.postTaches(this._tache).subscribe(
+      () => {
+        Swal.fire({
+          title: 'la tâche a été ajoutée avec succès',
+          type: 'success',
+        });
+        this.tacheManager.sendClickEvent(this._tache.storyId);
+      }, error => console.log(error));
+    this.registerForm.reset();
+    // this.getStoryTaches(this.registerForm.value.storyId);
   }
+
+  /* getStoryTaches(storyId: number) {
+     this.tacheService.getStoryTaches(storyId).subscribe(
+       response => this.storyTaches.push(...response),
+       error => console.log(error));
+   }*/
 
   ngOnInit(): void {
     this.initForm();
@@ -67,6 +57,16 @@ export class TacheFormComponent implements OnInit {
       storyId: new FormControl(),
       Libelle: new FormControl()
     });
+  }
+
+  getStoryList() {
+    this.story = [];
+    this.storyService.getStoryList().subscribe(
+      response => this.story.push(...response));
+  }
+
+  closeModal() {
+    this.registerForm.reset();
   }
 
 }

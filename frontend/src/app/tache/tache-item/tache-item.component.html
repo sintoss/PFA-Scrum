@@ -1,18 +1,207 @@
-<tr>
-    <td class="pl-0 py-8">
-        <div class="d-flex align-items-center">
-            <div>
-                <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, ducimus!</a>
-            </div>
+<!--<div *ngIf="">-->
+<div *ngIf="storyTaches.length; else content">
+
+  <tr *ngFor="let tache of storyTaches" style="word-break: break-all">
+    <td class="pl-0 py-8" style="width: 30% !important;">
+      <div class="d-flex align-items-center">
+        <div>
+          <a
+            class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"
+          >{{ tache.libelle }}</a
+          >
         </div>
+      </div>
     </td>
     <td>
-        <strong class="text-dark-75 font-weight-bolder d-block font-size-lg">11-Mars-2022</strong>
+      <strong class="text-dark-75 font-weight-bolder d-block font-size-lg">{{
+        tache.dateCreation | date: "dd-MM-yyyy"
+        }}</strong>
     </td>
-    <td>
-        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">-</span>
+    <td class="text-right">
+    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{
+      tache.dateDerniereModification | date: "dd-MM-yyyy"
+      }}</span>
     </td>
-    <td>
-        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">To Do</span>
+    <td class="text-right">
+    <span class="text-dark-75 font-weight-bolder font-size-lg" style="margin-right: 5px !important;">{{
+      etatCasting(tache.etat)
+      }}</span><a
+      (click)="editForm(tache)"
+      class="btn btn-icon btn-light-success btn-hover-success btn-sm mr-3"
+      data-target="#editModal"
+      data-toggle="modal"
+      type="button"
+    >
+                      <span class="svg-icon svg-icon-success svg-icon-2x"
+                      ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Design\Edit.svg--><svg
+                        height="24px"
+
+                        viewBox="0 0 24 24"
+                        width="24px"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                          <g
+                            fill="none"
+                            fill-rule="evenodd"
+                            stroke="none"
+                            stroke-width="1"
+                          >
+                            <rect height="24" width="24" x="0" y="0"/>
+                            <path
+                              d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
+                              fill="#000000"
+                              fill-rule="nonzero"
+                              transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "
+                            />
+                            <rect
+                              fill="#000000"
+                              height="2"
+                              opacity="0.3"
+                              rx="1"
+                              width="15"
+                              x="5"
+                              y="20"
+                            />
+                          </g></svg
+                      ><!--end::Svg Icon--></span
+                      >
+    </a>
+      <a
+        (click)="deleteTache(tache.id)"
+        class="btn btn-icon btn-light-danger btn-hover-danger btn-sm"
+      >
+      <span class="svg-icon svg-icon-danger svg-icon-2x"
+      ><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Files\Deleted-file.svg--><svg
+        height="24px"
+        viewBox="0 0 24 24"
+        width="24px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+                          <g
+                            fill="none"
+                            fill-rule="evenodd"
+                            stroke="none"
+                            stroke-width="1"
+                          >
+                            <polygon points="0 0 24 0 24 24 0 24"/>
+                            <path
+                              d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
+                              fill="#000000"
+                              fill-rule="nonzero"
+                              opacity="0.3"
+                            />
+                            <path
+                              d="M10.5857864,13 L9.17157288,11.5857864 C8.78104858,11.1952621 8.78104858,10.5620972 9.17157288,10.1715729 C9.56209717,9.78104858 10.1952621,9.78104858 10.5857864,10.1715729 L12,11.5857864 L13.4142136,10.1715729 C13.8047379,9.78104858 14.4379028,9.78104858 14.8284271,10.1715729 C15.2189514,10.5620972 15.2189514,11.1952621 14.8284271,11.5857864 L13.4142136,13 L14.8284271,14.4142136 C15.2189514,14.8047379 15.2189514,15.4379028 14.8284271,15.8284271 C14.4379028,16.2189514 13.8047379,16.2189514 13.4142136,15.8284271 L12,14.4142136 L10.5857864,15.8284271 C10.1952621,16.2189514 9.56209717,16.2189514 9.17157288,15.8284271 C8.78104858,15.4379028 8.78104858,14.8047379 9.17157288,14.4142136 L10.5857864,13 Z"
+                              fill="#000000"
+                            />
+                          </g></svg
+      ><!--end::Svg Icon--></span
+      >
+      </a>
     </td>
-</tr>
+
+  </tr>
+
+
+  <!-- Modal -->
+  <div
+    aria-hidden="true"
+    aria-labelledby="staticBackdropLabel"
+    class="modal fade"
+    data-backdrop="static"
+    data-keyboard="false"
+    id="editModal"
+    tabindex="-1"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modifier La tache</h5>
+          <button
+            aria-label="Close"
+            class="close"
+            data-dismiss="modal"
+            type="button"
+
+          >
+            <i aria-hidden="true" class="ki ki-close"></i>
+          </button>
+        </div>
+        <form (ngSubmit)="onEdit()" class="form">
+          <div class="modal-body">
+            <div class="card-body">
+              <div class="form-group">
+                <label>Storie :</label>
+                <select (ngModelChange)="tacheForm.storyId=$event" [ngModel]="tacheForm?.storyId"
+                        class="form-control form-control-solid" name="storyId">
+                  <option
+                    *ngFor="let story of story" [ngValue]="story.id"
+                  >{{story.id}}
+                    -{{story.description | slice:0:20}}
+                    -{{story.dateCreation | date : 'yy/mm/dd'}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Libelle">Libelle :</label>
+                <textarea
+                  (ngModelChange)="tacheForm.libelle=$event"
+                  [ngModel]="tacheForm?.libelle"
+                  class="form-control form-control-solid" id="libelle"
+                  name="libelle"
+                  placeholder="La description de la tache..." rows="3" type="text"></textarea>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary mr-2" data-dismiss="modal" type="reset">Close
+            </button>
+            <button (click)="onEdit()" class="btn btn-secondary" data-dismiss="modal" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="pager.totalPages > 0" class="d-flex justify-content-between align-items-center flex-wrap">
+  <div class="d-flex flex-wrap py-2 mr-3">
+    <div>
+      <a (click)="givepg(1)" class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i
+        class="ki ki-bold-double-arrow-back icon-xs"></i></a>
+      <a (click)="givepg(pager.currentPage-1)" class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i
+        class="ki ki-bold-arrow-back icon-xs"></i></a>
+    </div>
+    <a (click)="givepg(i+1)"
+       *ngFor="let item of [].constructor(pager.endPage); let i = index"
+       [ngClass]="i == pager.currentPage-1 ? 'active' : ''"
+       class="btn btn-icon btn-sm border-0 btn-hover-success mr-2 my-1">
+      {{i + 1}} </a>
+    <div>
+      <a (click)="givepg((pager.currentPage+1 <= pager.endPage) ? pager.currentPage+1 : pager.endPage )"
+         class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
+      <a (click)="givepg(pager.endPage)" class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i
+        class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+    </div>
+  </div>
+  <div class="d-flex align-items-center py-3">
+    <select
+      #mySelect
+      (change)='onOptionsSelected(mySelect.value)'
+      class="form-control form-control-sm text-success font-weight-bold mr-4 border-0 bg-light-success"
+      style="width: 75px;">
+      <option value="3">3</option>
+      <option selected value="5">5</option>
+      <option value="7">7</option>
+    </select>
+    <span class="text-muted">Displaying {{pager.currentPage}} of {{pager.totalPages}} pages</span>
+  </div>
+</div>
+
+
+<ng-template #content>
+  <div class="mt-5 alert alert-custom alert-notice alert-light-warning shadow fade show "
+       role="alert">
+    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+    <div class="alert-text">Opps is seems that you have zero tasks</div>
+  </div>
+</ng-template>
