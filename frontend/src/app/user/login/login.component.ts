@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
          }).then((result) => {
            if (result.value) {
              this.route.navigateByUrl('projets');
+             window.location.reload();
              // For more information about handling dismissals please visit
              // https://sweetalert2.github.io/#handling-dismissals
            }
