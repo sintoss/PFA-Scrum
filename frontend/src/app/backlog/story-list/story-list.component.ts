@@ -8,8 +8,8 @@ import {environment} from '../../../environments/environment';
 import Swal from 'sweetalert2';
 import {HttpClient} from '@angular/common/http';
 import {Pager} from '../../shared/models/pager.model';
-import {TachmangerService} from '../../shared/services/tachmanger.service';
 import {SprintService} from '../../shared/services/sprint.service';
+import {TachManagerService} from '../../shared/services/tach-manager.service';
 
 @Component({
   selector: 'app-story-list',
@@ -28,9 +28,10 @@ export class StoryListComponent implements OnInit {
   ImagePath: any;
 
 
-  constructor(private http: HttpClient, private backlogService: BacklogService ,private service: StoryService, private router: ActivatedRoute
-  ,private tachmanger : TachmangerService , private sprint:SprintService ) {
-    this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
+  // tslint:disable-next-line:max-line-length
+  constructor(private http: HttpClient, private backlogService: BacklogService, private service: StoryService, private router: ActivatedRoute
+    , private tacheManager: TachManagerService, private sprint: SprintService) {
+    this.idproject = (Number)(this.router.snapshot.paramMap.get('id'));
     this.checkIfBacklogExist();
     this.value = new Story();
   }
@@ -94,8 +95,10 @@ export class StoryListComponent implements OnInit {
           type: 'success',
         });
         this.sprint.emitData(true);
-        let model = document.getElementById('exampleModal');
-        if(model != null)model.click();
+        const model = document.getElementById('exampleModal');
+        if (model != null) {
+          model.click();
+        }
         this.story = new Story();
         this.FillList();
       }, error => console.log(error));
@@ -128,48 +131,50 @@ export class StoryListComponent implements OnInit {
     this.FillList();
   }
 
- deleteItem(s:any){
-   this.value=s;
-   Swal.fire({
-     title: 'Are you sure?',
-     text: "You won't be able to revert this!",
-     type: 'warning',
-     showCancelButton: true,
-     confirmButtonColor: '#3085d6',
-     cancelButtonColor: '#d33',
-     confirmButtonText: 'Yes, delete it!'
-   }).then((result) => {
-     if (result.value) {
-       this.service.deleteStory(this.value.id).subscribe(res=>{
-         Swal.fire(
-           'Deleted!',
-           'Your file has been deleted.',
-           'success'
-         );
-         this.sprint.emitData(true);
-         this.FillList();
-       },error => console.log(error));
-     }
-   })
+  // tslint:disable-next-line:typedef
+  deleteItem(s: any) {
+    this.value = s;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.service.deleteStory(this.value.id).subscribe(res => {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          );
+          this.sprint.emitData(true);
+          this.FillList();
+        }, error => console.log(error));
+      }
+    });
 
 
   }// end of function
 
-  onOptionsSelected(num:any){
-     this.pg = 1;
-     this.pager.pageSize = num;
-     this.FillList();
+  // tslint:disable-next-line:typedef
+  onOptionsSelected(num: any) {
+    this.pg = 1;
+    this.pager.pageSize = num;
+    this.FillList();
   }
 
   onSearchChange(searchValue: any): void {
     this.pg = 1;
-     this.desc = searchValue.target.value;
-     this.FillList();
+    this.desc = searchValue.target.value;
+    this.FillList();
   }
 
   // tslint:disable-next-line:typedef
   AssignUserStory(storyId: number) {
-    this.TacheManager.sendClickEvent(storyId);
+    this.tacheManager.sendClickEvent(storyId);
   }
 
   // tslint:disable-next-line:typedef
