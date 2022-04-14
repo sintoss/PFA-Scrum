@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ProjetModel } from 'src/app/shared/models/projet-model.model';
-import { ProjetService } from 'src/app/shared/services/projet.service';
+import {Component, OnInit} from "@angular/core";
+import {ProjetModel} from "src/app/shared/models/projet-model.model";
+import {ProjetService} from "src/app/shared/services/projet.service";
 
 @Component({
-  selector: 'app-projet-list',
-  templateUrl: './projet-list.component.html',
-  styleUrls: ['./projet-list.component.css']
+  selector: "app-projet-list",
+  templateUrl: "./projet-list.component.html",
+  styleUrls: ["./projet-list.component.css"],
 })
 export class ProjetListComponent implements OnInit {
   projets: ProjetModel[];
@@ -18,5 +18,4 @@ export class ProjetListComponent implements OnInit {
       res => this.projets.push(...res)
     );
   }
-
 }

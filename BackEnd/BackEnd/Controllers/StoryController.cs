@@ -30,23 +30,22 @@ namespace BackEnd.Controllers
         [HttpGet("{bckid}/{pg}/{pgs}/{desc?}")]
         public async Task<IActionResult> GetStoriesByBacklog(int bckid, int pg = 1, int pgs = 5, string desc = " ")
         {
-            List<Story> stories = await _context.Stories.Where(s => s.BacklogId == bckid
+            var complexType = await _context.Stories.Where(s => s.BacklogId == bckid
                                                                     &&
                                                                     s.Description.Contains(
-                                                                        (string.IsNullOrWhiteSpace(desc)) ? "" : desc))
-                .ToListAsync();
+                                                                        (string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToListAsync();
 
             int pageSize = (pgs <= 7) ? pgs : 5;
 
             if (pg < 1) pg = 1;
 
-            int recscount = stories.Count();
+            int recscount = complexType.Count();
 
             var pager = new Pager(recscount, pg, pageSize);
 
             int recSkip = (pg - 1) * pageSize;
 
-            var data = stories.Skip(recSkip).Take(pager.PageSize).ToList();
+            var data = complexType.Skip(recSkip).Take(pager.PageSize).ToList();
 
             var newData = new List<StoryMv>();
 
@@ -58,11 +57,13 @@ namespace BackEnd.Controllers
                         id = d.Id,
                         description = d.Description,
                         dateCreation = d.DateCreation,
-                        dateDerniereModification = (System.DateTime) d.DateDerniereModification,
+                        dateDerniereModification = (System.DateTime)d.DateDerniereModification,
                         Commentaire = d.Commentaire,
                         BacklogId = d.BacklogId,
-                        pathAvtar = GetImage(d.Id)
-                    });
+                        pathAvtar = GetImage(d.Id),
+                        Libelle = _context.sprintStories.Where(sp => sp.StoryId == d.Id).Join(_context.Sprints, sp => sp.SprintId, s => s.Id,
+                          (sprintstory, sprint) =>  sprint.Libelle ).FirstOrDefault()
+                    }) ;
             });
 
             return Ok(new { newData, pager });
@@ -87,7 +88,7 @@ namespace BackEnd.Controllers
             {
                 return BadRequest();
             }
-
+            story.DateDerniereModification = System.DateTime.Now;
             _context.Entry(story).State = EntityState.Modified;
 
             try
@@ -114,9 +115,10 @@ namespace BackEnd.Controllers
         [HttpPost]
         public ActionResult<Story> PostInspection(Story story)
         {
+            story.DateCreation = System.DateTime.Now;
+            story.DateDerniereModification = System.DateTime.Now;
             _context.Stories.Add(story);
             _context.SaveChangesAsync();
-
             return new Story();
         }
 

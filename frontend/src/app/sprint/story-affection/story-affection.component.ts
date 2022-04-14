@@ -64,6 +64,7 @@ export class StoryAffectionComponent implements  OnInit {
     }
   }
 
+
   affect(){
     if(this.currentsprint){
         this.service.addMyListOfSotryToSprint({storylist:this.StoryList , sprintid : this.currentsprint.id})
@@ -74,6 +75,8 @@ export class StoryAffectionComponent implements  OnInit {
                      type : "success"
                    });
                    this.Fillist();
+                   this.StoryList = [];
+                   this.service.emitData(false);
                    this.closeFormWhenAffect.emit(true);
                  }
           });

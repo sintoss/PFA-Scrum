@@ -30,7 +30,7 @@ export class SprintDetailComponent implements OnInit{
 
   FillstorysprintList(){
       this.service.getAllOfstoryOfthisSprint(this.pg,this.pager.pageSize,this.lib).subscribe(res=>{
-        console.log(res);
+        //console.log(res);
         this.storysprintList$ = (<any>res).data;
         this.pager = (<any>res).pager;
       },error => console.log(error));
