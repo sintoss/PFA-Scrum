@@ -31,7 +31,6 @@ export class ShowSprintComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   checkIfBacklogExist(){

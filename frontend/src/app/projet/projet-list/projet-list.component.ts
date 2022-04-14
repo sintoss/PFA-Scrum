@@ -17,7 +17,6 @@ export class ProjetListComponent implements OnInit {
     this.projetService.getMyProjets().subscribe(
       res => this.projets.push(...res)
     );
-    console.log(this.projets);
   }
 
 }
