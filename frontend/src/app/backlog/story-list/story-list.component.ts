@@ -112,17 +112,17 @@ export class StoryListComponent implements OnInit {
   // tslint:disable-next-line:typedef
   onUpdating() {
     this.service.updateStory(this.value.id, this.value)
-      .subscribe(() => {
-        Swal.fire({
-          title: 'Le user story a été modifier avec succes',
-          type: 'success',
-        });
+      .subscribe(res => {
+          this.FillList();
+          Swal.fire({
+            title: 'Le user story a été modifier avec succes',
+            type: 'success',
+          });
       }, error => console.log(error));
     const model = document.getElementById('exampleModal1');
     if (model != null) {
       model.click();
     }
-    this.FillList();
   }
 
   // tslint:disable-next-line:typedef

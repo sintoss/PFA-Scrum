@@ -38,6 +38,7 @@ export class AddEditSprintComponent implements OnInit {
                       title : "new sprint was added with succes",
                       type : "success"
                     });
+                    this.service.emitData(false);
                     this.refPageancClose.emit(true);
                   };
                 });

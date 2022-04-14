@@ -17,5 +17,7 @@ namespace BackEnd.ViewModel
         public string Commentaire { get; set; }
         public int BacklogId { get; set; }
 
+        public string Libelle { get; set; }
+
     }
 }
