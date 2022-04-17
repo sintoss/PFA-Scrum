@@ -13,7 +13,8 @@
       </div>
     </div>
 
-    <button (click)="createBacklog()" *ngIf="backlog===undefined"
+     <span *ngIf="jwtService.hasRole('ScrumMaster')">
+    <button  (click)="createBacklog()" *ngIf="backlog===undefined"
             class="btn btn-success font-weight-bolder font-size-sm mx-2">
       Creer Backlog
     </button>
@@ -22,6 +23,7 @@
        data-toggle="modal" href="#">
       Ajouter User Story
     </a>
+     </span>
 
 
   </div>
@@ -39,7 +41,7 @@
           <th class="text-center" style="width: 20%">Sprint</th>
           <th style="width: 20%">Date Creation</th>
           <th style="width: 20%">Date Dernier Modification</th>
-          <th class="text-center" style="width: 20%">Action</th>
+          <th *ngIf="jwtService.hasRole('ScrumMaster')" class="text-center" style="width: 20%">Action</th>
         </tr>
         </thead>
         <tbody id="datatable">
@@ -72,7 +74,9 @@
             <span
               class="text-dark-75 font-weight-bolder d-block font-size-lg">{{item.dateDerniereModification | date: 'dd-MM-yyyy'}}</span>
           </td>
-          <td style="width: 20%" class="text-center pr-0 px-2">
+          <td style="width: 20%" class="text-center pr-0 px-2" *ngIf="jwtService.hasRole('ScrumMaster')">
+
+
             <a (click)="EditModel(item)" class="btn btn-icon btn-light-success btn-hover-success btn-sm mr-3"
                data-target="#exampleModal1" data-toggle="modal">
             <span class="svg-icon svg-icon-success svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Design\Edit.svg--><svg

@@ -14,6 +14,7 @@ import {ProjetService} from '../../shared/services/projet.service';
 import {Projet} from '../../shared/models/projet.model';
 import {DetectTeamProjectService} from '../../shared/services/detect-team-project.service';
 import {DeveloppeurStoryService} from '../../shared/services/developpeur-story.service';
+import {JwtService} from '../../shared/services/jwt.service';
 
 @Component({
   selector: 'app-story-list',
@@ -38,7 +39,7 @@ export class StoryListComponent implements OnInit {
   // tslint:disable-next-line:max-line-length
   constructor(private http: HttpClient, private backlogService: BacklogService, private service: StoryService, private router: ActivatedRoute
     , private tacheManager: TachManagerService, private sprint: SprintService , public projetService: ProjetService , private teamchange : DetectTeamProjectService
-   , private devstory:DeveloppeurStoryService ) {
+   , private devstory:DeveloppeurStoryService ,  public jwtService: JwtService ) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get('id'));
     this.checkIfBacklogExist();
     this.value = new Story();
@@ -220,6 +221,7 @@ export class StoryListComponent implements OnInit {
           this.devstory.insertDevStory({developpeurId:this.userId,storyId : this.storyId}).subscribe(res=>{
             if(res){
                  this.FillList();
+              this.sprint.emitData(true);
             }
           })
       }
