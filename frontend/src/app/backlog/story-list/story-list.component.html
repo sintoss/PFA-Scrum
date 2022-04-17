@@ -105,6 +105,22 @@
             </a>
 
 
+               <!-- Button for affect user story to only dev in this project  -->
+
+                  <a (click)="assignStoryId(item.id)" class="btn btn-icon btn-light btn-hover-primary btn-sm ml-3" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+
+                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                           <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                           <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                       </svg>
+
+                    </span>
+                  </a>
+
+              <!-- ...  -->
+
+
           </td>
         </tr>
 
@@ -224,6 +240,52 @@
           <button (click)="onSubmit()" class="btn btn-primary" type="submit">Save</button>
         </form>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for affect dev to story -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
+  id="lgmodel" >
+  <div class="modal-dialog  modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Affect User Story to Dev</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <ng-container *ngIf="project != undefined">
+        <form  class="form text-center">
+          <h4 class="text-left my-5">
+            Choisir les membre de l'equipe pour ce projet :
+          </h4>
+          <div class="membredata" id="datatable2">
+            <article *ngFor="let user of project.utilisateurProjets">
+              <input name= "rbutton" type="radio"
+                     (change)="changeStatus(user.utilisateur.id,$event)" />
+              <div class="membre-content p-2">
+                <div class="membre-img">
+                  <img
+                    alt="{{ user.utilisateur.userName }}"
+                    class="w-100 h-100 rounded-circle"
+                    src="https://localhost:44349/{{ user.utilisateur.pathImage }}"
+                  />
+                </div>
+                <div class="membre-detail text-left">
+                  <h5 class="mb-0">{{ user.utilisateur.userName }}</h5>
+                  <span>{{ user.utilisateur.discriminator }}</span>
+                </div>
+              </div>
+            </article>
+          </div>
+          <button class="btn btn-primary" type="submit" (click)="addstorytomembre()">Ajouter</button>
+        </form>
+         </ng-container>
       </div>
     </div>
   </div>

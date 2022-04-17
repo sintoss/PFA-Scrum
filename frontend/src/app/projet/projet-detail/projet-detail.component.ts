@@ -10,6 +10,7 @@ import {ProjetService} from 'src/app/shared/services/projet.service';
 import {UserServiceService} from 'src/app/shared/services/user-service.service';
 import {environment} from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import {DetectTeamProjectService} from '../../shared/services/detect-team-project.service';
 
 @Component({
   selector: 'app-projet-detail',
@@ -24,7 +25,8 @@ export class ProjetDetailComponent implements OnInit {
   usersInput: Array<Utilisateur>;
   usersProjets: Array<UtilisateurProjet>;
 
-  constructor(private router: ActivatedRoute, private projetService: ProjetService, private http: HttpClient, private userService: UserServiceService, public jwtService: JwtService) {
+  constructor(private router: ActivatedRoute, private projetService: ProjetService, private http: HttpClient, private userService: UserServiceService, public jwtService: JwtService
+  , private teamchange : DetectTeamProjectService) {
     this.projet = new Projet();
     this.users = new Array<Utilisateur>();
     this.usersInput = new Array<Utilisateur>();
@@ -66,10 +68,8 @@ export class ProjetDetailComponent implements OnInit {
   }
 
   addMembres() {
-    console.log(this.usersProjets);
     this.projetService.setProjetMembres(this.projet.id, this.usersProjets).subscribe(
       res => {
-        console.log(res);
         this.projet.utilisateurProjets = [...res];
         this.usersProjets = [];
         Swal.fire(
@@ -77,6 +77,7 @@ export class ProjetDetailComponent implements OnInit {
           'Le membre a ete ajouter avec succes.',
           'success'
         );
+        this.teamchange.teamchange(true);
         let model = document.getElementById('membremodal');
         if (model != null) {
           model.click();
@@ -105,6 +106,7 @@ export class ProjetDetailComponent implements OnInit {
               'Le membre a ete supprimer avec succes.',
               'success'
             );
+            this.teamchange.teamchange(true);
           },
           error => console.log(error));
       }

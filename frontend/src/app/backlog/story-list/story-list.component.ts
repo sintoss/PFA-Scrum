@@ -10,6 +10,10 @@ import {HttpClient} from '@angular/common/http';
 import {Pager} from '../../shared/models/pager.model';
 import {SprintService} from '../../shared/services/sprint.service';
 import {TachManagerService} from '../../shared/services/tach-manager.service';
+import {ProjetService} from '../../shared/services/projet.service';
+import {Projet} from '../../shared/models/projet.model';
+import {DetectTeamProjectService} from '../../shared/services/detect-team-project.service';
+import {DeveloppeurStoryService} from '../../shared/services/developpeur-story.service';
 
 @Component({
   selector: 'app-story-list',
@@ -26,18 +30,36 @@ export class StoryListComponent implements OnInit {
   desc = '';
   idproject!: number;
   ImagePath: any;
+  project!:Projet;
+  userId!:string;
+  storyId!:string;
 
 
   // tslint:disable-next-line:max-line-length
   constructor(private http: HttpClient, private backlogService: BacklogService, private service: StoryService, private router: ActivatedRoute
-    , private tacheManager: TachManagerService, private sprint: SprintService) {
+    , private tacheManager: TachManagerService, private sprint: SprintService , public projetService: ProjetService , private teamchange : DetectTeamProjectService
+   , private devstory:DeveloppeurStoryService ) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get('id'));
     this.checkIfBacklogExist();
     this.value = new Story();
+    this.teamchange.returnobj().subscribe(res=>{
+      if(res){
+          this.GetMembre();
+      }
+    });
   }
 
 
   ngOnInit(): void {
+    this.GetMembre();
+  }
+
+  GetMembre(){
+    this.projetService.getProjetDetail(this.idproject).subscribe(
+      res => {
+        this.project = res;
+      }
+    );
   }
 
   // tslint:disable-next-line:typedef
@@ -180,6 +202,38 @@ export class StoryListComponent implements OnInit {
   // tslint:disable-next-line:typedef
   GetAvtareUsingUserStory(pathImg: string) {
     return `https://localhost:44349/${pathImg}`;
+  }
+
+  changeStatus(id: string , e : any){
+    if(e.target.checked){
+         this.userId = id;
+    }
+  }
+
+  assignStoryId(str:string){
+    this.storyId = str;
+  }
+
+  addstorytomembre(){
+      if(this.userId && this.storyId){
+          //add story to dev
+          this.devstory.insertDevStory({developpeurId:this.userId,storyId : this.storyId}).subscribe(res=>{
+            if(res){
+                 this.FillList();
+            }
+          })
+      }
+      let model = document.getElementById('lgmodel');
+      if(model != null) model.click();
+      this.userId = "";
+      this.clearRadio();
+  }
+
+  clearRadio(){
+    const chbx = document.getElementsByName("rbutton") ;
+    for(let i=0; i < chbx.length; i++) {
+      (<HTMLInputElement>chbx[i]).checked = false;
+    }
   }
 
 }
