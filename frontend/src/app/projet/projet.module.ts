@@ -17,6 +17,7 @@ import {NgApexchartsModule} from "ng-apexcharts";
 import {BacklogModule} from '../backlog/backlog.module';
 import {AppModule} from '../app.module';
 import {SprintModule} from '../sprint/sprint.module';
+import { BoardComponent } from './board/board.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {SprintModule} from '../sprint/sprint.module';
     ProjetFormComponent,
     SprintComponent,
     BdchartComponent,
+    BoardComponent,
   ],
   imports: [
     CommonModule,

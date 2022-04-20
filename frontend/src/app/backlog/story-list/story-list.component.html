@@ -25,7 +25,6 @@
     </a>
      </span>
 
-
   </div>
   <!--end::Header-->
   <!--begin::Body-->
@@ -187,8 +186,10 @@
 
 
           <div>
-          <a (click)="givepg((pager.currentPage+1 <= pager.endPage) ? pager.currentPage+1 : pager.endPage )"  class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
-          <a (click)="givepg(pager.endPage)"  class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+            <a (click)="givepg((pager.currentPage+1 <= pager.endPage) ? pager.currentPage+1 : pager.endPage )"
+               class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
+            <a (click)="givepg(pager.endPage)" class="btn btn-icon btn-sm btn-light-success mr-2 my-1"><i
+              class="ki ki-bold-double-arrow-next icon-xs"></i></a>
           </div>
 
         </div>
