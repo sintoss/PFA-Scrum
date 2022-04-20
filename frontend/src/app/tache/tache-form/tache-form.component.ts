@@ -6,6 +6,7 @@ import {Story} from '../../shared/models/story.model';
 import {StoryService} from '../../shared/services/story.service';
 import Swal from 'sweetalert2';
 import {TachManagerService} from '../../shared/services/tach-manager.service';
+import {JwtService} from '../../shared/services/jwt.service';
 
 
 @Component({

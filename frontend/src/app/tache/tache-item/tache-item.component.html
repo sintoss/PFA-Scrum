@@ -18,11 +18,11 @@
         }}</strong>
     </td>
     <td class="text-right">
-    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{
+    <span class="text-dark-75 text-center font-weight-bolder d-block font-size-lg">{{
       tache.dateDerniereModification | date: "dd-MM-yyyy"
       }}</span>
     </td>
-    <td class="text-right">
+    <td  *ngIf="jwtService.hasRole('ScrumMaster')" class="text-right">
     <span class="text-dark-75 font-weight-bolder font-size-lg" style="margin-right: 5px !important;">{{
       etatCasting(tache.etat)
       }}</span><a

@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="card-toolbar">
-      <app-tache-form></app-tache-form>
+        <app-tache-form  *ngIf="jwtService.hasRole('ScrumMaster')"></app-tache-form>
     </div>
   </div>
   <!--end::Header-->
@@ -30,7 +30,7 @@
           </th>
           <th style="width: 120px">Date Creation</th>
           <th style="width: 80px">Date Dernier Modification</th>
-          <th style="width: 80px">Etat</th>
+          <th  *ngIf="jwtService.hasRole('ScrumMaster')" style="width: 80px">Etat</th>
         </tr>
         </thead>
         <tbody>

@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
 import Swal from 'sweetalert2';
 import {Pager} from '../../shared/models/pager.model';
 import {SearchService} from '../../shared/services/search.service';
+import {JwtService} from '../../shared/services/jwt.service';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class TacheItemComponent implements OnInit {
   @Input() desc!: string;
 
   // tslint:disable-next-line:max-line-length
-  constructor(private tacheService: TacheService, private tacheManager: TachManagerService, private storyService: StoryService, private searchService: SearchService) {
+  constructor(private tacheService: TacheService, private tacheManager: TachManagerService, private storyService: StoryService, private searchService: SearchService ,  public jwtService: JwtService) {
     this.clickEventSubscription = this.tacheManager.getClickEvent().subscribe(() => {
       this.getStoryTaches();
       this.storyTaches = [];

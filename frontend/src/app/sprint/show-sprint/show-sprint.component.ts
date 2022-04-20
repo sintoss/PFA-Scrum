@@ -7,6 +7,7 @@ import {environment} from '../../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {DetailsprintService} from '../../shared/services/detailsprint.service';
+import {JwtService} from '../../shared/services/jwt.service';
 
 @Component({
   selector: 'app-show-sprint',
@@ -25,7 +26,8 @@ export class ShowSprintComponent implements OnInit {
   idproject!:number;
   backlog!: Backlog;
 
-  constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute , private sprintstor:DetailsprintService) {
+  constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute , private sprintstor:DetailsprintService
+  ,  public jwtService: JwtService) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get("id"));
     this.checkIfBacklogExist();
   }
