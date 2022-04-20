@@ -57,6 +57,7 @@ export class StoryListComponent implements OnInit {
       .subscribe(res => {
         if (res != null) {
           this.backlog = res;
+          this.backlogService.setBackId(this.backlog.id);
           this.FillList();
         }
       }, error => console.log(error));
@@ -73,6 +74,7 @@ export class StoryListComponent implements OnInit {
         res => {
           if (res != null) {
             this.backlog = res;
+            this.backlogService.setBackId(this.backlog.id);
             this.FillList();
           }
           Swal.fire({

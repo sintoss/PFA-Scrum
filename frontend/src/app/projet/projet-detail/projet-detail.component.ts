@@ -38,7 +38,6 @@ export class ProjetDetailComponent implements OnInit {
         Object.assign(this.projet, res);
       }
     );
-    console.log(this.projet);
   }
 
   getUsers() {

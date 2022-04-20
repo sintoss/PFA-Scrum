@@ -1,13 +1,12 @@
-﻿using System;
+﻿using BackEnd.Helpers;
+using BackEnd.Models;
+using BackEnd.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BackEnd.Models;
-using BackEnd.Helpers;
-using BackEnd.ViewModel;
 
 namespace BackEnd.Controllers
 {
@@ -22,14 +21,38 @@ namespace BackEnd.Controllers
             _context = context;
         }
 
+        [HttpGet("CurrentSprint/{backId}")]
+        public async Task<ActionResult<Sprint>> GetCurrentSprint(int backId)
+        {
+            var sprint = await _context.Sprints.Where(b => b.BacklogId == backId).OrderByDescending(d => d.DateCreation)
+                .FirstAsync();
+            if (sprint == null)
+            {
+                return NotFound();
+            }
+
+            var dateCreation = sprint.DateCreation;
+            var dateFin = sprint.Dateestimeedefin;
+            var days = new List<DateTime>();
+
+            var daysLeft = ((TimeSpan)(dateFin - dateCreation)).TotalDays;
+
+            for (var i = 0; i < daysLeft; i++)
+            {
+                days.Add(new DateTime(dateCreation.AddDays(i).Ticks));
+            }
+
+            return Ok(new { sprint, days });
+        }
 
         [HttpGet("{backId}/{pg}/{pgs}/{lib?}")]
-        public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints(int backId, int pg = 1, int pgs = 5, string lib = " ")
+        public async Task<ActionResult<IEnumerable<Sprint>>> GetSprints(int backId, int pg = 1, int pgs = 5,
+            string lib = " ")
         {
             List<Sprint> sprints = await _context.Sprints.Where(s =>
-            s.BacklogId == backId
-              &&
-            s.Libelle.Contains((string.IsNullOrWhiteSpace(lib)) ? "" : lib)).ToListAsync();
+                s.BacklogId == backId
+                &&
+                s.Libelle.Contains((string.IsNullOrWhiteSpace(lib)) ? "" : lib)).ToListAsync();
 
             int pageSize = (pgs <= 7) ? pgs : 5;
 
@@ -112,10 +135,10 @@ namespace BackEnd.Controllers
         {
             var story =
                 _context.Stories
-          .Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)
-               && c.BacklogId == bckid
-                &&
-              c.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToList();
+                    .Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)
+                                && c.BacklogId == bckid
+                                &&
+                                c.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToList();
 
             var newData = new List<StoryMv>();
 
@@ -138,8 +161,10 @@ namespace BackEnd.Controllers
 
         private string GetImage(int UserStoryId)
         {
-            string path = _context.DeveloppeurStories.Where(ds => ds.StoryId == UserStoryId).Join(_context.Stories, d => d.StoryId, s => s.Id, (devstory, story) => new { devstory, story })
-                .Join(_context.Developpeurs, ds => ds.devstory.DeveloppeurId, d => d.Id, (ds, d) => new { d.pathImage }).Select(u => u.pathImage)
+            string path = _context.DeveloppeurStories.Where(ds => ds.StoryId == UserStoryId).Join(_context.Stories,
+                    d => d.StoryId, s => s.Id, (devstory, story) => new { devstory, story })
+                .Join(_context.Developpeurs, ds => ds.devstory.DeveloppeurId, d => d.Id, (ds, d) => new { d.pathImage })
+                .Select(u => u.pathImage)
                 .FirstOrDefault();
             return (string.IsNullOrEmpty(path)) ? @"Ressources\Image\anonymous.png" : path;
         }
@@ -168,15 +193,15 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("story/{sprintId}/{pg}/{pgs}/{desc?}")]
-        public ActionResult<Sprint> getstorysofsprint(int sprintId , int pg = 1, int pgs = 5, string desc = " ")
+        public ActionResult<Sprint> getstorysofsprint(int sprintId, int pg = 1, int pgs = 5, string desc = " ")
         {
-            var stories = _context.Stories.Where(s=>
-            s.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)
-            ).Join(_context.sprintStories.Where(ss=> ss.SprintId == sprintId),
-                                              s => s.Id, ss => ss.StoryId , (story, sprintstory) => new
-                                              {
-                                                  story
-                                              }).ToList();
+            var stories = _context.Stories.Where(s =>
+                s.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)
+            ).Join(_context.sprintStories.Where(ss => ss.SprintId == sprintId),
+                s => s.Id, ss => ss.StoryId, (story, sprintstory) => new
+                {
+                    story
+                }).ToList();
 
             int pageSize = (pgs <= 7) ? pgs : 5;
 
@@ -192,6 +217,5 @@ namespace BackEnd.Controllers
 
             return Ok(new { data, pager });
         }
-
     }
 }
