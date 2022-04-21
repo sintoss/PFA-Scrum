@@ -23,11 +23,15 @@ export class AddEditSprintComponent implements OnInit {
   jourTravail!:number;
 
   constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute) {
-    this.checkIfBacklogExist().subscribe(res=>{
-       if(res) {
-         this.dureeSprint = res.projet.dureeSprint;
-         this.jourTravail = res.projet.jourTravail;
-       }
+    this.service.returnSprint3().subscribe(res=>{
+      if(res){
+        this.checkIfBacklogExist().subscribe(res=>{
+          if(res) {
+            this.dureeSprint = res.projet.dureeSprint;
+            this.jourTravail = res.projet.jourTravail;
+          }
+        });
+      }
     });
   }
 

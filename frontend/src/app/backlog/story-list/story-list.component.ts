@@ -48,6 +48,11 @@ export class StoryListComponent implements OnInit {
           this.GetMembre();
       }
     });
+    this.sprint.returnSprint2().subscribe(res=>{
+      if(res){
+        this.FillList();
+      }
+    });
   }
 
 
@@ -82,6 +87,7 @@ export class StoryListComponent implements OnInit {
           this.backlog = res;
           this.backlogService.setBackId(this.backlog.id);
           this.FillList();
+          this.sprint.emitData3(true);
         }
       }, error => console.log(error));
   }
@@ -99,6 +105,7 @@ export class StoryListComponent implements OnInit {
             this.backlog = res;
             this.backlogService.setBackId(this.backlog.id);
             this.FillList();
+            this.sprint.emitData3(true);
           }
           Swal.fire({
             title: 'Le backlog a été crée avec succes',
@@ -120,6 +127,7 @@ export class StoryListComponent implements OnInit {
           type: 'success',
         });
         this.sprint.emitData(true);
+        this.sprint.emitData3(true);
         const model = document.getElementById('exampleModal');
         if (model != null) {
           model.click();

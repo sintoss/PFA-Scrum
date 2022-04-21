@@ -132,14 +132,12 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("affection/{bckid}/{desc?}")]
-        public ActionResult<IEnumerable<Story>> GetstorywithoutSprint(int bckid, string desc = " ")
+        public async Task<ActionResult<IEnumerable<Story>>> GetstorywithoutSprint(int bckid, string desc = " ")
         {
-            var story =
-                _context.Stories
-                    .Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)
-                                && c.BacklogId == bckid
-                                &&
-                                c.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToList();
+            var sto =  await _context.Stories.Where( c => c.BacklogId == bckid &&
+                                c.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToListAsync();
+
+            var story =  sto.Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)).ToList();
 
             var newData = new List<StoryMv>();
 
@@ -177,16 +175,22 @@ namespace BackEnd.Controllers
             if (!ModelState.IsValid)
                 return Ok(ModelState);
 
-            sprint.storylist.ForEach(i =>
+            if (_context.Sprints.Find(sprint.sprintid) != null 
+                && _context.Sprints.Find(sprint.sprintid).JoursRestants >= sprint.duree )
             {
-                if (_context.Stories.Find(i) != null)
+                var spr = _context.Sprints.Find(sprint.sprintid);
+                spr.JoursRestants -= sprint.duree;
+                sprint.storylist.ForEach(i =>
                 {
-                    var sprintstories = new SprintStory();
-                    sprintstories.StoryId = i;
-                    sprintstories.SprintId = sprint.sprintid;
-                    _context.sprintStories.Add(sprintstories);
-                }
-            });
+                    if (_context.Stories.Find(i) != null)
+                    {
+                        var sprintstories = new SprintStory();
+                        sprintstories.StoryId = i;
+                        sprintstories.SprintId = sprint.sprintid;
+                        _context.sprintStories.Add(sprintstories);
+                    }
+                });
+            }
 
             await _context.SaveChangesAsync();
 
