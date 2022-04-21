@@ -1,4 +1,5 @@
 ﻿using BackEnd.Models;
+using BackEnd.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -17,20 +18,51 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost]
-        public IActionResult addStoryToDev(DeveloppeurStory developpeurStory)
+        public IActionResult addStoryToDev(UtilsateurStoryMv userStory)
         {
             if (!ModelState.IsValid) return Ok("YOU HAVE SOMETHING WRONG");
-            if(context.Developpeurs.Find(developpeurStory.DeveloppeurId) != null 
-                &&
-               context.Stories.Find(developpeurStory.StoryId) != null
-                &&
-               context.DeveloppeurStories.FirstOrDefault(ds=>ds.StoryId == developpeurStory.StoryId) == null)
+
+            string msj = "You Can add only one Developer and one tester to the user story";
+
+            if(context.Stories.Find(userStory.StoryId) != null)
             {
-                developpeurStory.DateAffectation = System.DateTime.Now;
-                context.DeveloppeurStories.Add(developpeurStory);
-                context.SaveChanges();
+      
+                if(context.Developpeurs.Find(userStory.userId) != null
+                    &&
+                    !context.DeveloppeurStories.Where(d => d.StoryId == userStory.StoryId).Any())
+                {
+                    //Dev
+
+                    DeveloppeurStory devstr = new DeveloppeurStory();
+                    devstr.DeveloppeurId = userStory.userId;
+                    devstr.StoryId = userStory.StoryId;
+                    devstr.DateAffectation = System.DateTime.Now;
+                    context.DeveloppeurStories.Add(devstr);
+                    context.SaveChanges();
+                    msj = "this dev was added to the user story ";
+
+                }
+                else if(context.Testeurs.Find(userStory.userId) != null
+                    &&
+                    !context.TesteurStory.Where(d=>d.StoryId == userStory.StoryId).Any())
+                {
+                    //test
+
+                    TesteurStory teststr = new TesteurStory();
+                    teststr.TesteurId = userStory.userId;
+                    teststr.StoryId = userStory.StoryId;
+                    teststr.DateAffectation = System.DateTime.Now;
+                    context.TesteurStory.Add(teststr);
+                    context.SaveChanges();
+                    msj = "this tester was added to the user story ";
+
+                }
+
             }
-            return Ok("INSERTED");
+            
+         
+            
+            return Ok(msj);
         }
 
     }

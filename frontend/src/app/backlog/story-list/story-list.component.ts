@@ -228,10 +228,14 @@ export class StoryListComponent implements OnInit {
   addstorytomembre(){
       if(this.userId && this.storyId){
           //add story to dev
-          this.devstory.insertDevStory({developpeurId:this.userId,storyId : this.storyId}).subscribe(res=>{
+          this.devstory.insertDevStory({userId:this.userId,StoryId : this.storyId}).subscribe(res=>{
             if(res){
-                 this.FillList();
-              this.sprint.emitData(true);
+              Swal.fire(
+                '<h2>Information!</h2>',
+                '<strong>'+res+'</strong>'
+              )
+              this.FillList();
+                 this.sprint.emitData(true);
             }
           })
       }
