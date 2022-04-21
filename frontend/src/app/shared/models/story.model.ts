@@ -6,7 +6,7 @@ export class Story {
   dateDerniereModification!: Date;
   commentaire!: string;
   backlogId!:number;
-
+  isDone!:boolean;
   constructor() {}
 
 
