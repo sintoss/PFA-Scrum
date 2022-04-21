@@ -10,6 +10,8 @@ namespace BackEnd.Models
         public DateTime DateCreation { get; set; }
         public DateTime? DateDebut { get; set; }
         public DateTime? DatePrevueFin { get; set; }
+        public int DureeSprint { get; set; }
+        public int JourTravail { get; set; }
         public int? BacklogId { get; set; }
         public virtual Backlog Backlog { get; set; }
         public string ScrumMasterId { get; set; }

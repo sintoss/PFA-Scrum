@@ -10,6 +10,8 @@ export class Projet {
     dateCreation!: Date;
     dateDebut!: Date;
     datePrevueFin!: Date;
+    dureeSprint!: number;
+    jourTravail!: number;
     backlog!: Backlog;
     scrumMasterId!: string;
     scrumMaster!: ScrumMaster;
