@@ -19,9 +19,16 @@ export class AddEditSprintComponent implements OnInit {
   @Input() btnManger!:boolean;
   @Output() refPageancClose = new EventEmitter<boolean>();
   idproject!:number;
+  dureeSprint!:number;
+  jourTravail!:number;
 
   constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute) {
-    this.checkIfBacklogExist();
+    this.checkIfBacklogExist().subscribe(res=>{
+       if(res) {
+         this.dureeSprint = res.projet.dureeSprint;
+         this.jourTravail = res.projet.jourTravail;
+       }
+    });
   }
 
   ngOnInit(): void {
@@ -30,8 +37,18 @@ export class AddEditSprintComponent implements OnInit {
   addSprint(){
      this.checkIfBacklogExist().subscribe(res=>{
           if(res != undefined){
-            if( this.frm != null){
-              this.service.addSprint({BacklogId:res.id,libelle:this.frm.value.Libelle,dateestimeedefin:this.frm.value.dtf})
+            if( this.frm != null && this.frm.value.dureeSprint > 0 && this.frm.value.jourTravail){
+              this.service.addSprint(
+
+                {
+
+                  BacklogId:res.id,
+                  libelle:this.frm.value.Libelle,
+                  dateestimeedefin:this.frm.value.dtf,
+                  dureeSprint : this.frm.value.dureeSprint,
+                  jourTravail : this.frm.value.jourTravail
+
+                })
                 .subscribe(r=>{
                   if(r != undefined){
                     Swal.fire({

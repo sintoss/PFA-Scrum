@@ -12,5 +12,11 @@ namespace BackEnd.ViewModel
 
         [Required]
         public int BacklogId { get; set; }
+
+        public int dureeSprint { get; set; }
+
+        public int jourTravail { get; set; }
+
+
     }
 }

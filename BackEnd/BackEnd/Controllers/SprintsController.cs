@@ -100,6 +100,9 @@ namespace BackEnd.Controllers
             spr.Dateestimeedefin = sprint.dateestimeedefin;
             spr.DateCreation = DateTime.Now;
             spr.BacklogId = sprint.BacklogId;
+            spr.DureeSprint = sprint.dureeSprint;
+            spr.JourTravail = sprint.jourTravail; 
+            spr.JoursRestants = sprint.dureeSprint * sprint.jourTravail;
 
             _context.Sprints.Add(spr);
             await _context.SaveChangesAsync();
