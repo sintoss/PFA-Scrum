@@ -7,9 +7,6 @@ namespace BackEnd.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "isDone",
-                table: "Stories");
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DateDebut",
@@ -55,12 +52,6 @@ namespace BackEnd.Migrations
                 name: "Etat",
                 table: "Stories");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "isDone",
-                table: "Stories",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
         }
     }
 }

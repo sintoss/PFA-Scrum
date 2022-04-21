@@ -25,24 +25,22 @@ namespace BackEnd.Controllers
         public async Task<ActionResult<Sprint>> GetCurrentSprint(int backId)
         {
             var sprint = await _context.Sprints.Where(b => b.BacklogId == backId).OrderByDescending(d => d.DateCreation)
-                .FirstAsync();
-            if (sprint == null)
+                .FirstOrDefaultAsync();
+            if (sprint != null)
             {
-                return NotFound();
+                var dateCreation = sprint.DateCreation;
+                var dateFin = sprint.Dateestimeedefin;
+                var days = new List<DateTime>();
+
+                var daysLeft = ((TimeSpan)(dateFin - dateCreation)).TotalDays;
+
+                for (var i = 0; i < daysLeft; i++)
+                {
+                    days.Add(new DateTime(dateCreation.AddDays(i).Ticks));
+                }
+                return Ok(new { sprint, days });
             }
-
-            var dateCreation = sprint.DateCreation;
-            var dateFin = sprint.Dateestimeedefin;
-            var days = new List<DateTime>();
-
-            var daysLeft = ((TimeSpan)(dateFin - dateCreation)).TotalDays;
-
-            for (var i = 0; i < daysLeft; i++)
-            {
-                days.Add(new DateTime(dateCreation.AddDays(i).Ticks));
-            }
-
-            return Ok(new { sprint, days });
+            return Ok("There is no current sprint for this moment");
         }
 
         [HttpGet("{backId}/{pg}/{pgs}/{lib?}")]

@@ -51,6 +51,6 @@ export class SprintService {
   }
 
   getCurrentSprint(backId: number) {
-    return this.http.get(this.baseUrl + '/Sprints/CurrentSprint/' + backId);
+    return this.http.get(this.baseUrl + '/Sprints/CurrentSprint/' + backId, {responseType: 'text'});
   }
 }

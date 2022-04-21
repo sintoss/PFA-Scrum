@@ -29,11 +29,11 @@ export type ChartOptions = {
 export class BdchartComponent implements OnInit {
   @ViewChild('chart')
   chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  public chartOptions!: Partial<ChartOptions>;
   daysRemaining: any;
   totalStories: any;
-  actualStories:any[];
-  stories: any[];
+  actualStories!:any[];
+  stories!: any[];
 
   idealChart()
   {
@@ -76,11 +76,13 @@ export class BdchartComponent implements OnInit {
   getSprintDays() {
     this.backlogService.backId.subscribe((value: number) => {
       this.sprintService.getCurrentSprint(value).subscribe(response => {
-        this.totalStories = (response as any).sprint.sprintStories.length;
-        this.actualStories.push(this.totalStories);
-        this.stories=(response as  any).sprint.sprintStories;
-        this.daysRemaining = (response as any).days;
-        this.initChart();
+        if((response as any).sprint != undefined){
+          this.totalStories = (response as any).sprint.sprintStories.length;
+          this.actualStories.push(this.totalStories);
+          this.stories=(response as  any).sprint.sprintStories;
+          this.daysRemaining = (response as any).days;
+          this.initChart();
+        }
       });
     });
   }
@@ -93,10 +95,10 @@ export class BdchartComponent implements OnInit {
           ...accumulate, [value.dateFin]: (accumulate[value.dateFin] || 0) + 1
       }), {});
 
-    Object.values(duplicate).reduce((accumulate, value) => {
-        let res = accumulate -= value;
-        this.actualStories.push(res);
-        return res;
+    Object.values(duplicate).reduce((accumulate:any, value:any) => {
+          let res = accumulate -= value;
+          this.actualStories.push(res);
+          return res;
     }, this.actualStories);
   }
 
