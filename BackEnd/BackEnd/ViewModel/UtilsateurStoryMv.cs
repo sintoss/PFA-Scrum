@@ -10,5 +10,7 @@ namespace BackEnd.ViewModel
         [Required]
         public int StoryId { get; set; }
 
+        public int Duree { get; set; }
+
     }
 }

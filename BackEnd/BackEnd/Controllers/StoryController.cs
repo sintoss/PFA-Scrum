@@ -1,5 +1,6 @@
 ﻿using BackEnd.Helpers;
 using BackEnd.Models;
+using BackEnd.Services;
 using BackEnd.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace BackEnd.Controllers
     public class StoryController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IDevStory devStory;
 
-        public StoryController(ApplicationDbContext context)
+        public StoryController(ApplicationDbContext context , IDevStory devStory)
         {
             _context = context;
+            this.devStory = devStory;
         }
 
         // GET: api/Story
@@ -142,5 +145,28 @@ namespace BackEnd.Controllers
         {
             return _context.Stories.Any(e => e.Id == id);
         }
+
+        [HttpGet("checkWorkLeftForDev/{id}/{bckid}")]
+        public async Task<IActionResult> CheckDayLeftForDev(string id , int bckid)
+        {
+            int dayofwork = 0;
+            string msj = "";
+            if (_context.Sprints.Any(s=>!s.FinDeSprint))
+            {
+                DevStoryMv dvm = devStory.getData(bckid, id);
+                dayofwork = dvm.dayofwork;
+                int duree = dvm.ListStory.Sum(s => s.Duree);
+
+                msj += "Total work Day of sprint = " + dayofwork;
+                dayofwork -= duree;
+                msj += ";Day work Left  = " + dayofwork;
+                foreach (var item in dvm.ListStory)
+                {
+                    msj += ";"+item.Description + " -- Duree = " + item.Duree;
+                }
+            }
+            return Ok(new { dayofwork , msj} );
+        }
+
     }
 }

@@ -16,6 +16,6 @@ namespace BackEnd.Models
         public virtual Backlog Backlog { get; set; }
         public int DureeSprint { get; set; }
         public int JourTravail { get; set; }
-        public int JoursRestants { get; set; }
+        public bool FinDeSprint { get; set; }
     }
 }

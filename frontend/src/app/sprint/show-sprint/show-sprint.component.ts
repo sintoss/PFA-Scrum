@@ -25,6 +25,7 @@ export class ShowSprintComponent implements OnInit {
   currentsprint:any;
   idproject!:number;
   backlog!: Backlog;
+  DisapleSprintBtn:boolean = false;
 
   constructor(private http: HttpClient, public service:SprintService,private router: ActivatedRoute , private sprintstor:DetailsprintService
   ,  public jwtService: JwtService) {
@@ -35,6 +36,8 @@ export class ShowSprintComponent implements OnInit {
             this.checkIfBacklogExist();
          }
     });
+     // let him add sprint only if all sprint are done or is the first sprint
+     this.LetSprintAdd();
   }
 
   ngOnInit(): void {
@@ -134,6 +137,12 @@ export class ShowSprintComponent implements OnInit {
       this.service.emitData(false);
       this.sprintstor.setValueOfSprint(vl.id);
     }
+  }
+
+  LetSprintAdd(){
+     this.service.getCheckForSprint().subscribe(res=>{
+            this.DisapleSprintBtn = (<boolean>res);
+     });
   }
 
 }

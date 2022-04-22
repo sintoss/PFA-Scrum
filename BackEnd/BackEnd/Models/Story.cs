@@ -24,6 +24,7 @@ namespace BackEnd.Models
         public DateTime? DateFin { get; set; }
         public string Commentaire { get; set; }
         public int BacklogId { get; set; }
+        public int Duree { get; set; }
         [DefaultValue(Etat.ToDo)] public Etat Etat { get; set; }
         public virtual Backlog Backlog { get; set; }
         public virtual ICollection<Tache> Taches { get; set; }

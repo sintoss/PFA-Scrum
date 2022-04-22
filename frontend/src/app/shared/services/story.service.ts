@@ -41,4 +41,8 @@ export class StoryService {
     return this.http.get(this.baseUrl + `/Story/UserStoryId?UserStoryId=${UserStoryId}`, {responseType: 'text'});
   }
 
+  GetWorkLeftForDev(id: number | string , bckid : number | string ) {
+    return this.http.get(this.baseUrl + `/Story/checkWorkLeftForDev/${id}/${bckid}`);
+  }
+
 }

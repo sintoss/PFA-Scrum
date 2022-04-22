@@ -110,7 +110,7 @@
 
                <!-- Button for affect user story to only dev in this project  -->
 
-                  <a (click)="assignStoryId(item.id)" class="btn btn-icon btn-light btn-hover-primary btn-sm ml-3" data-toggle="modal" data-target=".bd-example-modal-lg">
+                  <a *ngIf="item.libelle == null" (click)="assignStoryId(item.id)" class="btn btn-icon btn-light btn-hover-primary btn-sm ml-3" data-toggle="modal" data-target=".bd-example-modal-lg">
                     <span class="svg-icon svg-icon-primary svg-icon-2x">
 
                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
@@ -266,11 +266,9 @@
       <div class="modal-body">
          <ng-container *ngIf="project != undefined">
         <form  class="form text-center">
-          <h4 class="text-left my-5">
-            Choisir les membre de l'equipe pour ce projet :
-          </h4>
           <div class="membredata" id="datatable2">
             <article *ngFor="let user of project.utilisateurProjets">
+              <div class="alert alert-secondary" role="alert">
               <input name= "rbutton" type="radio"
                      (change)="changeStatus(user.utilisateur.id,$event)" />
               <div class="membre-content p-2">
@@ -286,9 +284,17 @@
                   <span>{{ user.utilisateur.discriminator }}</span>
                 </div>
               </div>
+              <div class="mt-3" *ngIf="user.utilisateur.discriminator == 'Developpeur'">
+                <input type="number" class="form-control" #nm
+                       [textContent]='nm.value == "" ? showDayWorkLeft(user.utilisateur.id,nm,lb) : nm.value'
+                       (change)="changevl(nm)" name="nuday"
+                       />
+                <label style = "white-space: pre-line" #lb> </label>
+              </div>
+              </div>
             </article>
           </div>
-          <button class="btn btn-primary" type="submit" (click)="addstorytomembre()">Ajouter</button>
+          <button class="btn btn-primary mt-2" type="submit" (click)="addstorytomembre(null,null)">Affect</button>
         </form>
          </ng-container>
       </div>

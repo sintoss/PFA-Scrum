@@ -9,11 +9,10 @@
   </div>
 </div>
 
-    <form class="form text-center" #f="ngForm">
+    <form class="form text-center">
       <div id="datatable" class="membredata">
 
         <article *ngFor="let item of storywithsprintList$">
-          <div  class="alert alert-secondary" role="alert">
           <input type="checkbox" name="membres[]"
                (change)="changeStatus(item.id,$event)"/>
           <div class="membre-content p-2">
@@ -25,10 +24,6 @@
               <h5 class="mb-0">{{item.description}}</h5>
               <span>{{item.dateCreation | date }}</span>
             </div>
-          </div>
-          <input type="number" (change)="onEnterChange(item.id,$event)"
-                 class="form-control mt-3" required="required"
-                 placeholder="Enter duree de cette story" name="duree">
           </div>
         </article>
 

@@ -11,8 +11,5 @@ namespace BackEnd.ViewModel
         [Required]
         public int sprintid { get; set; }
 
-        [Required]
-        public int duree { get; set; }
-
     }
 }

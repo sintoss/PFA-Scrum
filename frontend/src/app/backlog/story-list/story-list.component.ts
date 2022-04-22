@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Story} from '../../shared/models/story.model';
 import {StoryService} from '../../shared/services/story.service';
 import {BacklogService} from '../../shared/services/backlog.service';
@@ -34,12 +34,13 @@ export class StoryListComponent implements OnInit {
   project!:Projet;
   userId!:string;
   storyId!:string;
-
+  DayLeft:number = 0;
 
   // tslint:disable-next-line:max-line-length
   constructor(private http: HttpClient, private backlogService: BacklogService, private service: StoryService, private router: ActivatedRoute
     , private tacheManager: TachManagerService, private sprint: SprintService , public projetService: ProjetService , private teamchange : DetectTeamProjectService
-   , private devstory:DeveloppeurStoryService ,  public jwtService: JwtService ) {
+   , private devstory:DeveloppeurStoryService ,  public jwtService: JwtService,
+              private ref: ChangeDetectorRef) {
     this.idproject = (Number)(this.router.snapshot.paramMap.get('id'));
     this.checkIfBacklogExist();
     this.value = new Story();
@@ -55,6 +56,9 @@ export class StoryListComponent implements OnInit {
     });
   }
 
+  ngAfterContentChecked() {
+    this.ref.detectChanges();
+  }
 
   ngOnInit(): void {
     this.GetMembre();
@@ -215,9 +219,10 @@ export class StoryListComponent implements OnInit {
     return `https://localhost:44349/${pathImg}`;
   }
 
-  changeStatus(id: string , e : any){
+  changeStatus(id: string , e : any ){
     if(e.target.checked){
          this.userId = id;
+         this.clearInput();
     }
   }
 
@@ -225,24 +230,30 @@ export class StoryListComponent implements OnInit {
     this.storyId = str;
   }
 
-  addstorytomembre(){
+  addstorytomembre(userId:any , e : any){
       if(this.userId && this.storyId){
           //add story to dev
-          this.devstory.insertDevStory({userId:this.userId,StoryId : this.storyId}).subscribe(res=>{
-            if(res){
-              Swal.fire(
-                '<h2>Information!</h2>',
-                '<strong>'+res+'</strong>'
-              )
-              this.FillList();
-                 this.sprint.emitData(true);
-            }
-          })
-      }
-      let model = document.getElementById('lgmodel');
-      if(model != null) model.click();
-      this.userId = "";
-      this.clearRadio();
+          this.devstory.insertDevStory({userId:this.userId,StoryId : this.storyId , Duree : this.DayLeft}).subscribe(res=>{
+             if(res){
+               Swal.fire(
+                 '<h2>Information!</h2>',
+                 '<strong>'+res+'</strong>'
+               )
+               this.FillList();
+                  this.sprint.emitData(true);
+             }
+           })
+       }
+       let model = document.getElementById('lgmodel');
+       if(model != null) model.click();
+       this.GetMembre();
+       this.userId = "";
+       this.clearRadio();
+       this.clearInput();
+  }
+
+  changevl(nm:any){
+    this.DayLeft = nm.value;
   }
 
   clearRadio(){
@@ -251,5 +262,30 @@ export class StoryListComponent implements OnInit {
       (<HTMLInputElement>chbx[i]).checked = false;
     }
   }
+
+  clearInput(){
+    const cinpt = document.getElementsByName("nuday") ;
+    for(let i=0; i < cinpt.length; i++) {
+      (<HTMLInputElement>cinpt[i]).value = "0";
+    }
+    this.DayLeft = 0;
+  }
+
+   showDayWorkLeft(Id:any , e :any , lb:any){
+     // Display for Dev how much work day left
+     if(this.backlog != undefined){
+       this.service.GetWorkLeftForDev(Id,this.backlog.id).subscribe(res=>{
+         if(res) {
+           e.value = ((res as any).dayofwork as number);
+           this.DayLeft = e.value;
+           let s = ((res as any).msj as string);
+           s = s.replace(new RegExp(';', 'g'), '\n')
+           lb.textContent = s;
+         }
+       });
+     }
+  }
+
+
 
 }

@@ -92,22 +92,28 @@ namespace BackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<Sprint>> PostSprint(SprintMv sprint)
         {
+      
             if (!ModelState.IsValid)
                 return Ok(ModelState);
 
-            var spr = new Sprint();
-            spr.Libelle = sprint.libelle;
-            spr.Dateestimeedefin = sprint.dateestimeedefin;
-            spr.DateCreation = DateTime.Now;
-            spr.BacklogId = sprint.BacklogId;
-            spr.DureeSprint = sprint.dureeSprint;
-            spr.JourTravail = sprint.jourTravail; 
-            spr.JoursRestants = sprint.dureeSprint * sprint.jourTravail;
+            string msj = "No";
 
-            _context.Sprints.Add(spr);
+            if( _context.Sprints.All(s => s.FinDeSprint))
+            {
+                var spr = new Sprint();
+                spr.Libelle = sprint.libelle;
+                spr.Dateestimeedefin = sprint.dateestimeedefin;
+                spr.DateCreation = DateTime.Now;
+                spr.BacklogId = sprint.BacklogId;
+                spr.DureeSprint = sprint.dureeSprint;
+                spr.JourTravail = sprint.jourTravail;
+                _context.Sprints.Add(spr);
+                msj = "INSERTED";
+            }
+
             await _context.SaveChangesAsync();
 
-            return Ok("INSERTED");
+            return Ok(msj);
         }
 
         // DELETE: api/Sprints/5
@@ -175,11 +181,9 @@ namespace BackEnd.Controllers
             if (!ModelState.IsValid)
                 return Ok(ModelState);
 
-            if (_context.Sprints.Find(sprint.sprintid) != null 
-                && _context.Sprints.Find(sprint.sprintid).JoursRestants >= sprint.duree )
+            if (_context.Sprints.Find(sprint.sprintid) != null  )
             {
                 var spr = _context.Sprints.Find(sprint.sprintid);
-                spr.JoursRestants -= sprint.duree;
                 sprint.storylist.ForEach(i =>
                 {
                     if (_context.Stories.Find(i) != null)
@@ -222,5 +226,16 @@ namespace BackEnd.Controllers
 
             return Ok(new { data, pager });
         }
+
+        [HttpGet("check")]
+        public async Task<bool> checkIfCanAdd()
+        {
+            return await _context.Sprints.CountAsync() == 0 ? true : await _context.Sprints.AllAsync(s => s.FinDeSprint);
+        }
+
+
+
+
     }
+
 }

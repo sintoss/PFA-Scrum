@@ -1,4 +1,5 @@
 ﻿using BackEnd.Models;
+using BackEnd.Services;
 using BackEnd.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace BackEnd.Controllers
     public class DeveloppeurStoriesController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IDevStory devStory;
 
-        public DeveloppeurStoriesController(ApplicationDbContext context)
+        public DeveloppeurStoriesController(ApplicationDbContext context , IDevStory devStory)
         {
             this.context = context;
+            this.devStory = devStory;
         }
 
         [HttpPost]
@@ -32,15 +35,41 @@ namespace BackEnd.Controllers
                     !context.DeveloppeurStories.Where(d => d.StoryId == userStory.StoryId).Any())
                 {
                     //Dev
+                    if (userStory.Duree > 0)
+                    {
+                        int dayofwork = 0;
+                        int bckid = context.Stories.Find(userStory.StoryId).BacklogId;
+                        DevStoryMv dvm = devStory.getData(bckid, userStory.userId);
+                        dayofwork = dvm.dayofwork;
+                        int dur = dvm.ListStory.Sum(s => s.Duree);
 
-                    DeveloppeurStory devstr = new DeveloppeurStory();
-                    devstr.DeveloppeurId = userStory.userId;
-                    devstr.StoryId = userStory.StoryId;
-                    devstr.DateAffectation = System.DateTime.Now;
-                    context.DeveloppeurStories.Add(devstr);
-                    context.SaveChanges();
-                    msj = "this dev was added to the user story ";
+                        dur += userStory.Duree;
 
+                        if (dayofwork >= dur)
+                        {
+                            // add story and dev to DeveloppeurStory
+                            DeveloppeurStory devstr = new DeveloppeurStory();
+                            devstr.DeveloppeurId = userStory.userId;
+                            devstr.StoryId = userStory.StoryId;
+                            devstr.DateAffectation = System.DateTime.Now;
+                            context.DeveloppeurStories.Add(devstr);
+                            // set the Duree in story
+                            var str = context.Stories.Find(userStory.StoryId);
+                            str.Duree = userStory.Duree;
+                            context.SaveChanges();
+                            msj = "this dev was added to the user story ";
+                        }
+                        else
+                        {
+                            msj = "You don't have enough days";
+                        }
+                        
+                    }
+                    else
+                    {
+                        msj = "you should give value greather than 0 ";
+                    }
+                   
                 }
                 else if(context.Testeurs.Find(userStory.userId) != null
                     &&

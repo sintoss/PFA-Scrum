@@ -12,7 +12,7 @@
                placeholder="Chercher une story">
       </div>
     </div>
-    <a *ngIf="jwtService.hasRole('ScrumMaster')" (click)="canIaddorEdit=true" href="#" class="btn btn-success font-weight-bolder font-size-sm" data-toggle="modal" data-target="#sprintmodel">
+    <a *ngIf="jwtService.hasRole('ScrumMaster')" (click)="canIaddorEdit=true" [hidden]="!DisapleSprintBtn" href="#" class="btn btn-success font-weight-bolder font-size-sm" data-toggle="modal" data-target="#sprintmodel">
       Ajouter Sprint
     </a>
   </div>
@@ -34,7 +34,6 @@
           <th style="width: 13%">Date Estimee de Fin</th>
           <th style="width: 13%">duree Sprint En Semain</th>
           <th style="width: 13%">jour Travail</th>
-          <th style="width: 13%">Jours Restants</th>
           <th *ngIf="jwtService.hasRole('ScrumMaster')" class="text-center" style="width: 20%">  Action </th>
 
 
@@ -59,9 +58,6 @@
           </td>
           <td  style="width: 13%">
             <strong class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.jourTravail}}</strong>
-          </td>
-          <td  style="width: 13%">
-            <strong class="text-dark font-weight-bolder text-hover-primary mb-1 font-size-lg">{{item.joursRestants}}</strong>
           </td>
           <td *ngIf="jwtService.hasRole('ScrumMaster')"  style="width: 20%">
 
