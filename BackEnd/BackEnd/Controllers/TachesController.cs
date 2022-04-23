@@ -97,6 +97,31 @@ namespace BackEnd.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/completer")]
+        public async Task<IActionResult> CompleteTache(Tache tache)
+        {
+            tache.Etat = true;
+            _context.Entry(tache).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TacheExists(tache.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         //  : api/Taches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

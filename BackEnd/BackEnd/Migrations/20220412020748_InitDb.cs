@@ -431,7 +431,7 @@ namespace BackEnd.Migrations
                     Libelle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateDerniereModification = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Etat = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Etat = table.Column<int>(type: "int", nullable: false),
                     StoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

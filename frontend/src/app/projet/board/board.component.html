@@ -1,1 +1,273 @@
-<p>board works!</p>
+<div class="container">
+    <div class="board">
+        <div class="board-column todo">
+          <div class="board-column-container">
+            <div class="board-column-header">Todo</div>
+            <div class="board-column-content-wrapper">
+              <div cdkDropList id=0 [cdkDropListConnectedTo]="['1']" [cdkDropListData]="this.stories[0]" class="board-column-content" (cdkDropListDropped)="onDrop($event)">
+                <div class="board-item" *ngFor="let item of this.stories[0]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Developpeur')">
+                  <div class="board-item-content">
+                    <div class="details">
+                      <h4>{{item.description}}</h4>
+                      <div class="contributeurs d-flex align-items-center mt-5">
+                        <div class="d-flex align-items-center mr-3" *ngIf="!jwtService.hasRole('Developpeur')">
+                          <strong class="mr-2">Developpeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.developpeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.developpeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.developpeur.pathImage}}"
+                                   title="{{user.developpeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center ml-3" *ngIf="!jwtService.hasRole('Testeur')">
+                          <strong class="mr-2">Testeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.testeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.testeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.testeur.pathImage}}"
+                                   title="{{user.testeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button #btnToDoToggle style="text-align: right" (click)="toggleTache(btnToDoToggle, todoTacheDetail)"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div #todoTacheDetail class="board-item-details">
+                    <ul>
+                      <li *ngFor="let tache of item.taches">
+                        <div class="tache-detail">
+                          <h4 class="my-4">{{tache.libelle}}</h4>
+                          <p class="text-justify">{{tache.description}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board-column doing">
+          <div class="board-column-container">
+            <div class="board-column-header">Doing</div>
+            <div class="board-column-content-wrapper">
+              <div cdkDropList id=1 [cdkDropListConnectedTo]="['0', '2']" [cdkDropListData]="this.stories[1]" class="board-column-content" (cdkDropListDropped)="onDrop($event)">
+                <div class="board-item" *ngFor="let item of this.stories[1]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Developpeur') || checkTaches(item)">
+                  <div class="board-item-content">
+                    <div class="details">
+                      <h4>{{item.description}}</h4>
+                      <span [ngClass]="{delaipassed: checkDelai(item.datePrevuFin, item.etat)}">{{item.datePrevuFin | date}}</span>
+                      <div class="contributeurs d-flex align-items-center mt-5">
+                        <div class="d-flex align-items-center mr-3" *ngIf="!jwtService.hasRole('Developpeur')">
+                          <strong class="mr-2">Developpeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.developpeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.developpeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.developpeur.pathImage}}"
+                                   title="{{user.developpeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center ml-3" *ngIf="!jwtService.hasRole('Testeur')">
+                          <strong class="mr-2">Testeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.testeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.testeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.testeur.pathImage}}"
+                                   title="{{user.testeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button #btnDoingToggle style="text-align: right" (click)="toggleTache(btnDoingToggle, doingTacheDetail)"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div #doingTacheDetail class="board-item-details">
+                    <ul>
+                      <li *ngFor="let tache of item.taches">
+                        <div class="tache-detail p-2">
+                          <h4 class="my-4">{{tache.libelle}}</h4>
+                          <p class="text-justify">{{tache.description}}</p>
+                        </div>
+                        <button *ngIf="!tache.etat" (click)="completeTache(1, item.id, tache)">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check fa-lg" style="color: #2ac06d"></i></strong>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="comment-content" *ngIf="item.commentaire!==null">
+                    <button #commentBtn class="btn-comment" (click)="toggleComment(commentBtn, commentContent)">1</button>
+                    <div #commentContent class="comment-detail">
+                      <strong>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt, in commodi, minus neque quo necessitatibus</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board-column done">
+          <div class="board-column-container">
+            <div class="board-column-header">Done</div>
+            <div class="board-column-content-wrapper">
+              <div cdkDropList 
+                   id=2
+                   [cdkDropListConnectedTo]="['1', '3']"
+                   [cdkDropListData]="this.stories[2]"
+                   class="board-column-content"
+                   (cdkDropListDropped)="onDrop($event)">
+                <div class="board-item" *ngFor="let item of this.stories[2]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Developpeur')">
+                  <div class="board-item-content">
+                    <div class="details">
+                      <h4>{{item.description}}</h4>
+                      <span>{{item.dateFin | date}}</span>
+                      <div class="contributeurs d-flex align-items-center mt-5">
+                        <div class="d-flex align-items-center mr-3" *ngIf="!jwtService.hasRole('Developpeur')">
+                          <strong class="mr-2">Developpeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.developpeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.developpeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.developpeur.pathImage}}"
+                                   title="{{user.developpeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center ml-3" *ngIf="!jwtService.hasRole('Testeur')">
+                          <strong class="mr-2">Testeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.testeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.testeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.testeur.pathImage}}"
+                                   title="{{user.testeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button #btnDoneToggle style="text-align: right" (click)="toggleTache(btnDoneToggle, doneTacheDetail)"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div #doneTacheDetail class="board-item-details">
+                    <ul>
+                      <li *ngFor="let tache of item.taches">
+                        <h4>{{tache.libelle}}</h4>
+                        <button *ngIf="!tache.etat">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check" style="color: #2ac06d"></i></strong>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board-column tested">
+          <div class="board-column-container">
+            <div class="board-column-header">Tested</div>
+            <div class="board-column-content-wrapper">
+              <div cdkDropList id=3 [cdkDropListConnectedTo]="['2', '4']" [cdkDropListData]="this.stories[3]" class="board-column-content" (cdkDropListDropped)="onDrop($event)">
+                <div class="board-item" *ngFor="let item of this.stories[3]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Developpeur')">
+                  <div class="board-item-content">
+                    <div class="details">
+                      <h4>{{item.description}}</h4>
+                      <span>{{item.dateFin | date}}</span>
+                      <div class="contributeurs d-flex align-items-center mt-5">
+                        <div class="d-flex align-items-center mr-3" *ngIf="!jwtService.hasRole('Developpeur')">
+                          <strong class="mr-2">Developpeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.developpeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.developpeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.developpeur.pathImage}}"
+                                   title="{{user.developpeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center ml-3" *ngIf="!jwtService.hasRole('Testeur')">
+                          <strong class="mr-2">Testeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.testeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.testeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.testeur.pathImage}}"
+                                   title="{{user.testeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button #btnTestedToggle style="text-align: right" (click)="toggleTache(btnTestedToggle, testedTacheDetail)"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div #testedTacheDetail class="board-item-details">
+                    <ul>
+                      <li *ngFor="let tache of item.taches">
+                        <h4>{{tache.libelle}}</h4>
+                        <button *ngIf="!tache.etat">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check" style="color: #2ac06d"></i></strong>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board-column aprouved">
+          <div class="board-column-container">
+            <div class="board-column-header">Aprouved</div>
+            <div class="board-column-content-wrapper">
+              <div cdkDropList id="4" [cdkDropListConnectedTo]="['3']" [cdkDropListData]="this.stories[4]" class="board-column-content" (cdkDropListDropped)="onDrop($event)">
+                <div class="board-item" *ngFor="let item of this.stories[4]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('ScrumMaster')">
+                  <div class="board-item-content">
+                    <div class="details">
+                      <h4>{{item.description}}</h4>
+                      <span>{{item.dateFin | date}}</span>
+                      <div class="contributeurs d-flex align-items-center mt-5">
+                        <div class="d-flex align-items-center mr-3" *ngIf="!jwtService.hasRole('Developpeur')">
+                          <strong class="mr-2">Developpeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.developpeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.developpeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.developpeur.pathImage}}"
+                                   title="{{user.developpeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center ml-3" *ngIf="!jwtService.hasRole('Testeur')">
+                          <strong class="mr-2">Testeur :</strong>
+                          <div class="symbol-group symbol-hover">
+                            <div *ngFor="let user of item.testeurStories"
+                                 class="symbol symbol-30 symbol-circle">
+                              <img [alt]="user.testeur.userName" data-toggle="tooltip"
+                                   src="https://localhost:44349/{{user.testeur.pathImage}}"
+                                   title="{{user.testeur.userName}}"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button #btnAprouvedToggle style="text-align: right" (click)="toggleTache(btnAprouvedToggle, aprouvedTacheDetail)"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div #aprouvedTacheDetail class="board-item-details">
+                    <ul>
+                      <li *ngFor="let tache of item.taches">
+                        <h4>{{tache.libelle}}</h4>
+                        <button *ngIf="!tache.etat">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check" style="color: #2ac06d"></i></strong>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

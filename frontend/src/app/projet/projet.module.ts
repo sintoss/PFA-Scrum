@@ -18,6 +18,7 @@ import {BacklogModule} from '../backlog/backlog.module';
 import {AppModule} from '../app.module';
 import {SprintModule} from '../sprint/sprint.module';
 import { BoardComponent } from './board/board.component';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { BoardComponent } from './board/board.component';
     TacheModule,
     NgApexchartsModule,
     BacklogModule,
-    SprintModule
+    SprintModule,
+    DragDropModule
   ],
   providers: [
   ],

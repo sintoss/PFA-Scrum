@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -40,7 +41,25 @@ namespace BackEnd.Controllers
                 }
                 return Ok(new { sprint, days });
             }
-            return Ok("There is no current sprint for this moment");
+            return BadRequest("There is no current sprint for this moment");
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<Story>>> GetSprint(int id, [FromHeader(Name = "Authorisation")] string jwt)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(jwt);
+            var roles = jwtSecurityToken.Claims.First(claim => claim.Type == "roles").Value;
+            string uid = jwtSecurityToken.Claims.First(claim => claim.Type == "uid").Value;
+            string userId = (!roles.Contains("ScrumMaster")) ? uid : "";
+
+            var stories = await _context.sprintStories.Where(s => s.SprintId == id && (s.Story.DeveloppeurStories.Any(d => d.DeveloppeurId.Contains(userId)) || s.Story.TesteurStories.Any(t => t.TesteurId.Contains(userId))))
+                                                      .Select(s => s.Story)
+                                                      .ToListAsync();
+            if (stories != null)
+            {
+                return stories;
+            }
+            return BadRequest("404 Not Found");
         }
 
         [HttpGet("{backId}/{pg}/{pgs}/{lib?}")]

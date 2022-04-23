@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEnd.Models
 {
@@ -24,11 +25,13 @@ namespace BackEnd.Models
         public DateTime? DateFin { get; set; }
         public string Commentaire { get; set; }
         public int BacklogId { get; set; }
-        [DefaultValue(Etat.ToDo)] public Etat Etat { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
+        [DefaultValue(Etat.ToDo)]
+        public Etat Etat { get; set; }
         public virtual Backlog Backlog { get; set; }
         public virtual ICollection<Tache> Taches { get; set; }
         public virtual ICollection<SprintStory> SprintStories { get; set; }
-        public virtual ICollection<DeveloppeurStory> DeloppeurStories { get; set; }
+        public virtual ICollection<DeveloppeurStory> DeveloppeurStories { get; set; }
         public virtual ICollection<TesteurStory> TesteurStories { get; set; }
     }
 }

@@ -28,6 +28,7 @@ export class TacheFormComponent implements OnInit {
 
   onSubmit() {
     this._tache.libelle = this.registerForm.value.Libelle;
+    this._tache.description = this.registerForm.value.Description;
     this._tache.dateCreation = new Date();
     this._tache.dateDerniereModification = new Date();
     this._tache.storyId = this.registerForm.value.storyId;
@@ -56,7 +57,8 @@ export class TacheFormComponent implements OnInit {
   initForm() {
     this.registerForm = new FormGroup({
       storyId: new FormControl(),
-      Libelle: new FormControl()
+      Libelle: new FormControl(),
+      Description: new FormControl()
     });
   }
 

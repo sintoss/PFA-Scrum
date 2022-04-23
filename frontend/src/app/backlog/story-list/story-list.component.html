@@ -13,7 +13,7 @@
       </div>
     </div>
 
-     <span *ngIf="jwtService.hasRole('ScrumMaster')">
+    <span *ngIf="jwtService.hasRole('ScrumMaster')">
     <button  (click)="createBacklog()" *ngIf="backlog===undefined"
             class="btn btn-success font-weight-bolder font-size-sm mx-2">
       Creer Backlog

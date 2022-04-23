@@ -34,6 +34,7 @@ export class BdchartComponent implements OnInit {
   totalStories: any;
   actualStories!:any[];
   stories!: any[];
+  sprintId!: number;
 
   idealChart()
   {
@@ -76,9 +77,11 @@ export class BdchartComponent implements OnInit {
   getSprintDays() {
     this.backlogService.backId.subscribe((value: number) => {
       this.sprintService.getCurrentSprint(value).subscribe(response => {
+        console.log(response);
         if((response as any).sprint != undefined){
+          this.sprintId = (response as any).sprint.id;
           this.totalStories = (response as any).sprint.sprintStories.length;
-          this.actualStories.push(this.totalStories);
+          //this.actualStories.push(this.totalStories);
           this.stories=(response as  any).sprint.sprintStories;
           this.daysRemaining = (response as any).days;
           this.initChart();
@@ -100,6 +103,7 @@ export class BdchartComponent implements OnInit {
           this.actualStories.push(res);
           return res;
     }, this.actualStories);
+    return this.actualStories;
   }
 
   doneStories()
