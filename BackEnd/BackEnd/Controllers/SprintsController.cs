@@ -143,7 +143,10 @@ namespace BackEnd.Controllers
             var sto =  await _context.Stories.Where( c => c.BacklogId == bckid &&
                                 c.Description.Contains((string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToListAsync();
 
-            var story =  sto.Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)).ToList();
+            var story =  sto.Where(c => !_context.sprintStories.Select(s => s.StoryId).Contains(c.Id)
+                                        &&
+                                        _context.DeveloppeurStories.Select(ds=>ds.StoryId).Contains(c.Id)
+                                        ).ToList();
 
             var newData = new List<StoryMv>();
 
