@@ -15,6 +15,24 @@ export class SprintService {
 
   sprintId!: number;
   subject$ = new Subject<any>();
+  subject2$ = new Subject<boolean>();
+  subject3$ = new Subject<boolean>();
+
+  emitData3(trv: boolean) {
+    this.subject3$.next(trv);
+  }
+
+  returnSprint3() {
+    return this.subject3$.asObservable();
+  }
+
+  emitData2(trv: boolean) {
+    this.subject2$.next(trv);
+  }
+
+  returnSprint2() {
+    return this.subject2$.asObservable();
+  }
 
   emitData(sprintId: any) {
     this.subject$.next(sprintId);
@@ -63,4 +81,9 @@ export class SprintService {
   {
     return this.http.get<SprintModule>(this.baseUrl + `/Sprints/${sprintId}/complete`);
   }
+
+  getCheckForSprint(){
+    return this.http.get(this.baseUrl + '/Sprints/check');
+  }
+
 }

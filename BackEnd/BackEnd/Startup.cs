@@ -49,6 +49,7 @@ namespace BackEnd
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IENCRYPTION, Encryptor>();
+            services.AddScoped<IDevStory, DevStory>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))

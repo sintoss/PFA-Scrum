@@ -98,7 +98,7 @@ namespace BackEnd.Models
         public DbSet<ProductOwner> Productowners { get; set; }
         public DbSet<DeveloppeurStory> DeveloppeurStories { get; set; }
         public DbSet<utilisateurProjets> utilisateurProjets { get; set; }
-
+        public DbSet<TesteurStory> TesteurStory { get; set; }
         public DbSet<SprintStory> sprintStories { get; set; }
         
     }

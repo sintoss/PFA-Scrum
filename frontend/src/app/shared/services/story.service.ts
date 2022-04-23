@@ -46,4 +46,13 @@ export class StoryService {
   {
     return this.http.put<Story>(this.baseUrl + `/Story/${storyId}/changerEtat`, story);
   }
+
+  GetWorkLeftForDev(id: number | string , bckid : number | string ) {
+    return this.http.get(this.baseUrl + `/Story/checkWorkLeftForDev/${id}/${bckid}`);
+  }
+
+  initStory(id: number | string){
+    return this.http.delete(this.baseUrl + `/Story/Init/${id}`);
+  }
+
 }

@@ -4,14 +4,16 @@ using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220421122717_ajouter les champ dans sprint")]
+    partial class ajouterleschampdanssprint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,10 +209,10 @@ namespace BackEnd.Migrations
                     b.Property<int>("DureeSprint")
                         .HasColumnType("int");
 
-                    b.Property<bool>("FinDeSprint")
-                        .HasColumnType("bit");
-
                     b.Property<int>("JourTravail")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JoursRestants")
                         .HasColumnType("int");
 
                     b.Property<string>("Libelle")
@@ -269,17 +271,8 @@ namespace BackEnd.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-                    b.Property<string>("Etat")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-=======
-                    b.Property<int>("Duree")
-                        .HasColumnType("int");
-
                     b.Property<int>("Etat")
                         .HasColumnType("int");
->>>>>>> f43bd034a6b01526a6a7eaa4efa8368bb0db562a
 
                     b.HasKey("Id");
 
@@ -301,11 +294,9 @@ namespace BackEnd.Migrations
                     b.Property<DateTime?>("DateDerniereModification")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Etat")
-                        .HasColumnType("int");
+                    b.Property<string>("Etat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Libelle")
                         .HasColumnType("nvarchar(max)");
@@ -634,7 +625,7 @@ namespace BackEnd.Migrations
                         .IsRequired();
 
                     b.HasOne("BackEnd.Models.Story", "Story")
-                        .WithMany("DeveloppeurStories")
+                        .WithMany("DeloppeurStories")
                         .HasForeignKey("StoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -882,7 +873,7 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("BackEnd.Models.Story", b =>
                 {
-                    b.Navigation("DeveloppeurStories");
+                    b.Navigation("DeloppeurStories");
 
                     b.Navigation("SprintStories");
 

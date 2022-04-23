@@ -14,5 +14,8 @@ namespace BackEnd.Models
         public virtual ICollection<Release> Releases { get; set; }
         public int BacklogId { get; set; }
         public virtual Backlog Backlog { get; set; }
+        public int DureeSprint { get; set; }
+        public int JourTravail { get; set; }
+        public bool FinDeSprint { get; set; }
     }
 }

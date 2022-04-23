@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Pager} from '../../shared/models/pager.model';
 import {DetailsprintService} from '../../shared/services/detailsprint.service';
 import {SprintService} from '../../shared/services/sprint.service';
+import Swal from 'sweetalert2';
+import {StoryService} from '../../shared/services/story.service';
 
 @Component({
   selector: 'app-sprint-detail',
@@ -14,7 +16,7 @@ export class SprintDetailComponent implements OnInit{
   pager:Pager = new Pager();
   pg:number = 1;
   lib:string = "";
-  constructor( public sprint:SprintService ,private service:DetailsprintService) {
+  constructor( public sprint:SprintService ,private service:DetailsprintService , private story:StoryService) {
 
       this.sprint.returnSprint().subscribe(res=>{
             if(res == false){
@@ -54,6 +56,50 @@ export class SprintDetailComponent implements OnInit{
     this.FillstorysprintList();
   }
 
+  deleteItem(s: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.story.initStory(s.id).subscribe(res => {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          );
+          this.sprint.emitData(true);
+          this.sprint.emitData2(true);
+          this.FillstorysprintList();
+        }, error => console.log(error));
+      }
+    });
 
+
+  }// end of function
+
+  GetEtatAsString(num:number|string){
+    let vl = "ToDo";
+    switch (num){
+      case 1:
+           vl = "Doing";
+        break;
+      case 2:
+          vl = "Done";
+        break;
+      case 3:
+          vl = "Tested";
+        break;
+      case 4:
+          vl = "Approuved";
+        break;
+     }
+     return vl;
+  }
 
 }

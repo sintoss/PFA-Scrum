@@ -1,8 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Backlog} from '../../shared/models/backlog.model';
 import {SprintService} from '../../shared/services/sprint.service';
 import {Pager} from '../../shared/models/pager.model';
 import Swal from 'sweetalert2';
+import {NgForm} from '@angular/forms';
+import {expressionType} from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-story-affection',
@@ -17,6 +19,7 @@ export class StoryAffectionComponent implements  OnInit {
   storywithsprintList$!:any[];
   desc:string = "";
   StoryList:number[] = [];
+
 
   constructor(public service:SprintService) {
 
@@ -64,23 +67,44 @@ export class StoryAffectionComponent implements  OnInit {
     }
   }
 
-
   affect(){
-    if(this.currentsprint){
-        this.service.addMyListOfSotryToSprint({storylist:this.StoryList , sprintid : this.currentsprint.id})
+
+    if(this.currentsprint &&  this.StoryList.length != 0){
+        this.service.addMyListOfSotryToSprint(
+          {storylist:this.StoryList , sprintid : this.currentsprint.id })
           .subscribe(res => {
-                 if(res != undefined){
-                   Swal.fire({
-                     title : "affection of story to sprint with success",
-                     type : "success"
-                   });
-                   this.Fillist();
-                   this.StoryList = [];
-                   this.service.emitData(false);
-                   this.closeFormWhenAffect.emit(true);
-                 }
+            if(res != undefined){
+              this.Fillist();
+              this.service.emitData(false);
+              this.service.emitData2(true);
+              this.closeFormWhenAffect.emit(true);
+              Swal.fire({
+                title : "affection of story to sprint with success",
+                type : "success"
+              });
+            }
           });
+      }
+    this.StoryList = [];
+    this.clearCheckbox();
+  }
+
+  clearCheckbox(){
+    const chbx = document.getElementsByName("membres[]") ;
+    for(let i=0; i < chbx.length; i++) {
+      (<HTMLInputElement>chbx[i]).checked = false;
     }
+    const zntxt = document.getElementsByName("duree");
+    for(let i=0; i < zntxt.length; i++) {
+      (<HTMLInputElement>zntxt[i]).value = "";
+    }
+  }
+
+  ShowError(){
+    Swal.fire({
+      title : "something went wrong",
+      type : "error"
+    });
   }
 
 }

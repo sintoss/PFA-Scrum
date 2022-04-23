@@ -11,10 +11,10 @@
 
     <form class="form text-center">
       <div id="datatable" class="membredata">
-      <article *ngFor="let item of storywithsprintList$">
+
+        <article *ngFor="let item of storywithsprintList$">
           <input type="checkbox" name="membres[]"
-                 (change)="changeStatus(item.id,$event)"
-          />
+               (change)="changeStatus(item.id,$event)"/>
           <div class="membre-content p-2">
             <div class="membre-img">
               <img [src]="GetAvtareUsingUserStory(item.pathAvtar)"
@@ -26,7 +26,7 @@
             </div>
           </div>
         </article>
+
       </div>
       <button class="btn btn-primary" (click)="affect()">Affect</button>
     </form>
-
