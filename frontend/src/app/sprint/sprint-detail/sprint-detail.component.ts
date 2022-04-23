@@ -83,4 +83,23 @@ export class SprintDetailComponent implements OnInit{
 
   }// end of function
 
+  GetEtatAsString(num:number|string){
+    let vl = "ToDo";
+    switch (num){
+      case 1:
+           vl = "Doing";
+        break;
+      case 2:
+          vl = "Done";
+        break;
+      case 3:
+          vl = "Tested";
+        break;
+      case 4:
+          vl = "Approuved";
+        break;
+     }
+     return vl;
+  }
+
 }
