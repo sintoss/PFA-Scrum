@@ -27,7 +27,11 @@ namespace BackEnd.Controllers
 
             string msj = "You Can add only one Developer and one tester to the user story";
 
-            if(context.Stories.Find(userStory.StoryId) != null)
+            bool ck = context.Sprints.Where(s => !s.FinDeSprint).Any();
+
+            if(!ck) msj = "You Should create New Sprint";
+
+            if (context.Stories.Find(userStory.StoryId) != null && ck)
             {
       
                 if(context.Developpeurs.Find(userStory.userId) != null

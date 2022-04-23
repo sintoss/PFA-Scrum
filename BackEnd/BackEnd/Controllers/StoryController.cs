@@ -168,5 +168,26 @@ namespace BackEnd.Controllers
             return Ok(new { dayofwork , msj} );
         }
 
+
+        [HttpDelete("Init/{id}")]
+        public async Task<IActionResult> initStory(int id)
+        {
+            var story = await _context.Stories.FindAsync(id);
+            if (story != null)
+            {
+                story.Duree = 0;
+                // deleted from devstory and teststory and sprintstory if exist
+                var temp1 = _context.DeveloppeurStories.Where(ds => ds.StoryId == id).FirstOrDefault();
+                if (temp1 != null) _context.DeveloppeurStories.Remove(temp1);
+                var temp2 = _context.TesteurStory.Where(ts => ts.StoryId == id).FirstOrDefault();
+                if (temp2 != null) _context.TesteurStory.Remove(temp2);
+                var temp3 = _context.sprintStories.Where(ss => ss.StoryId == id).FirstOrDefault();
+                if (temp3 != null) _context.sprintStories.Remove(temp3);
+            }
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }
