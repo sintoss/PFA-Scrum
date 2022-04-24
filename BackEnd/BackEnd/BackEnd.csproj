@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Ressources\Image\" />
+    <Folder Include="Ressources\Release\" />
   </ItemGroup>
 
 </Project>

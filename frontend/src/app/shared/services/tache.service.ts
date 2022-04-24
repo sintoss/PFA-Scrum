@@ -19,7 +19,6 @@ export class TacheService {
 
   getStoryTaches(storyId: number, pg: number | string, pgs: number | string = 5, desc: string = ' ') {
     return this.http.get<TacheModel[]>(this.baseUrl + `/Taches/StoryTaches/${storyId}/${pg}/${pgs}/${desc}`);
-
   }
 
   updateTache(id: number, model: TacheModel) {

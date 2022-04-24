@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body style="background-color: transparent">
+<div class="container mt-30">
+
+
+  <div class="card-body pt-0 pb-3">
+    <!--begin::Table-->
+    <div class="table-responsive table-container">
+      <table class="table table-striped table-dark table-head-custom table-head-bg table-borderless table-vertical-center ">
+        <thead>
+
+        <tr class="text-uppercase">
+          <th style="width: 34%"  class="pl-7 text-center">
+            <span class="text-dark-75">RELEASE-ID</span>
+          </th>
+          <th class="text-center" style="width: 33%">Sprint</th>
+          <th  class="text-center" style="width: 33%">  Action </th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+
+                  <tr *ngFor="let item of listofrelease">
+                    <td class="text-center" style="width: 34%">{{item.id}}</td>
+                    <td class="text-center" style="width: 33%">{{item.version}}</td>
+                    <td class="text-center" style="width: 33%">
+
+                      <a (click)="setId(item.id)"   class="btn btn-icon btn-light btn-hover-danger btn-sm mr-3" data-toggle="modal" data-target="#exampleModal">
+                          <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\Visible.svg--><!--end::Svg Icon-->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                              <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"/>
+                              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                           </svg>
+                          </span>
+                      </a>
+
+                    </td>
+                  </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="indicator"></div>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="media mb-3">
+            <img src="https://s3.amazonaws.com/creativetim_bucket/new_logo.png" class="mr-3 images" alt="...">
+            <div class="media-body">
+              <div class="position-relative">
+                <div class="custom-file">
+
+                  <angular-file-uploader
+                    [config]="afuConfig">
+                  </angular-file-uploader>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row col-md-12 ml-auto mr-auto preview"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
