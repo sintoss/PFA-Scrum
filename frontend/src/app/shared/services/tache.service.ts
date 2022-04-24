@@ -28,4 +28,8 @@ export class TacheService {
   deleteTache(id: number) {
     return this.http.delete(this.baseUrl + `/Taches/${id}`);
   }
+  completeTache(tache: TacheModel): Observable<TacheModel>
+  {
+    return this.http.put<TacheModel>(this.baseUrl + `/Taches/${tache.id}/completer`, tache);
+  }
 }

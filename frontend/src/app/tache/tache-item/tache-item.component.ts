@@ -49,8 +49,8 @@ export class TacheItemComponent implements OnInit {
   }
 
 
-  etatCasting(etat: number): string {
-    return Etat[etat];
+  etatCasting(etat: boolean): string {
+    return etat ? "Done" : "ToDo";
   }
 
   // tslint:disable-next-line:typedef

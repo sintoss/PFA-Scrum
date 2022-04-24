@@ -3,6 +3,8 @@ import {environment} from '../../../environments/environment';
 import {Observable, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
+import { Story } from '../models/story.model';
+import { SprintModule } from 'src/app/sprint/sprint.module';
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +71,15 @@ export class SprintService {
   }
 
   getCurrentSprint(backId: number) {
-    return this.http.get(this.baseUrl + '/Sprints/CurrentSprint/' + backId, {responseType: 'text'});
+    return this.http.get(this.baseUrl + '/Sprints/CurrentSprint/' + backId);
+  }
+  getMySprint(sprintId: number):Observable<Story[]>
+  {
+    return this.http.get<Story[]>(this.baseUrl + `/Sprints/${sprintId}`);
+  }
+  completeSprint(sprintId: number, sprint: SprintModule):Observable<SprintModule>
+  {
+    return this.http.put<SprintModule>(this.baseUrl + `/Sprints/${sprintId}/completer`, sprint);
   }
 
   getCheckForSprint(){

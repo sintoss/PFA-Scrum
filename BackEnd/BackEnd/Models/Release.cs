@@ -11,5 +11,6 @@ namespace BackEnd.Models
         public int SprintId { get; set; }
         public virtual Sprint Sprint { get; set; }
         public string dbapkpath { get; set; }
+
     }
 }

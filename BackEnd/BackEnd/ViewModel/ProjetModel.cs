@@ -4,8 +4,6 @@ namespace BackEnd.ViewModel
 {
     public class ProjetModel
     {
-        private int v;
-
         public int Id { get; set; }
         public string Nom { get; set; }
         public DateTime? DateDebut { get; set; }

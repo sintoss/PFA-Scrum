@@ -1,0 +1,214 @@
+.container {
+    width: 95%;
+    max-width: unset;
+    max-height: unset;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+.container .board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 15px;
+    grid-row-gap: 25px;
+    padding: 15px;
+}
+.container .board .board-column-container {
+    position: relative;
+}
+.container .board .board-column-container .board-column-header {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+    background: #333;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.cdk-drag-placeholder {
+      opacity: 0;
+}
+.cdk-drag-animating {
+    transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+.cdk-drop-list-dragging .cdk-drag {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.container .board .board-column.todo .board-column-header {
+    background: #4A9FF9;
+}
+.container .board .board-column.doing .board-column-header {
+    background: #f9944a;
+}
+.container .board .board-column.done .board-column-header {
+    background: #2ac06d;
+}
+.container .board .board-column-container .board-column-content-wrapper {
+    position: relative;
+    min-height: 345px;
+    background: #f0f0f0;
+    border-radius: 0 0 10px 10px;
+    display: grid;
+    align-items: stretch;
+}
+.board-column-content-wrapper::-webkit-scrollbar-track {
+    background-color: #e3e3e3; 
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+  }
+.board-column-content-wrapper::-webkit-scrollbar {
+    width: 15px;
+    position: absolute;
+}
+.board-column-content-wrapper::-webkit-scrollbar-thumb {
+    background: #6993FF; 
+    border-radius: 10px;
+    border: 3.5px solid #e3e3e3;
+    position: absolute;
+}
+
+.board-column-content-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #4a7dff; 
+}
+.container .board .board-column-container .board-column-content {
+    position: relative;
+    padding: 8px 8px 12px;
+}
+.board-item {
+    margin: 8px;
+    background: #fff;
+    cursor: move;
+    position: relative;
+    border-radius: 15px;
+}
+.board-item.cdk-drag-disabled {
+    cursor: not-allowed;
+}
+.board-item .board-item-details {
+    position: absolute;
+    left: 0;
+    top: 85%;
+    width: 100%;
+    z-index: 999;
+    background: #ffffff;
+    -webkit-box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+    box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform .3s ease;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+h3, h4 {
+    font: revert;
+    margin: 0;
+}
+.toggleDiv {
+    transform: scaleY(1) !important;
+}
+.toggleBtn {
+    transform: rotate(90deg);
+}
+.board-item .board-item-details ul {
+    padding: 0 15px;
+}
+.board-item .board-item-details ul li{
+    padding: 0 10px;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: 1fr 75px;
+    grid-column-gap: 10px;
+    align-items: center;
+    background: #f2f2f2;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+.board-item .board-item-details ul li > .tache-detail h4 {
+    font-size: 1.2rem;
+}
+.board-item .board-item-details ul li > button{
+    padding: 5px 8px;
+    background-color: #2ac06d;
+    border: none;
+    border-radius: 15px;
+    color: #ffffff;
+    font-weight: bold;
+}
+.board-item .board-item-details ul li .fa-circle-check {
+    color: #2ac06d;
+    font-size: 24px;
+}
+.board-item .board-item-details ul li > strong:last-child {
+    font-size: 25px;
+    text-align: center;
+}
+.board-item-content {
+    position: relative;
+    padding: 20px;
+    font-size: 17px;
+    -webkit-box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+    box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+    display: grid;
+    grid-template-columns: 1fr 25px;
+    align-items: center;
+    border-radius: 15px;
+}
+.board-item-content .details span {
+    font-size: .8rem;
+    font-weight: bold;
+    color: #818181;
+}
+.board-item-content .details span.delaipassed {
+    color: red;
+}
+.details .contributeurs strong {
+    font-size: 1rem;
+}
+.board-item-content button {
+    transition: transform .25s ease;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.board-item-content button i {
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.board-item .btn-comment {
+    position: absolute;
+    background-color: red;
+    color: #ffffff;
+    padding: 5px 10px;
+    top: -10px;
+    right: -10px;
+    font-size: 1rem;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .board-item .comment-detail {
+    position: absolute;
+    top: 50%;
+    left: 101%;
+    width: 100%;
+    padding: 10px;
+    background: aquamarine;
+    border-radius: 15px;
+    z-index: 99;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left;
+    transition: transform .3s ease;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  .toggleComment {
+    transform: translateY(-50%) scaleX(1) !important;
+  }

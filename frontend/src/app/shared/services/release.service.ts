@@ -13,8 +13,12 @@ export class ReleaseService {
 
   constructor(private http: HttpClient) { }
 
-  getStoryTaches() {
+  getRelease() {
     return this.http.get(this.baseUrl + '/Release');
+  }
+
+  downloadrelease(id:number|string) {
+    return this.http.get(this.baseUrl + `/Release/download/${id}` , {responseType:'blob'} );
   }
 
 }

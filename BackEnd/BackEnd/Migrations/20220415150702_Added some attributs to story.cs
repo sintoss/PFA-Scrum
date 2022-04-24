@@ -1,4 +1,5 @@
 ﻿using System;
+using BackEnd.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BackEnd.Migrations
@@ -26,12 +27,12 @@ namespace BackEnd.Migrations
                 type: "datetime2",
                 nullable: true);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<string>(
                 name: "Etat",
                 table: "Stories",
-                type: "int",
+                type: "nvarchar(50)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: Etat.ToDo);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -4,14 +4,16 @@ using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220422230816_ajouter champs Description au entité Tache")]
+    partial class ajouterchampsDescriptionauentitéTache
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,9 +127,6 @@ namespace BackEnd.Migrations
                     b.Property<string>("Version")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("dbapkpath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SprintId");
@@ -207,15 +206,6 @@ namespace BackEnd.Migrations
                     b.Property<DateTime?>("Dateestimeedefin")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DureeSprint")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("FinDeSprint")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("JourTravail")
-                        .HasColumnType("int");
-
                     b.Property<string>("Libelle")
                         .HasColumnType("nvarchar(max)");
 
@@ -275,9 +265,6 @@ namespace BackEnd.Migrations
                     b.Property<string>("Etat")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Duree")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

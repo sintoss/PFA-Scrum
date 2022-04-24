@@ -78,7 +78,7 @@ namespace BackEnd.Models
                 .HasForeignKey(ds => ds.DeveloppeurId);
             modelBuilder.Entity<DeveloppeurStory>()
                 .HasOne(s => s.Story)
-                .WithMany(ds => ds.DeloppeurStories)
+                .WithMany(ds => ds.DeveloppeurStories)
                 .HasForeignKey(ds => ds.StoryId);
 
             base.OnModelCreating(modelBuilder);

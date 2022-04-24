@@ -113,6 +113,29 @@ namespace BackEnd.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/changerEtat")]
+        public async Task<ActionResult<Story>> ChangerEtat(int id, Story story)
+        {
+            _context.Entry(story).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return story;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
         // POST: api/Story
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -122,7 +145,7 @@ namespace BackEnd.Controllers
             story.DateDerniereModification = System.DateTime.Now;
             _context.Stories.Add(story);
             _context.SaveChangesAsync();
-            return new Story();
+            return story;
         }
 
         // DELETE: api/Story/5

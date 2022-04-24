@@ -3,9 +3,10 @@ export class TacheModel {
 
   id!: number;
   libelle!: string;
+  description!: string;
   dateCreation!: Date;
   dateDerniereModification!: Date;
-  etat!: number;
+  etat!: boolean;
   storyId!: number;
 
 

@@ -28,7 +28,7 @@ namespace BackEnd.Controllers
                 listofendsprint.ForEach(s =>
                 {
                     Release r = new Release();
-                    r.Version = s.Libelle;
+                    r.Version = s.Libelle.Replace(" ", string.Empty);
                     r.SprintId = s.Id;
                     r.DateRelease = DateTime.Now;
                     context.Releases.Add(r);
@@ -63,6 +63,8 @@ namespace BackEnd.Controllers
 
                     var FullPath = Path.Combine(pathtosave, NewName);
 
+                    var dbpath = Path.Combine(foldername, NewName);
+
                     //delete file if exist
                     if ((System.IO.File.Exists(FullPath)))
                     {
@@ -73,9 +75,34 @@ namespace BackEnd.Controllers
                     {
                         file.CopyTo(stream);
                     }
+
+                    release.dbapkpath = dbpath;
+
+                    context.SaveChanges();
+
                 }
             }
             return Ok(release);
+        }
+
+        [HttpGet("download/{id}")]
+        public IActionResult GetBlobDownload(string id)
+        {
+            Release release = null;
+            int val = 0;
+            int.TryParse(id, out val);
+            if(val != 0 ) release = context.Releases.Find( val );
+            if(release != null && release.dbapkpath != null)
+            {
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData("https://localhost:44349/"+release.dbapkpath);
+                var content = new System.IO.MemoryStream(data);
+                var contentType = "APPLICATION/octet-stream";
+                var fileName = release.Version;
+                return File(content, contentType , fileName);
+            }
+ 
+            return Ok("Not found");
         }
 
     }
