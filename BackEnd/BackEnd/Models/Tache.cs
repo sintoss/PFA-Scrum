@@ -12,9 +12,8 @@ namespace BackEnd.Models
         public string Description { get; set; }
         public DateTime DateCreation { get; set; }
         public DateTime? DateDerniereModification { get; set; }
-        [Column(TypeName = "int")]
         [DefaultValue(false)]
-        public Boolean Etat { get; set; }
+        public bool Etat { get; set; }
         public int StoryId { get; set; }
         public virtual Story Story { get; set; }
     }

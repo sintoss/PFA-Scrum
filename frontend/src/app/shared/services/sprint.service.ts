@@ -79,7 +79,7 @@ export class SprintService {
   }
   completeSprint(sprintId: number, sprint: SprintModule):Observable<SprintModule>
   {
-    return this.http.get<SprintModule>(this.baseUrl + `/Sprints/${sprintId}/complete`);
+    return this.http.put<SprintModule>(this.baseUrl + `/Sprints/${sprintId}/completer`, sprint);
   }
 
   getCheckForSprint(){

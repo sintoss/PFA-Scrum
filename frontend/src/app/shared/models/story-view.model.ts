@@ -12,6 +12,7 @@ export class StoryView {
   dateDerniereModification!: Date;
   commentaire!: string;
   backlogId!:number;
+  duree!: number;
   etat!:Etat;
   
   constructor(story:Story) {
@@ -24,6 +25,7 @@ export class StoryView {
     this.dateDerniereModification = story.dateDerniereModification;
     this.commentaire = story.commentaire;
     this.backlogId = story.backlogId;
+    this.duree = story.duree;
     this.etat = story.etat;
   }
 

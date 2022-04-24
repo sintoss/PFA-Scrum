@@ -9,7 +9,7 @@ namespace BackEnd.Migrations
             migrationBuilder.AlterColumn<int>(
                 name: "Etat",
                 table: "Taches",
-                type: "int",
+                type: "bit",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)");

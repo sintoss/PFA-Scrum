@@ -95,8 +95,8 @@
                           <h4 class="my-4">{{tache.libelle}}</h4>
                           <p class="text-justify">{{tache.description}}</p>
                         </div>
-                        <button *ngIf="!tache.etat" (click)="completeTache(1, item.id, tache)">completer</button>
-                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check fa-lg" style="color: #2ac06d"></i></strong>
+                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
                   </div>
@@ -121,7 +121,7 @@
                    [cdkDropListData]="this.stories[2]"
                    class="board-column-content"
                    (cdkDropListDropped)="onDrop($event)">
-                <div class="board-item" *ngFor="let item of this.stories[2]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Developpeur')">
+                <div class="board-item" *ngFor="let item of this.stories[2]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Testeur')">
                   <div class="board-item-content">
                     <div class="details">
                       <h4>{{item.description}}</h4>
@@ -156,9 +156,12 @@
                   <div #doneTacheDetail class="board-item-details">
                     <ul>
                       <li *ngFor="let tache of item.taches">
-                        <h4>{{tache.libelle}}</h4>
-                        <button *ngIf="!tache.etat">completer</button>
-                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check" style="color: #2ac06d"></i></strong>
+                        <div class="tache-detail p-2">
+                          <h4 class="my-4">{{tache.libelle}}</h4>
+                          <p class="text-justify">{{tache.description}}</p>
+                        </div>
+                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
                   </div>
@@ -172,7 +175,7 @@
             <div class="board-column-header">Tested</div>
             <div class="board-column-content-wrapper">
               <div cdkDropList id=3 [cdkDropListConnectedTo]="['2', '4']" [cdkDropListData]="this.stories[3]" class="board-column-content" (cdkDropListDropped)="onDrop($event)">
-                <div class="board-item" *ngFor="let item of this.stories[3]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('Developpeur')">
+                <div class="board-item" *ngFor="let item of this.stories[3]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('ScrumMaster')">
                   <div class="board-item-content">
                     <div class="details">
                       <h4>{{item.description}}</h4>
@@ -207,9 +210,12 @@
                   <div #testedTacheDetail class="board-item-details">
                     <ul>
                       <li *ngFor="let tache of item.taches">
-                        <h4>{{tache.libelle}}</h4>
-                        <button *ngIf="!tache.etat">completer</button>
-                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check" style="color: #2ac06d"></i></strong>
+                        <div class="tache-detail p-2">
+                          <h4 class="my-4">{{tache.libelle}}</h4>
+                          <p class="text-justify">{{tache.description}}</p>
+                        </div>
+                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
                   </div>
@@ -223,7 +229,7 @@
             <div class="board-column-header">Aprouved</div>
             <div class="board-column-content-wrapper">
               <div cdkDropList id="4" [cdkDropListConnectedTo]="['3']" [cdkDropListData]="this.stories[4]" class="board-column-content" (cdkDropListDropped)="onDrop($event)">
-                <div class="board-item" *ngFor="let item of this.stories[4]" cdkDrag [cdkDragDisabled]="!jwtService.hasRole('ScrumMaster')">
+                <div class="board-item" *ngFor="let item of this.stories[4]" cdkDrag [cdkDragDisabled]="true">
                   <div class="board-item-content">
                     <div class="details">
                       <h4>{{item.description}}</h4>
@@ -258,9 +264,12 @@
                   <div #aprouvedTacheDetail class="board-item-details">
                     <ul>
                       <li *ngFor="let tache of item.taches">
-                        <h4>{{tache.libelle}}</h4>
-                        <button *ngIf="!tache.etat">completer</button>
-                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check" style="color: #2ac06d"></i></strong>
+                        <div class="tache-detail p-2">
+                          <h4 class="my-4">{{tache.libelle}}</h4>
+                          <p class="text-justify">{{tache.description}}</p>
+                        </div>
+                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
+                        <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
                   </div>

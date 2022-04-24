@@ -134,8 +134,6 @@ namespace BackEnd.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
         }
 
         // POST: api/Story

@@ -269,17 +269,12 @@ namespace BackEnd.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<string>("Etat")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
-=======
+
                     b.Property<int>("Duree")
                         .HasColumnType("int");
-
-                    b.Property<int>("Etat")
-                        .HasColumnType("int");
->>>>>>> f43bd034a6b01526a6a7eaa4efa8368bb0db562a
 
                     b.HasKey("Id");
 

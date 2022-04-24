@@ -10,6 +10,7 @@ import { TacheModel } from 'src/app/shared/models/tache.model';
 import { TacheService } from 'src/app/shared/services/tache.service';
 import { StoryService } from 'src/app/shared/services/story.service';
 import Swal from 'sweetalert2';
+import { Sprint } from 'src/app/shared/models/sprint.model';
 
 @Component({
   selector: 'app-board',
@@ -33,11 +34,10 @@ export class BoardComponent implements OnInit {
     this.sprintService.getMySprint(this.sprintId).subscribe(
       res => {
         res.forEach((item) => {
-          console.log(item);
           if(this.etats.includes(item.etat)) this.storiesRemain++
           this.stories[item.etat].push(item);
         });
-        console.log(this.stories);
+        console.log(this.storiesRemain);
       }
     );
   }
@@ -119,12 +119,13 @@ export class BoardComponent implements OnInit {
           cancelButtonColor: '#d33',
         }).then((res) => {
           if(res.value) {
+            console.log(event.container.data[event.currentIndex]);
             let story = new StoryView(event.container.data[event.currentIndex]);
             story.etat = parseInt(event.container.id);
             if(parseInt(event.container.id) === 1 && parseInt(event.previousContainer.id) === 0) {
               story.dateDebut = new Date();
               story.datePrevuFin = new Date();
-              story.datePrevuFin.setDate(story.dateDebut.getDate() + 3);
+              story.datePrevuFin.setDate(story.dateDebut.getDate() + story.duree);
             }
             if(parseInt(event.container.id) === 2 && parseInt(event.previousContainer.id) === 1) {
               story.dateFin = new Date();
@@ -132,7 +133,6 @@ export class BoardComponent implements OnInit {
             //console.log(story);
             this.storyService.storyStateChanged(story.id, story).subscribe(
               res => {
-                console.log(res);
                 event.container.data[event.currentIndex].etat = res.etat;
                 if(parseInt(event.container.id) === 1 && parseInt(event.previousContainer.id) === 0) {
                   event.container.data[event.currentIndex].dateDebut = res.dateDebut;
@@ -151,7 +151,17 @@ export class BoardComponent implements OnInit {
                 )
                 if(this.storiesRemain === 0)
                 {
-                  //this.sprintService.completeSprint(sprintId, )   
+                  let sprint = new Sprint();
+                  this.sprintService.completeSprint(this.sprintId, sprint).subscribe(
+                    res => {
+                      event.container.data[event.currentIndex].sprintStories[0].sprint.finDeSprint = true;
+                      Swal.fire(
+                        'Completé!',
+                        'Le Sprint a ete completé',
+                        'success'
+                      )
+                    }
+                  )
                 }
               },
               err => {
@@ -196,7 +206,7 @@ export class BoardComponent implements OnInit {
     }
     return false;
   }
-  completeTache(index: number, storyId: number, tache: TacheModel)
+  completeTache(tache: TacheModel)
   {
     this.tacheService.completeTache(tache).subscribe(
       res => {

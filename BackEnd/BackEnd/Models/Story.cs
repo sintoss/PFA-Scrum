@@ -24,6 +24,7 @@ namespace BackEnd.Models
         public DateTime? DatePrevuFin { get; set; }
         public DateTime? DateFin { get; set; }
         public string Commentaire { get; set; }
+        public int Duree { get; set; }
         public int BacklogId { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         [DefaultValue(Etat.ToDo)]

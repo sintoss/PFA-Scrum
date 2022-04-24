@@ -14,6 +14,7 @@ export class Story {
   dateDerniereModification!: Date;
   commentaire!: string;
   backlogId!:number;
+  duree!: number;
   sprintStories!: Array<SprintStory>;
   taches!: Array<TacheModel>;
   etat!:Etat;
