@@ -1,0 +1,41 @@
+
+nav {
+  font-size: large;
+}
+
+strong {
+  font-size: xxx-large;
+  display: table-caption;
+}
+
+
+.carousel-control-next, .carousel-control-prev {
+  border: none !important;
+  background: none;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("src/assets/media/agile/next.svg") !important;
+  transform: rotate(180deg) scale(2);
+}
+
+.carousel-control-next-icon {
+  transform: scale(2);
+  background-image: url("src/assets/media/agile/next.svg") !important;
+}
+
+.carousel-item img {
+  max-width: 50%;
+  border-radius: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px, rgba(10, 37, 64, 0.35) 0 -2px 6px 0 inset;
+}
+
+footer {
+  background-image: url("src/assets/media/agile/layered-waves-haikei.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+nav:hover {
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;;
+}
