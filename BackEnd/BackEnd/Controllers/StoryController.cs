@@ -17,7 +17,7 @@ namespace BackEnd.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IDevStory devStory;
 
-        public StoryController(ApplicationDbContext context , IDevStory devStory)
+        public StoryController(ApplicationDbContext context, IDevStory devStory)
         {
             _context = context;
             this.devStory = devStory;
@@ -34,9 +34,10 @@ namespace BackEnd.Controllers
         public async Task<IActionResult> GetStoriesByBacklog(int bckid, int pg = 1, int pgs = 5, string desc = " ")
         {
             var complexType = await _context.Stories.Where(s => s.BacklogId == bckid
-                                                                    &&
-                                                                    s.Description.Contains(
-                                                                        (string.IsNullOrWhiteSpace(desc)) ? "" : desc)).ToListAsync();
+                                                                &&
+                                                                s.Description.Contains(
+                                                                    (string.IsNullOrWhiteSpace(desc)) ? "" : desc))
+                .ToListAsync();
 
             int pageSize = (pgs <= 7) ? pgs : 5;
 
@@ -60,23 +61,36 @@ namespace BackEnd.Controllers
                         id = d.Id,
                         description = d.Description,
                         dateCreation = d.DateCreation,
-                        dateDerniereModification = (System.DateTime)d.DateDerniereModification,
+                        dateDerniereModification = (System.DateTime) d.DateDerniereModification,
                         Commentaire = d.Commentaire,
                         BacklogId = d.BacklogId,
                         pathAvtar = GetImage(d.Id),
-                        Libelle = _context.sprintStories.Where(sp => sp.StoryId == d.Id).Join(_context.Sprints, sp => sp.SprintId, s => s.Id,
-                          (sprintstory, sprint) =>  sprint.Libelle ).FirstOrDefault()
-                    }) ;
+                        Libelle = _context.sprintStories.Where(sp => sp.StoryId == d.Id).Join(_context.Sprints,
+                            sp => sp.SprintId, s => s.Id,
+                            (sprintstory, sprint) => sprint.Libelle).FirstOrDefault()
+                    });
             });
 
-            return Ok(new { newData, pager });
+            return Ok(new {newData, pager});
+        }
+
+        [HttpGet("AllStoriesByID/{backlogId}")]
+        public async Task<ActionResult<IEnumerable<Story>>> GetAllStoriesByBacklog(int backlogId)
+        {
+            var storyList = await _context.Stories.Where(b => b.BacklogId == backlogId).ToListAsync();
+            if (storyList == null)
+            {
+                return NotFound();
+            }
+
+            return storyList;
         }
 
         private string GetImage(int UserStoryId)
         {
             string path = _context.DeveloppeurStories.Where(ds => ds.StoryId == UserStoryId).Join(_context.Stories,
-                    d => d.StoryId, s => s.Id, (devstory, story) => new { devstory, story })
-                .Join(_context.Developpeurs, ds => ds.devstory.DeveloppeurId, d => d.Id, (ds, d) => new { d.pathImage })
+                    d => d.StoryId, s => s.Id, (devstory, story) => new {devstory, story})
+                .Join(_context.Developpeurs, ds => ds.devstory.DeveloppeurId, d => d.Id, (ds, d) => new {d.pathImage})
                 .Select(u => u.pathImage)
                 .FirstOrDefault();
             return (string.IsNullOrEmpty(path)) ? @"Ressources\Image\anonymous.png" : path;
@@ -91,6 +105,7 @@ namespace BackEnd.Controllers
             {
                 return BadRequest();
             }
+
             story.DateDerniereModification = System.DateTime.Now;
             _context.Entry(story).State = EntityState.Modified;
 
@@ -170,11 +185,11 @@ namespace BackEnd.Controllers
         }
 
         [HttpGet("checkWorkLeftForDev/{id}/{bckid}")]
-        public async Task<IActionResult> CheckDayLeftForDev(string id , int bckid)
+        public async Task<IActionResult> CheckDayLeftForDev(string id, int bckid)
         {
             int dayofwork = 0;
             string msj = "";
-            if (_context.Sprints.Any(s=>!s.FinDeSprint))
+            if (_context.Sprints.Any(s => !s.FinDeSprint))
             {
                 DevStoryMv dvm = devStory.getData(bckid, id);
                 dayofwork = dvm.dayofwork;
@@ -185,10 +200,11 @@ namespace BackEnd.Controllers
                 msj += ";Day work Left  = " + dayofwork;
                 foreach (var item in dvm.ListStory)
                 {
-                    msj += ";"+item.Description + " -- Duree = " + item.Duree;
+                    msj += ";" + item.Description + " -- Duree = " + item.Duree;
                 }
             }
-            return Ok(new { dayofwork , msj} );
+
+            return Ok(new {dayofwork, msj});
         }
 
 
@@ -207,10 +223,10 @@ namespace BackEnd.Controllers
                 var temp3 = _context.sprintStories.Where(ss => ss.StoryId == id).FirstOrDefault();
                 if (temp3 != null) _context.sprintStories.Remove(temp3);
             }
+
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-
     }
 }

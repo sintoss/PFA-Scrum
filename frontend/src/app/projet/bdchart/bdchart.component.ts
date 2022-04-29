@@ -32,20 +32,17 @@ export class BdchartComponent implements OnInit {
   public chartOptions!: Partial<ChartOptions>;
   daysRemaining: any;
   totalStories: any;
-  actualStories!:any[];
+  actualStories!: any[];
   stories!: any[];
   sprintId!: number;
 
-  idealChart()
-  {
-    let chartData=this.totalStories/(this.daysRemaining.length);
-    let storyChart=[];
+  idealChart() {
+    let chartData = this.totalStories / (this.daysRemaining.length);
+    let storyChart = [];
     storyChart.push(this.totalStories);
-    for(let i =1;i<this.daysRemaining.length;i++)
-    {
-        storyChart.push(storyChart[i-1]-chartData);
+    for (let i = 1; i < this.daysRemaining.length; i++) {
+      storyChart.push(storyChart[i - 1] - chartData);
     }
-    console.log(storyChart);
     return storyChart;
   }
 
@@ -77,12 +74,11 @@ export class BdchartComponent implements OnInit {
   getSprintDays() {
     this.backlogService.backId.subscribe((value: number) => {
       this.sprintService.getCurrentSprint(value).subscribe(response => {
-        console.log(response);
-        if((response as any).sprint != undefined){
+        if ((response as any).sprint !== undefined) {
           this.sprintId = (response as any).sprint.id;
           this.totalStories = (response as any).sprint.sprintStories.length;
-          //this.actualStories.push(this.totalStories);
-          this.stories=(response as  any).sprint.sprintStories;
+          // this.actualStories.push(this.totalStories);
+          this.stories = (response as any).sprint.sprintStories;
           this.daysRemaining = (response as any).days;
           this.initChart();
         }
@@ -91,24 +87,22 @@ export class BdchartComponent implements OnInit {
   }
 
 
-  fillActual()
-  {
+  fillActual() {
 
-      let duplicate = this.doneStories().reduce((accumulate, value) => ({
-          ...accumulate, [value.dateFin]: (accumulate[value.dateFin] || 0) + 1
-      }), {});
+    let duplicate = this.doneStories().reduce((accumulate, value) => ({
+      ...accumulate, [value.dateFin]: (accumulate[value.dateFin] || 0) + 1
+    }), {});
 
-    Object.values(duplicate).reduce((accumulate:any, value:any) => {
-          let res = accumulate -= value;
-          this.actualStories.push(res);
-          return res;
+    Object.values(duplicate).reduce((accumulate: any, value: any) => {
+      let res = accumulate -= value;
+      this.actualStories.push(res);
+      return res;
     }, this.actualStories);
     return this.actualStories;
   }
 
-  doneStories()
-  {
-    return this.stories.filter(s=>s.isDone===true);
+  doneStories() {
+    return this.stories.filter(s => s.etat === 4);
   }
 
   initChart() {
@@ -116,10 +110,10 @@ export class BdchartComponent implements OnInit {
       series: [
         {
           name: 'actual',
-          data: [2,1.5, 1, 0]
+          data: [2, 1.5]
         },
         {
-          name: 'Ideal',
+          name: 'Estimated',
           data: this.idealChart()
         }
       ],

@@ -3,7 +3,7 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {Story} from '../models/story.model';
 import {HttpClient} from '@angular/common/http';
-import { StoryView } from '../models/story-view.model';
+import {StoryView} from '../models/story-view.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,17 +42,21 @@ export class StoryService {
   getImagePath(UserStoryId: number | string) {
     return this.http.get(this.baseUrl + `/Story/UserStoryId?UserStoryId=${UserStoryId}`, {responseType: 'text'});
   }
-  storyStateChanged(storyId: number, story: StoryView): Observable<Story>
-  {
+
+  storyStateChanged(storyId: number, story: StoryView): Observable<Story> {
     return this.http.put<Story>(this.baseUrl + `/Story/${storyId}/changerEtat`, story);
   }
 
-  GetWorkLeftForDev(id: number | string , bckid : number | string ) {
+  GetWorkLeftForDev(id: number | string, bckid: number | string) {
     return this.http.get(this.baseUrl + `/Story/checkWorkLeftForDev/${id}/${bckid}`);
   }
 
-  initStory(id: number | string){
+  initStory(id: number | string) {
     return this.http.delete(this.baseUrl + `/Story/Init/${id}`);
+  }
+
+  getAllStoriesById(backId: number) {
+    return this.http.get(this.baseUrl + '/Story/AllStoriesByID/' + backId);
   }
 
 }

@@ -19,7 +19,6 @@ export class TacheService {
 
   getStoryTaches(storyId: number, pg: number | string, pgs: number | string = 5, desc: string = ' ') {
     return this.http.get<TacheModel[]>(this.baseUrl + `/Taches/StoryTaches/${storyId}/${pg}/${pgs}/${desc}`);
-
   }
 
   updateTache(id: number, model: TacheModel) {
@@ -29,8 +28,8 @@ export class TacheService {
   deleteTache(id: number) {
     return this.http.delete(this.baseUrl + `/Taches/${id}`);
   }
-  completeTache(tache: TacheModel): Observable<TacheModel>
-  {
+
+  completeTache(tache: TacheModel): Observable<TacheModel> {
     return this.http.put<TacheModel>(this.baseUrl + `/Taches/${tache.id}/completer`, tache);
   }
 }

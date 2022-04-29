@@ -7,6 +7,7 @@ import {StoryService} from '../../shared/services/story.service';
 import Swal from 'sweetalert2';
 import {TachManagerService} from '../../shared/services/tach-manager.service';
 import {JwtService} from '../../shared/services/jwt.service';
+import {BacklogService} from '../../shared/services/backlog.service';
 
 
 @Component({
@@ -16,14 +17,14 @@ import {JwtService} from '../../shared/services/jwt.service';
 })
 export class TacheFormComponent implements OnInit {
   registerForm!: FormGroup;
-  story: Story[];
+  story: any;
   _tache: TacheModel = new TacheModel();
 
-  // private storyTaches: TacheModel[];
+  private backId: any;
 
-  constructor(private tacheService: TacheService, private storyService: StoryService, private tacheManager: TachManagerService) {
-    this.story = new Array<Story>();
-    // this.storyTaches = new Array<TacheModel>();
+  constructor(private tacheService: TacheService, private storyService: StoryService, private tacheManager: TachManagerService,
+              private backLogService: BacklogService) {
+
   }
 
   onSubmit() {
@@ -52,6 +53,7 @@ export class TacheFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getBackLogId();
   }
 
   initForm() {
@@ -62,10 +64,21 @@ export class TacheFormComponent implements OnInit {
     });
   }
 
+  getBackLogId() {
+    this.backLogService.backId.subscribe(value => {
+        this.backId = value;
+      }
+    );
+  }
+
   getStoryList() {
     this.story = [];
-    this.storyService.getStoryList().subscribe(
-      response => this.story.push(...response));
+    this.storyService.getAllStoriesById(this.backId).subscribe(
+      response => {
+        console.log(response);
+        this.story = response;
+      }
+    );
   }
 
   closeModal() {
