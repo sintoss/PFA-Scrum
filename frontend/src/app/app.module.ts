@@ -6,11 +6,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtService } from './shared/services/jwt.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LandingComponent
     ],
     imports: [
         BrowserModule,
