@@ -10,5 +10,7 @@ namespace BackEnd.Models
         public bool IsValide { get; set; }
         public int SprintId { get; set; }
         public virtual Sprint Sprint { get; set; }
+        public string dbapkpath { get; set; }
+
     }
 }

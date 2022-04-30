@@ -88,7 +88,8 @@ export class ShowSprintComponent implements OnInit {
   }
 
   doSomething(){
-    this.checkIfBacklogExist()
+    this.checkIfBacklogExist();
+    this.LetSprintAdd();
     let model = document.getElementById('sprintmodel');
     if(model != null)model.click();
   }

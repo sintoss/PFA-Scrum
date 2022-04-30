@@ -4,14 +4,16 @@ using BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220424163354_addapkpathtorelease")]
+    partial class addapkpathtorelease
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,11 +274,10 @@ namespace BackEnd.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Etat")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int>("Duree")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Etat")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -299,11 +300,9 @@ namespace BackEnd.Migrations
                     b.Property<DateTime?>("DateDerniereModification")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Etat")
-                        .HasColumnType("int");
+                    b.Property<string>("Etat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Libelle")
                         .HasColumnType("nvarchar(max)");
@@ -632,7 +631,7 @@ namespace BackEnd.Migrations
                         .IsRequired();
 
                     b.HasOne("BackEnd.Models.Story", "Story")
-                        .WithMany("DeveloppeurStories")
+                        .WithMany("DeloppeurStories")
                         .HasForeignKey("StoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -880,7 +879,7 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("BackEnd.Models.Story", b =>
                 {
-                    b.Navigation("DeveloppeurStories");
+                    b.Navigation("DeloppeurStories");
 
                     b.Navigation("SprintStories");
 
