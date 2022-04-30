@@ -11,6 +11,7 @@ import {
 } from 'ng-apexcharts';
 import {SprintService} from '../../shared/services/sprint.service';
 import {BacklogService} from '../../shared/services/backlog.service';
+import {Story} from '../../shared/models/story.model';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -33,7 +34,7 @@ export class BdchartComponent implements OnInit {
   daysRemaining: any;
   totalStories: any;
   actualStories!: any[];
-  stories!: any[];
+  stories!: Story[];
   sprintId!: number;
 
   idealChart() {
@@ -48,7 +49,8 @@ export class BdchartComponent implements OnInit {
 
 
   constructor(private sprintService: SprintService, private backlogService: BacklogService) {
-
+    this.stories = new Array<Story>();
+    this.actualStories = [30];
   }
 
   /*public generateData(baseval: any, count: any, yrange: any) {
@@ -78,9 +80,12 @@ export class BdchartComponent implements OnInit {
           this.sprintId = (response as any).sprint.id;
           this.totalStories = (response as any).sprint.sprintStories.length;
           // this.actualStories.push(this.totalStories);
-          this.stories = (response as any).sprint.sprintStories;
+          (response as any).sprint.sprintStories.forEach((item: { story: any; }) => {
+            this.stories.push(item.story);
+          });
           this.daysRemaining = (response as any).days;
           this.initChart();
+       
         }
       });
     });
@@ -88,21 +93,20 @@ export class BdchartComponent implements OnInit {
 
 
   fillActual() {
-
-    let duplicate = this.doneStories().reduce((accumulate, value) => ({
-      ...accumulate, [value.dateFin]: (accumulate[value.dateFin] || 0) + 1
+    const duplicate = this.doneStories().reduce((accumulate: any, value) => ({
+      ...accumulate, [new Date(value.dateFin).toDateString()]: (accumulate[new Date(value.dateFin).toDateString()] || 0) + 1
     }), {});
-
     Object.values(duplicate).reduce((accumulate: any, value: any) => {
-      let res = accumulate -= value;
+      const res = accumulate -= value;
       this.actualStories.push(res);
       return res;
     }, this.actualStories);
+    console.log(this.actualStories);
     return this.actualStories;
   }
 
   doneStories() {
-    return this.stories.filter(s => s.etat === 4);
+    return this.stories.filter(s => s.etat === 2);
   }
 
   initChart() {
@@ -110,7 +114,7 @@ export class BdchartComponent implements OnInit {
       series: [
         {
           name: 'actual',
-          data: [2, 1.5]
+          data: this.fillActual()
         },
         {
           name: 'Estimated',
