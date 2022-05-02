@@ -15,30 +15,31 @@ export class SignupComponent implements OnInit {
 
   @ViewChild('f')
   Form!: NgForm;
-  btnDisplay:boolean = false;
-  ImageString : string = "../assets/Img/Default.jpg";
-  FileToUpload:any;
-  AcceptePolicy:boolean = false;
+  btnDisplay: boolean = false;
+  ImageString: string = '../assets/media/svg/avatars/001-boy.svg';
+  FileToUpload: any;
+  AcceptePolicy: boolean = false;
 
-  constructor(private route: Router , private signup: SignupService) { }
+  constructor(private route: Router, private signup: SignupService) {
+  }
 
   ngOnInit(): void {
   }
 
   // tslint:disable-next-line:typedef
-  onSubmit(){
-    if(this.FileToUpload === undefined){
+  onSubmit() {
+    if (this.FileToUpload === undefined) {
       Swal.fire({
         title: 'Entre your profile picture',
         type: 'warning'
       });
-    }else{
+    } else {
       this.btnDisplay = true;
       this.signup.tryToRegister(new RegisterModel(
         this.Form.value.Username,
         this.Form.value.email,
-        this.Form.value.password, this.Form.value.acctype,this.FileToUpload)).subscribe(data => {
-          if(data.isAuthenticated){
+        this.Form.value.password, this.Form.value.acctype, this.FileToUpload)).subscribe(data => {
+          if (data.isAuthenticated) {
             let manger = new LocalStoragemangerModel();
             manger.putAccounntInLocal(data);
             Swal.fire({
@@ -59,21 +60,25 @@ export class SignupComponent implements OnInit {
 
   }
 
-  handerFileInput(files:any){
-      if(files.length == 0) return;
-      this.FileToUpload = <File>files[0];
-      //show Image
-      let reader = new FileReader();
-      reader.onload = (event:any)=>{
-        this.ImageString = event.target.result;
-      }
-      reader.readAsDataURL(this.FileToUpload);
+  handerFileInput(files: any) {
+    if (files.length == 0) {
+      return;
+    }
+    this.FileToUpload = <File> files[0];
+    //show Image
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.ImageString = event.target.result;
+    };
+    reader.readAsDataURL(this.FileToUpload);
   }
 
-  changeterm(vl:any){
-     this.AcceptePolicy = vl;
-     let model = document.getElementById('exampleModalCenter');
-     if(model != null)model.click();
+  changeterm(vl: any) {
+    this.AcceptePolicy = vl;
+    let model = document.getElementById('exampleModalCenter');
+    if (model != null) {
+      model.click();
+    }
   }
 
 }

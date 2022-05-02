@@ -1,108 +1,123 @@
 <!--begin::Login-->
-<div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login" style="height: 100vh;">
-    <!--begin::Aside-->
-    <div class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-10" style="background-image: url(assets/media/bg/bg-4.jpg);">
-        <!--begin: Aside Container-->
-        <div class="d-flex flex-row-fluid flex-column justify-content-between">
-            <!--begin: Aside header-->
-            <a href="#" class="flex-column-auto mt-5 pb-lg-0 pb-10">
-                <img src="assets/media/logos/logo-letter-1.png" class="max-h-70px" alt="" />
-            </a>
-            <!--end: Aside header-->
-            <!--begin: Aside content-->
-            <div class="flex-column-fluid d-flex flex-column justify-content-center">
-                <h3 class="font-size-h1 mb-5 text-white">Welcome to Metronic!</h3>
-                <p class="font-weight-lighter text-white opacity-80">The ultimate Bootstrap, Angular 8, React &amp; VueJS admin theme framework for next generation web apps.</p>
-            </div>
-            <!--end: Aside content-->
-            <!--begin: Aside footer for desktop-->
-            <div class="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
-                <div class="opacity-70 font-weight-bold text-white">© 2021 Metronic</div>
-                <div class="d-flex">
-                    <a href="#" class="text-white">Privacy</a>
-                    <a href="#" class="text-white ml-10">Legal</a>
-                    <a href="#" class="text-white ml-10">Contact</a>
-                </div>
-            </div>
-            <!--end: Aside footer for desktop-->
+<div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white" id="kt_login">
+  <!--begin::Aside-->
+  <div class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-10"
+       style="background-image: url(assets/media/bg/bg-2.jpg)">
+    <!--begin: Aside Container-->
+    <div class="d-flex flex-row-fluid flex-column justify-content-between">
+      <!--begin: Aside header-->
+      <a class="flex-column-auto mt-5 pb-lg-0 pb-10" href="#">
+        <img alt="" class="max-h-70px" src="assets/media/agile/logo-white.svg" style="transform:scale(2);"/>
+      </a>
+      <!--end: Aside header-->
+      <!--begin: Aside content-->
+      <div class="flex-column-fluid d-flex flex-column justify-content-center">
+        <h3 class="font-size-h1 mb-5 text-white">Welcome to Scrumize!</h3>
+        <p class="font-weight-lighter text-white opacity-80">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Amet commodi culpa eum eveniet harum hic illum iste itaque officiis praesentium ratione saepe tempore</p>
+      </div>
+      <!--end: Aside content-->
+      <!--begin: Aside footer for desktop-->
+      <div class="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
+        <div class="opacity-70 font-weight-bold text-white">© 2022 Scrumize</div>
+        <div class="d-flex">
+          <a class="text-white" href="#">Privacy</a>
+          <a class="text-white ml-10" href="#">Legal</a>
+          <a class="text-white ml-10" href="#">Contact</a>
         </div>
-        <!--end: Aside Container-->
+      </div>
+      <!--end: Aside footer for desktop-->
     </div>
-    <!--end::Aside-->
-    <!--begin::Content-->
-    <div class="d-flex flex-column flex-row-fluid position-relative p-7 overflow-hidden">
-        <!--begin::Content header-->
-        <div class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10">
-            <span class="font-weight-bold text-dark-50">already have an account?</span>
-            <a routerLink="/login" class="font-weight-bold ml-2" id="kt_login_signup">Login</a>
-        </div>
-        <!--end::Content header-->
-        <!--begin::Content body-->
-        <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
-            <!--begin::Signup-->
-            <div class="login-form login-signup-on">
-
-                <!--begin::Form-->
-                <form (ngSubmit)="onSubmit()" #f="ngForm" class="form" novalidate="novalidate" id="kt_login_signup_form">
-                  <h3 class="text-center font-size-h1">Sign Up</h3>
-
-                    <div class="avatar-upload">
-                      <div class="avatar-edit">
-                        <input type='file' id="imageUpload" #file accept=".png, .jpg, .jpeg" (change)="handerFileInput(file.files)" required="required"/>
-                        <label for="imageUpload"></label>
-                      </div>
-                      <div class="avatar-preview">
-                        <div id="imagePreview" [style.backgroundImage]="'url('+ ImageString +')'"></div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                        <input class="form-control form-control-solid h-auto py-5 px-6" type="text" placeholder="Username" name="Username" autocomplete="off" ngModel required="required"/>
-                    </div>
-                  <div class="form-group">
-                        <input class="form-control form-control-solid h-auto py-5 px-6" type="email" placeholder="Email" name="email" autocomplete="off" ngModel required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Password" name="password" autocomplete="off" ngModel required="required"/>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control form-control-solid h-auto py-5 px-6" type="password" placeholder="Confirm password" name="cpassword" autocomplete="off" />
-                    </div>
-                  <div class="form-group">
-                    <select class="form-control form-control-solid h-auto py-5 px-6" name="acctype" ngModel required="required">
-                      <option value="" selected disabled hidden>Choose Account type</option>
-                      <option value="ScrumMaster">ScrumMaster</option>
-                      <option value="Developpeur">Developpeur</option>
-                      <option value="Testeur">Testeur</option>
-                      <option value="ProductOwner">ProductOwner</option>
-                    </select>
-                  </div>
-
-
-                        <app-termpolicy (etatEvent)="changeterm($event)"></app-termpolicy>
-
-
-                    <div class="form-group d-flex flex-wrap flex-center">
-                        <button type="submit" id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4" [disabled]="!(f.valid && !btnDisplay && AcceptePolicy)">Submit</button>
-                        <button type="button" id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">Cancel</button>
-                    </div>
-                </form>
-                <!--end::Form-->
-            </div>
-            <!--end::Signup-->
-        </div>
-        <!--end::Content body-->
-        <!--begin::Content footer for mobile-->
-        <div class="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
-            <div class="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">© 2021 Metronic</div>
-            <div class="d-flex order-1 order-sm-2 my-2">
-                <a href="#" class="text-dark-75 text-hover-primary">Privacy</a>
-                <a href="#" class="text-dark-75 text-hover-primary ml-4">Legal</a>
-                <a href="#" class="text-dark-75 text-hover-primary ml-4">Contact</a>
-            </div>
-        </div>
-        <!--end::Content footer for mobile-->
+    <!--end: Aside Container-->
+  </div>
+  <!--end::Aside-->
+  <!--begin::Content-->
+  <div class="d-flex flex-column flex-row-fluid position-relative p-7">
+    <!--begin::Content header-->
+    <div
+      class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10">
+      <span class="font-weight-bold text-dark-50">already have an account?</span>
+      <a class="font-weight-bold ml-2" id="kt_login_signup" routerLink="/login">Login</a>
     </div>
-    <!--end::Content-->
+    <!--end::Content header-->
+    <!--begin::Content body-->
+    <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
+      <!--begin::Signup-->
+      <div class="login-form login-signup-on">
+
+        <!--begin::Form-->
+        <form #f="ngForm" (ngSubmit)="onSubmit()" class="form" id="kt_login_signup_form" novalidate="novalidate">
+          <h3 class="text-center font-size-h1">Sign Up</h3>
+
+          <div class="avatar-upload">
+            <div class="avatar-edit">
+              <input #file (change)="handerFileInput(file.files)" accept=".png, .jpg, .jpeg" id="imageUpload"
+                     required="required" type='file'/>
+              <label for="imageUpload"></label>
+            </div>
+            <div class="avatar-preview">
+              <div [style.backgroundImage]="'url('+ ImageString +')'" id="imagePreview"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input autocomplete="off" class="form-control form-control-solid h-auto py-5 px-6" name="Username"
+                   ngModel placeholder="Username" required="required" type="text"/>
+          </div>
+          <div class="form-group">
+            <input autocomplete="off" class="form-control form-control-solid h-auto py-5 px-6" name="email"
+                   ngModel placeholder="Email" required="required" type="email"/>
+          </div>
+          <div class="form-group">
+            <input autocomplete="off" class="form-control form-control-solid h-auto py-5 px-6" name="password"
+                   ngModel placeholder="Password" required="required" type="password"/>
+          </div>
+          <div class="form-group">
+            <input autocomplete="off" class="form-control form-control-solid h-auto py-5 px-6"
+                   name="cpassword" placeholder="Confirm password" type="password"/>
+          </div>
+          <div class="form-group">
+            <select class="form-control form-control-solid h-auto py-5 px-6" name="acctype" ngModel required="required">
+              <option disabled hidden selected value="">Choose Account type</option>
+              <option value="ScrumMaster">ScrumMaster</option>
+              <option value="Developpeur">Developpeur</option>
+              <option value="Testeur">Testeur</option>
+              <option value="ProductOwner">ProductOwner</option>
+            </select>
+          </div>
+
+
+          <app-termpolicy (etatEvent)="changeterm($event)"></app-termpolicy>
+
+
+          <div class="form-group d-flex flex-wrap flex-center">
+            <button [disabled]="!(f.valid && !btnDisplay && AcceptePolicy)"
+                    class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
+                    id="kt_login_signup_submit"
+                    type="submit">Submit
+            </button>
+            <button class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4" id="kt_login_signup_cancel"
+                    type="button">Cancel
+            </button>
+          </div>
+        </form>
+        <!--end::Form-->
+      </div>
+      <!--end::Signup-->
+    </div>
+    <!--end::Content body-->
+    <!--begin::Content footer for mobile-->
+    <div
+      class="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
+      <div class="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">© 2022 Scrumize</div>
+      <div class="d-flex order-1 order-sm-2 my-2">
+        <a class="text-dark-75 text-hover-primary" href="#">Privacy</a>
+        <a class="text-dark-75 text-hover-primary ml-4" href="#">Legal</a>
+        <a class="text-dark-75 text-hover-primary ml-4" href="#">Contact</a>
+      </div>
+    </div>
+    <!--end::Content footer for mobile-->
+  </div>
+  <!--end::Content-->
 </div>
 <!--end::Login-->

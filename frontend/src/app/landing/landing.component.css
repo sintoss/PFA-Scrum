@@ -9,33 +9,57 @@ strong {
 }
 
 
+hr {
+  border: none;
+  height: 0.4em;
+  width: 1.5em;
+  border-radius: 20px;
+  margin-left: 0;
+  color: #333; /* old IE */
+  background-color: #333; /* Modern Browsers */
+}
+
+
 .carousel-control-next, .carousel-control-prev {
   border: none !important;
   background: none;
 }
 
 .carousel-control-prev-icon {
-  background-image: url("src/assets/media/agile/next.svg") !important;
-  transform: rotate(180deg) scale(2);
+  background-image: url("src/assets/media/agile/left.svg") !important;
+  transform: scale(3);
 }
 
 .carousel-control-next-icon {
-  transform: scale(2);
+  transform: scale(3);
   background-image: url("src/assets/media/agile/next.svg") !important;
 }
 
 .carousel-item img {
   max-width: 50%;
   border-radius: 20px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px, rgba(10, 37, 64, 0.35) 0 -2px 6px 0 inset;
+  box-shadow: rgba(46, 240, 137, 0.4) 5px 5px, rgba(46, 240, 195, 0.3) 10px 10px, rgba(46, 240, 195, 0.2) 15px 15px, rgba(46, 240, 188, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
 }
 
 footer {
-  background-image: url("src/assets/media/agile/layered-waves-haikei.svg");
+  background-image: url("src/assets/media/agile/layered-waves-haikei (5).svg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 nav:hover {
-  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }
+
+footer > div:first-of-type {
+  z-index: 2;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+
+.card.card-custom.wave.wave-animate-slow {
+
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+
+
