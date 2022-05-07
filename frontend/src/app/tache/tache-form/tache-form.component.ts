@@ -22,7 +22,19 @@ export class TacheFormComponent implements OnInit {
 
   private backId: any;
 
-  constructor(private tacheService: TacheService, private storyService: StoryService, private tacheManager: TachManagerService,
+  readonly modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+  
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }]                         // text direction
+    ]
+  };
+
+  constructor(private tacheService: TacheService, private storyService: StoryService, public tacheManager: TachManagerService,
               private backLogService: BacklogService) {
 
   }
@@ -32,7 +44,7 @@ export class TacheFormComponent implements OnInit {
     this._tache.description = this.registerForm.value.Description;
     this._tache.dateCreation = new Date();
     this._tache.dateDerniereModification = new Date();
-    this._tache.storyId = this.registerForm.value.storyId;
+    this._tache.storyId = this.tacheManager.storyId;
     this.tacheService.postTaches(this._tache).subscribe(
       () => {
         Swal.fire({
@@ -58,7 +70,7 @@ export class TacheFormComponent implements OnInit {
 
   initForm() {
     this.registerForm = new FormGroup({
-      storyId: new FormControl(),
+      //storyId: new FormControl(),
       Libelle: new FormControl(),
       Description: new FormControl()
     });

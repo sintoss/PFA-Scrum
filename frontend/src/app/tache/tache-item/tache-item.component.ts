@@ -27,6 +27,18 @@ export class TacheItemComponent implements OnInit {
   pg = 1;
   @Input() desc!: string;
 
+  readonly modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+  
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }]                         // text direction
+    ]
+  };
+
   // tslint:disable-next-line:max-line-length
   constructor(private tacheService: TacheService, private tacheManager: TachManagerService, private storyService: StoryService, private searchService: SearchService ,  public jwtService: JwtService) {
     this.clickEventSubscription = this.tacheManager.getClickEvent().subscribe(() => {
@@ -73,14 +85,20 @@ export class TacheItemComponent implements OnInit {
   // tslint:disable-next-line:typedef
   editForm(tache: TacheModel) {
     this.tacheForm = tache;
+    console.log(this.tacheForm);
   }
 
   // tslint:disable-next-line:typedef
   onEdit() {
-    this.tacheService.updateTache(this.tacheForm.id, this.tacheForm).subscribe(
+    let tache = new TacheModel();
+    tache.id = this.tacheForm.id;
+    tache.libelle = this.tacheForm.libelle;
+    tache.description = this.tacheForm.description;
+
+    this.tacheService.updateTache(this.tacheForm.id, tache).subscribe(
       () => {
         Swal.fire({
-          title: 'Le user story a été modifier avec succes',
+          title: 'La tache a été modifier avec succes',
           type: 'success',
         });
         this.storyTaches = [];

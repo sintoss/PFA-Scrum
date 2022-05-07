@@ -198,9 +198,9 @@ export class BoardComponent implements OnInit {
     }
     return false;
   }
-  checkDelai(datePrevuFin: Date, etat: number): boolean
+  checkDelai(datePrevuFin: Date): boolean
   {
-    if(datePrevuFin !== undefined && new Date(datePrevuFin).getDate() < new Date().getDate() && etat != 2) {
+    if(datePrevuFin !== undefined && new Date(datePrevuFin).getDate() < new Date().getDate()) {
       console.log(true);
       return true;
     }

@@ -41,7 +41,7 @@
                       <li *ngFor="let tache of item.taches">
                         <div class="tache-detail">
                           <h4 class="my-4">{{tache.libelle}}</h4>
-                          <p class="text-justify">{{tache.description}}</p>
+                          <div class="text-justify" [innerHTML]="tache.description"></div>
                         </div>
                       </li>
                     </ul>
@@ -60,7 +60,7 @@
                   <div class="board-item-content">
                     <div class="details">
                       <h4>{{item.description}}</h4>
-                      <span [ngClass]="{delaipassed: checkDelai(item.datePrevuFin, item.etat)}">{{item.datePrevuFin | date}}</span>
+                      <span [ngClass]="{delaipassed: checkDelai(item.datePrevuFin)}">{{item.datePrevuFin | date}}</span>
                       <div class="contributeurs d-flex align-items-center mt-5">
                         <div class="d-flex align-items-center mr-3" *ngIf="!jwtService.hasRole('Developpeur')">
                           <strong class="mr-2">Developpeur :</strong>
@@ -93,17 +93,17 @@
                       <li *ngFor="let tache of item.taches">
                         <div class="tache-detail p-2">
                           <h4 class="my-4">{{tache.libelle}}</h4>
-                          <p class="text-justify">{{tache.description}}</p>
+                          <div class="text-justify" [innerHTML]="tache.description"></div>
                         </div>
-                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
+                        <button *ngIf="!tache.etat && jwtService.hasRole('Developpeur')" (click)="completeTache(tache)">completer</button>
                         <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
                   </div>
                   <div class="comment-content" *ngIf="item.commentaire!==null">
                     <button #commentBtn class="btn-comment" (click)="toggleComment(commentBtn, commentContent)">1</button>
-                    <div #commentContent class="comment-detail">
-                      <strong>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt, in commodi, minus neque quo necessitatibus</strong>
+                    <div #commentContent class="comment-detail bg-danger">
+                      <strong class="text-white">{{item.commentaire}}</strong>
                     </div>
                   </div>
                 </div>
@@ -158,9 +158,8 @@
                       <li *ngFor="let tache of item.taches">
                         <div class="tache-detail p-2">
                           <h4 class="my-4">{{tache.libelle}}</h4>
-                          <p class="text-justify">{{tache.description}}</p>
+                          <div class="text-justify" [innerHTML]="tache.description"></div>
                         </div>
-                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
                         <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
@@ -212,9 +211,8 @@
                       <li *ngFor="let tache of item.taches">
                         <div class="tache-detail p-2">
                           <h4 class="my-4">{{tache.libelle}}</h4>
-                          <p class="text-justify">{{tache.description}}</p>
+                          <div class="text-justify" [innerHTML]="tache.description"></div>
                         </div>
-                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
                         <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>
@@ -266,9 +264,8 @@
                       <li *ngFor="let tache of item.taches">
                         <div class="tache-detail p-2">
                           <h4 class="my-4">{{tache.libelle}}</h4>
-                          <p class="text-justify">{{tache.description}}</p>
+                          <div class="text-justify" [innerHTML]="tache.description"></div>
                         </div>
-                        <button *ngIf="!tache.etat" (click)="completeTache(tache)">completer</button>
                         <strong *ngIf="tache.etat"><i class="fa-solid fa-circle-check"></i></strong>
                       </li>
                     </ul>

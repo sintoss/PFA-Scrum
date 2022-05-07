@@ -1,6 +1,5 @@
 <!-- Button trigger modal -->
 <button
-  (click)="getStoryList()"
   class="btn btn-success font-weight-bolder font-size-sm"
   data-target="#staticBackdrop"
   data-toggle="modal"
@@ -35,13 +34,14 @@
       <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="form">
         <div class="modal-body">
           <div class="card-body">
-            <div class="form-group">
+            <!--<input type="hidden" formControlName="storyId" [value]="this.tacheManager.storyId"/>-->
+            <!--<div class="form-group">
               <label>Storie :</label>
               <select class="form-control form-control-solid" formControlName="storyId">
                 <option *ngFor="let story of story" [ngValue]="story.id">{{story.id}}-{{story.description | slice:0:20}}
                   -{{story.dateCreation | date:'yy/mm/dd'}}</option>
               </select>
-            </div>
+            </div>-->
             <div class="form-group">
               <label for="Libelle">Libelle :</label>
               <input type="text" class="form-control form-control-solid" formControlName="Libelle"
@@ -49,9 +49,8 @@
             </div>
             <div class="form-group">
               <label for="Description">Description :</label>
-              <textarea class="form-control form-control-solid" formControlName="Description"
-                        id="Description" name="Description" placeholder="La description de la tache..." rows="3"
-                        ></textarea>
+              <quill-editor [modules]="modules" formControlName="Description"
+                        ></quill-editor>
             </div>
           </div>
         </div>

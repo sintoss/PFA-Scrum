@@ -44,13 +44,14 @@ export class BdchartComponent implements OnInit {
     for (let i = 1; i < this.daysRemaining.length; i++) {
       storyChart.push(storyChart[i - 1] - chartData);
     }
+    console.log(storyChart);
     return storyChart;
   }
 
 
   constructor(private sprintService: SprintService, private backlogService: BacklogService) {
     this.stories = new Array<Story>();
-    this.actualStories = [30];
+    this.actualStories = [];
   }
 
   /*public generateData(baseval: any, count: any, yrange: any) {
@@ -79,7 +80,7 @@ export class BdchartComponent implements OnInit {
         if ((response as any).sprint !== undefined) {
           this.sprintId = (response as any).sprint.id;
           this.totalStories = (response as any).sprint.sprintStories.length;
-          // this.actualStories.push(this.totalStories);
+          this.actualStories.push(this.totalStories);
           (response as any).sprint.sprintStories.forEach((item: { story: any; }) => {
             this.stories.push(item.story);
           });
@@ -93,20 +94,43 @@ export class BdchartComponent implements OnInit {
 
 
   fillActual() {
-    const duplicate = this.doneStories().reduce((accumulate: any, value) => ({
+    const duplicate = this.storiesByEtat(4).reduce((accumulate: any, value) => ({
       ...accumulate, [new Date(value.dateFin).toDateString()]: (accumulate[new Date(value.dateFin).toDateString()] || 0) + 1
     }), {});
-    Object.values(duplicate).reduce((accumulate: any, value: any) => {
-      const res = accumulate -= value;
+    let days = [...this.daysRemaining].map(elt => new Date(elt).toDateString());
+    days.shift();
+    days.reduce((accumulate:any, value) => {
+      let res = accumulate - (duplicate[value] || 0);
       this.actualStories.push(res);
       return res;
+      /*const res = accumulate -= value;
+      this.actualStories.push(res);
+      return res;*/
     }, this.actualStories);
-    console.log(this.actualStories);
     return this.actualStories;
   }
+  fillIdeal() {
+    const duplicate = this.storiesByEtat(1).reduce((accumulate: any, value) => ({
+      ...accumulate, [new Date(value.datePrevuFin).toDateString()]: (accumulate[new Date(value.datePrevuFin).toDateString()] || 0) + 1
+    }), {});
+    let storyChart = [this.totalStories];
+    let days = [...this.daysRemaining].map(elt => new Date(elt).toDateString());
+    days.shift();
+    days.pop();
+    days.reduce((accumulate:any, value) => {
+      let res = accumulate - (duplicate[value] || 0);
+      storyChart.push(res);
+      return res;
+      /*const res = accumulate -= value;
+      storyChart.push(res);
+      return res;*/
+    }, storyChart);
+    storyChart.push(0);
+    return storyChart;
+  }
 
-  doneStories() {
-    return this.stories.filter(s => s.etat === 2);
+  storiesByEtat(num: number) {
+    return this.stories.filter(s => s.etat >= num);
   }
 
   initChart() {
@@ -118,7 +142,7 @@ export class BdchartComponent implements OnInit {
         },
         {
           name: 'Estimated',
-          data: this.idealChart()
+          data: this.fillIdeal()
         }
       ],
       chart: {

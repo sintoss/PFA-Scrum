@@ -75,8 +75,11 @@ namespace BackEnd.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(tache).State = EntityState.Modified;
+            var t = _context.Taches.Find(id);
+            t.Libelle = tache.Libelle;
+            t.Description = tache.Description;
+            t.DateDerniereModification = System.DateTime.Now;
+            //_context.Entry(tache).State = EntityState.Modified;
 
             try
             {

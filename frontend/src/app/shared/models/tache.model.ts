@@ -11,5 +11,5 @@ export class TacheModel {
 
 
   constructor() {
-  }
+  };
 }

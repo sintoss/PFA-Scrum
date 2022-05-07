@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchService} from '../../shared/services/search.service';
 import {JwtService} from '../../shared/services/jwt.service';
+import { TachManagerService } from 'src/app/shared/services/tach-manager.service';
 
 @Component({
   selector: 'app-tache-list',
@@ -10,7 +11,7 @@ import {JwtService} from '../../shared/services/jwt.service';
 export class TacheListComponent implements OnInit {
   searchElement!: string;
 
-  constructor(private searchService: SearchService , public jwtService: JwtService) {
+  constructor(private searchService: SearchService , public jwtService: JwtService, public tacheManager: TachManagerService) {
 
   }
 

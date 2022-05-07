@@ -235,12 +235,12 @@
                    name="description" placeholder="Enter DESCRIPTION" type="text">
           </div>
 
-          <div class="form-group">
+          <!--<div class="form-group">
             <label for="cmt">commentaire</label>
             <textarea [(ngModel)]="story.commentaire" class="form-control" cols="50" id="cmt" maxlength="200"
                       name="commentaire"
                       ngForm rows="4"></textarea>
-          </div>
+          </div>-->
 
           <button (click)="onSubmit()" class="btn btn-primary" type="submit">Save</button>
         </form>
@@ -269,7 +269,7 @@
           <div class="membredata" id="datatable2">
             <article *ngFor="let user of project.utilisateurProjets">
               <div class="alert alert-secondary" role="alert">
-              <input name= "rbutton" type="radio"
+                <input name= "rbutton" type="radio"
                      (change)="changeStatus(user.utilisateur.id,$event)" />
               <div class="membre-content p-2">
                 <div class="membre-img">

@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="card-toolbar">
-        <app-tache-form  *ngIf="jwtService.hasRole('ScrumMaster')"></app-tache-form>
+        <app-tache-form  *ngIf="jwtService.hasRole('ScrumMaster') && this.tacheManager.storyId !== undefined"></app-tache-form>
     </div>
   </div>
   <!--end::Header-->

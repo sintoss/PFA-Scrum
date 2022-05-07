@@ -5,7 +5,7 @@
       <h3 class="card-label">Burndown Chart</h3>
     </div>
     <div class="card-toolbar">
-      <a routerLink="sprints/{{this.sprintId}}" class="btn btn-success font-weight-bolder font-size-sm mx-2">
+      <a routerLink="sprints/{{this.sprintId}}" class="btn btn-success font-weight-bolder font-size-sm mx-2" *ngIf="daysRemaining?.length > 0">
         Voir Board
       </a>
     </div>

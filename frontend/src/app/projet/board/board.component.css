@@ -200,7 +200,6 @@ h3, h4 {
     left: 101%;
     width: 100%;
     padding: 10px;
-    background: aquamarine;
     border-radius: 15px;
     z-index: 99;
     transform: translateY(-50%) scaleX(0);
