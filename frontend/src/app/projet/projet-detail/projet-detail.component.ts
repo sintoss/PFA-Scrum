@@ -24,6 +24,7 @@ export class ProjetDetailComponent implements OnInit {
   users: Array<Utilisateur>;
   usersInput: Array<Utilisateur>;
   usersProjets: Array<UtilisateurProjet>;
+  storyPercent: string;
 
   constructor(private router: ActivatedRoute, private projetService: ProjetService, private http: HttpClient, private userService: UserServiceService, public jwtService: JwtService
   , private teamchange : DetectTeamProjectService) {
@@ -31,12 +32,16 @@ export class ProjetDetailComponent implements OnInit {
     this.users = new Array<Utilisateur>();
     this.usersInput = new Array<Utilisateur>();
     this.usersProjets = new Array<UtilisateurProjet>();
+    this.storyPercent = "0";
   }
 
   ngOnInit(): void {
     let id = (Number)(this.router.snapshot.paramMap.get('id'));
     this.projetService.getProjetDetail(id).subscribe(
       res => {
+        if(res.backlog != null && res.backlog.stories != null) {
+          this.storyPercent = (((res.backlog.stories.filter(s => s.etat === 4).length / res.backlog.stories.length)*100).toFixed(0));
+        }
         Object.assign(this.projet, res);
       }
     );

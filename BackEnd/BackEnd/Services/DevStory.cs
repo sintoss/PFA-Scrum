@@ -17,8 +17,15 @@ namespace BackEnd.Services
             DevStoryMv dmv = new DevStoryMv();
 
             int dayofwork = 0;
-            Sprint sprt = context.Sprints.Where(s => !s.FinDeSprint && s.BacklogId == bckid).FirstOrDefault();
-            dayofwork = sprt.DureeSprint * sprt.JourTravail;
+            var spr = context.Sprints.Where(s => !s.FinDeSprint && s.BacklogId == bckid).FirstOrDefault();
+            if(spr != null)
+            {
+                dayofwork = spr.JourTravail * spr.DureeSprint;
+            } else
+            {
+                Projet p = context.Projets.Where(p => p.BacklogId != bckid).FirstOrDefault();
+                dayofwork = p.JourTravail * p.DureeSprint;
+            }
 
             var liststory = context.DeveloppeurStories.Where(d => d.DeveloppeurId == id).Join(
 

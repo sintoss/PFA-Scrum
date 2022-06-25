@@ -32,7 +32,13 @@ namespace BackEnd.Controllers
             string id = jwtSecurityToken.Claims.First(claim => claim.Type == "uid").Value;
 
             return await _context.Projets.Where(p => p.ScrumMasterId.Equals(id) || p.UtilisateurProjets.Where(up => up.utilisateurId.Equals(id)).Count()>0)
-                                         .Select(p => new ProjetModel(p.Id, p.Nom, p.DateDebut, p.DatePrevueFin, p.Backlog.Stories.Count()))
+                                         .Select(p => new ProjetModel(
+                                                                        p.Id,
+                                                                        p.Nom, 
+                                                                        p.DateDebut, 
+                                                                        p.DatePrevueFin, 
+                                                                        p.Backlog.Stories.Count(), 
+                                                                        (Math.Truncate(((double)p.Backlog.Stories.Where(s => s.Etat == Etat.Approuved).Count() / (double) ((p.Backlog.Stories.Count() == 0 ) ? 1 : p.Backlog.Stories.Count())) *100))))
                                          .ToListAsync();
 
            

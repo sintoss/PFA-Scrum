@@ -139,10 +139,10 @@
                     aria-valuenow="50"
                     class="progress-bar bg-success"
                     role="progressbar"
-                    style="width: 63%"
+                    [style.width.%]="storyPercent"
                   ></div>
                 </div>
-                <span class="font-weight-bolder text-dark">78%</span>
+                <span class="font-weight-bolder text-dark">{{storyPercent}}%</span>
               </div>
             </div>
           </div>

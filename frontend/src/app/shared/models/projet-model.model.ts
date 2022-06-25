@@ -10,4 +10,5 @@ export class ProjetModel {
     dateDebut!: Date;
     datePrevueFin!: Date;
     storyNumber!: number;
+    completedStory!: number;
 }

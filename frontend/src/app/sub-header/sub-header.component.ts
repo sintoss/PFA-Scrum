@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtService } from '../shared/services/jwt.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { JwtService } from '../shared/services/jwt.service';
 export class SubHeaderComponent implements OnInit {
 
   roles: Object;
-  constructor(public jwtServie: JwtService) {
+
+  constructor(public jwtServie: JwtService, private router: Router) {
     this.roles = {};
     Object.assign(this.roles, this.jwtServie.getRoles());
   }
